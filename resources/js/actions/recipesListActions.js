@@ -35,7 +35,9 @@ export const addCommentary = (recipeId, text) => ({
 // };
 
 export const fetchRecipes = () => async (dispatch) => {
-    const response = await fetch("http://127.0.0.1:8000/api/recipes");
+    const baseURL = window.location.origin;
+    console.log(baseURL);
+    const response = await fetch(`${baseURL}/api/recipes`);
     const data = await response.json();
 
     dispatch({ type: FETCH_RECIPES, payload: data.recipes });

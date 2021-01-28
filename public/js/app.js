@@ -18476,27 +18476,29 @@ var addCommentary = function addCommentary(recipeId, text) {
 var fetchRecipes = function fetchRecipes() {
   return /*#__PURE__*/function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().mark(function _callee(dispatch) {
-      var response, data;
+      var baseURL, response, data;
       return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default().wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
-              _context.next = 2;
-              return fetch("http://127.0.0.1:8000/api/recipes");
+              baseURL = window.location.origin;
+              console.log(baseURL);
+              _context.next = 4;
+              return fetch("".concat(baseURL, "/api/recipes"));
 
-            case 2:
+            case 4:
               response = _context.sent;
-              _context.next = 5;
+              _context.next = 7;
               return response.json();
 
-            case 5:
+            case 7:
               data = _context.sent;
               dispatch({
                 type: FETCH_RECIPES,
                 payload: data.recipes
               });
 
-            case 7:
+            case 9:
             case "end":
               return _context.stop();
           }
