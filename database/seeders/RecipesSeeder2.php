@@ -33,12 +33,19 @@ class RecipesSeeder2 extends Seeder
             $author_id = ($users[Rand(0,count($users)-1)])->id;
             $description = $faker->sentence(mt_rand(30,80));
 
+            $time = Rand(0,10);
+            $complexity = Rand(0,10);
+            $rating = Rand(0,10);
+
             $data[] =[
                 'name' => $name,
                 'catalog_id' => $catalog_id,
                 'status' => $status,
                 'author_id' => $author_id,
-                'description' => $description
+                'description' => $description,
+                'time' => $time,
+                'complexity'=>$complexity,
+                'rating'=>$rating
             ];
         }
         return $data;
