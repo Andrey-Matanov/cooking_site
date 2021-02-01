@@ -1,15 +1,17 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { useFormik } from 'formik';
-import { addCommentary } from '../../actions/recipesListActions';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import { addCommentary } from "../../actions/recipesListActions";
 
-const AddCommentaryForm = ({ recipeId, addCommentary }) => {
+const AddCommentaryForm = ({ recipeId }) => {
+    const dispatch = useDispatch();
+
     const formik = useFormik({
         initialValues: {
-            text: '',
+            text: "",
         },
         onSubmit: ({ text }) => {
-            addCommentary(recipeId, text);
+            dispatch(addCommentary(recipeId, text));
         },
     });
 
@@ -19,16 +21,12 @@ const AddCommentaryForm = ({ recipeId, addCommentary }) => {
             <textarea
                 value={formik.values.text}
                 onChange={formik.handleChange}
-                name='text'
-                placeholder='Введите комментарий...'
+                name="text"
+                placeholder="Введите комментарий..."
             />
-            <button type='submit'>Отправить</button>
+            <button type="submit">Отправить</button>
         </form>
     );
 };
 
-const mapDispatchToProps = {
-    addCommentary,
-};
-
-export default connect(null, mapDispatchToProps)(AddCommentaryForm);
+export default AddCommentaryForm;

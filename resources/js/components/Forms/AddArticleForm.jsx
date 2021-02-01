@@ -1,69 +1,81 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { useFormik } from 'formik';
-import { addArticle } from '../../actions/articlesActions';
-import { updateUserArticlesIds } from '../../actions/usersActions';
-import {
-    add_article_form,
-    form_item,
-    form_input,
-    form_textarea,
-} from './AddArticleForm.module.css';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import styled from "styled-components";
+import { addArticle } from "../../actions/articlesActions";
+import { updateUserArticlesIds } from "../../actions/usersActions";
 
-const AddArticleFormik = ({ id, addArticle, updateUserArticlesIds }) => {
+const AddArticleForm = styled.form`
+    width: 500px;
+`;
+
+const FormItem = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+`;
+
+const FormInput = styled.input`
+    flex-basis: 100%;
+`;
+
+const FormTextarea = styled.textarea`
+    flex-basis: 100%;
+    min-height: 500px;
+`;
+
+const AddArticleFormik = ({ id }) => {
+    const dispatch = useDispatch();
+
     const formik = useFormik({
         initialValues: {
-            name: '',
-            text: '',
+            name: "",
+            text: "",
         },
         onSubmit: ({ name, text }) => {
-            const newArticleId = '' + id;
+            const newArticleId = "" + id;
             const newArticle = {
                 id: newArticleId,
                 name,
                 text,
             };
 
-            updateUserArticlesIds(newArticleId);
-            addArticle(newArticle);
+            dispatch(updateUserArticlesIds(newArticleId));
+            dispatch(addArticle(newArticle));
         },
     });
 
     return (
-        <form onSubmit={formik.handleSubmit} className={add_article_form}>
-            <div className={form_item}>
-                <label htmlFor='name'>Название</label>
-                <input
+        <AddArticleForm onSubmit={formik.handleSubmit}>
+            <FormItem>
+                <label htmlFor="name">Название</label>
+                <FormInput
                     value={formik.values.name}
                     onChange={formik.handleChange}
-                    className={form_input}
-                    name='name'
-                    type='text'
-                    id='name'
+                    name="name"
+                    type="text"
+                    id="name"
                 />
-            </div>
-            <div className={form_item}>
-                <label htmlFor='text'>Текст статьи</label>
-                <textarea
+            </FormItem>
+            <FormItem>
+                <label htmlFor="text">Текст статьи</label>
+                <FormTextarea
                     value={formik.values.description}
                     onChange={formik.handleChange}
-                    className={form_textarea}
-                    name='text'
-                    id='text'
+                    name="text"
+                    id="text"
                 />
-            </div>
-            <div className={form_item}>
-                <button type='submit'>Добавить рецепт</button>
-            </div>
-        </form>
+            </FormItem>
+            <FormItem>
+                <button type="submit">Добавить рецепт</button>
+            </FormItem>
+        </AddArticleForm>
     );
 };
 
-const mapStateToProps = () => ({});
-
-const mapDispatchToProps = {
-    addArticle,
-    updateUserArticlesIds,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddArticleFormik);
+export default AddArticleFormik;
