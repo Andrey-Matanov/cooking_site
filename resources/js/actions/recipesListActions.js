@@ -1,6 +1,6 @@
 export const ADD_RECIPE = "@@recipesList/ADD_RECIPE";
 export const ADD_COMMENTARY = "@@recipesList/ADD_COMMENTARY";
-export const RENDER_RECIPES = "@@recipesList/RENDER_RECIPES";
+// export const RENDER_RECIPES = "@@recipesList/RENDER_RECIPES";
 export const FETCH_RECIPES = "@@recipesList/FETCH_RECIPES";
 export const FETCH_CATEGORIES = "@@recipesList/FETCH_CATEGORIES";
 export const FETCH_ERROR = "@@recipesList/FETCH_ERROR";
