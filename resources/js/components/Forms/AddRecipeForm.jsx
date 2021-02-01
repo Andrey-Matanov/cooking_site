@@ -1,24 +1,46 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { useFormik } from 'formik';
-import { addRecipe } from '../../actions/recipesListActions';
-import { updateUserRecipesIds } from '../../actions/usersActions';
-import {
-    add_recipe_form,
-    form_item,
-    form_input,
-} from './AddRecipeForm.module.css';
+import React from "react";
+import { useDispatch } from "react-redux";
+import { useFormik } from "formik";
+import styled from "styled-components";
+import { addRecipe } from "../../actions/recipesListActions";
+import { updateUserRecipesIds } from "../../actions/usersActions";
 
-const AddRecipeFormik = ({ id, addRecipe, updateUserRecipesIds }) => {
+const AddRecipeForm = styled.form`
+    width: 500px;
+`;
+
+const FormItem = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+
+    &:last-child {
+        margin-bottom: 0;
+    }
+`;
+
+const FormInput = styled.input`
+    flex-basis: 100%;
+`;
+
+const FormTextarea = styled.textarea`
+    flex-basis: 100%;
+    resize: none;
+`;
+
+const AddRecipeFormik = ({ id }) => {
+    const dispatch = useDispatch();
+
     const formik = useFormik({
         initialValues: {
-            name: '',
+            name: "",
             time: 0,
-            difficulty: '1',
-            description: '',
+            difficulty: "1",
+            description: "",
         },
         onSubmit: ({ name, time, difficulty, description }) => {
-            const newRecipeId = '' + id;
+            const newRecipeId = "" + id;
             const newRecipe = {
                 newRecipeId,
                 name,
@@ -27,76 +49,66 @@ const AddRecipeFormik = ({ id, addRecipe, updateUserRecipesIds }) => {
                 description,
             };
 
-            updateUserRecipesIds(newRecipeId);
-            addRecipe(newRecipe);
+            dispatch(updateUserRecipesIds(newRecipeId));
+            dispatch(addRecipe(newRecipe));
         },
     });
 
     return (
-        <form onSubmit={formik.handleSubmit} className={add_recipe_form}>
-            <div className={form_item}>
-                <label htmlFor='name'>Название</label>
-                <input
+        <AddRecipeForm onSubmit={formik.handleSubmit}>
+            <FormItem>
+                <label htmlFor="name">Название</label>
+                <FormInput
                     value={formik.values.name}
                     onChange={formik.handleChange}
-                    className={form_input}
-                    name='name'
-                    type='text'
-                    id='name'
+                    name="name"
+                    type="text"
+                    id="name"
                 />
-            </div>
-            <div className={form_item}>
-                <label htmlFor='time'>Время приготовления</label>
-                <input
+            </FormItem>
+            <FormItem>
+                <label htmlFor="time">Время приготовления</label>
+                <FormInput
                     value={formik.values.time}
                     onChange={formik.handleChange}
-                    className={form_input}
-                    name='time'
-                    type='text'
-                    id='time'
+                    name="time"
+                    type="text"
+                    id="time"
                 />
-            </div>
-            <div className={form_item}>
-                <label htmlFor='difficulty'>Сложность приготовления</label>
+            </FormItem>
+            <FormItem>
+                <label htmlFor="difficulty">Сложность приготовления</label>
                 <select
                     value={formik.values.difficulty}
                     onChange={formik.handleChange}
-                    id='difficulty'
+                    id="difficulty"
                 >
-                    <option value='1'>1</option>
-                    <option value='2'>2</option>
-                    <option value='3'>3</option>
-                    <option value='4'>4</option>
-                    <option value='5'>5</option>
-                    <option value='6'>6</option>
-                    <option value='7'>7</option>
-                    <option value='8'>8</option>
-                    <option value='9'>9</option>
-                    <option value='10'>10</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
                 </select>
-            </div>
-            <div className={form_item}>
-                <label htmlFor='description'>Описание рецепта</label>
-                <textarea
+            </FormItem>
+            <FormItem>
+                <label htmlFor="description">Описание рецепта</label>
+                <FormTextarea
                     value={formik.values.description}
                     onChange={formik.handleChange}
-                    className={form_input}
-                    name='description'
-                    id='description'
+                    name="description"
+                    id="description"
                 />
-            </div>
-            <div className={form_item}>
-                <button type='submit'>Добавить рецепт</button>
-            </div>
-        </form>
+            </FormItem>
+            <FormItem>
+                <button type="submit">Добавить рецепт</button>
+            </FormItem>
+        </AddRecipeForm>
     );
 };
 
-const mapStateToProps = () => ({});
-
-const mapDispatchToProps = {
-    addRecipe,
-    updateUserRecipesIds,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(AddRecipeFormik);
+export default AddRecipeFormik;

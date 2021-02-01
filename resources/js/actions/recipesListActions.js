@@ -37,7 +37,6 @@ export const addCommentary = (recipeId, text) => ({
 
 export const fetchRecipes = () => async (dispatch) => {
     const baseURL = window.location.origin;
-    console.log(baseURL);
     const response = await fetch(`${baseURL}/api/recipes`);
     const data = await response.json();
 
@@ -46,7 +45,6 @@ export const fetchRecipes = () => async (dispatch) => {
 
 export const fetchCategories = () => async (dispatch) => {
     const baseURL = window.location.origin;
-    console.log(baseURL);
     const response = await fetch(`${baseURL}/api/categories`);
     const data = await response.json();
 

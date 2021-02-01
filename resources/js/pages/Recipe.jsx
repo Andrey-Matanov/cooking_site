@@ -1,29 +1,35 @@
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-
-import RecipeStepsList from '../components/RecipeStepsList.jsx'
-
-import { Container } from '@material-ui/core'
+import React, { useEffect } from "react";
+import { connect, useDispatch } from "react-redux";
+import RecipeStepsList from "../components/RecipeStepsList.jsx";
+import { Container } from "@material-ui/core";
 import { fetchRecipe } from "../actions/recipeActions.js";
 
-const Recipe = ({ recipeId, recipe, users, reviewsList, fetchRecipe }) => {
+const Recipe = ({ recipeId, recipe, users, reviewsList }) => {
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        fetchRecipe(Number(location.href.slice(location.href.lastIndexOf('/')+1)));
-    }, [])
-    
+        dispatch(
+            fetchRecipe(
+                Number(location.href.slice(location.href.lastIndexOf("/") + 1))
+            )
+        );
+    }, []);
+
     const { reviews } = reviewsList;
 
     if (recipe.recipe.name) {
         return (
-            <Container maxWidth='lg'>
-                <RecipeStepsList recipe={recipe.recipe} ingredients= {recipe.ingredients} reviews={reviews} />
+            <Container maxWidth="lg">
+                <RecipeStepsList
+                    recipe={recipe.recipe}
+                    ingredients={recipe.ingredients}
+                    reviews={reviews}
+                />
             </Container>
         );
     } else {
-        return <div></div>
+        return <div></div>;
     }
-
 };
 
 const mapStateToProps = (state, ownProps) => ({
@@ -34,4 +40,4 @@ const mapStateToProps = (state, ownProps) => ({
     reviewsList: state.reviews,
 });
 
-export default connect(mapStateToProps, { fetchRecipe })(Recipe);
+export default connect(mapStateToProps)(Recipe);

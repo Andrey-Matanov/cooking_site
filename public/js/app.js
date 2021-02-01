@@ -20092,7 +20092,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "ADD_RECIPE": () => /* binding */ ADD_RECIPE,
 /* harmony export */   "ADD_COMMENTARY": () => /* binding */ ADD_COMMENTARY,
-/* harmony export */   "RENDER_RECIPES": () => /* binding */ RENDER_RECIPES,
 /* harmony export */   "FETCH_RECIPES": () => /* binding */ FETCH_RECIPES,
 /* harmony export */   "FETCH_CATEGORIES": () => /* binding */ FETCH_CATEGORIES,
 /* harmony export */   "FETCH_ERROR": () => /* binding */ FETCH_ERROR,
@@ -20110,8 +20109,8 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 var ADD_RECIPE = "@@recipesList/ADD_RECIPE";
-var ADD_COMMENTARY = "@@recipesList/ADD_COMMENTARY";
-var RENDER_RECIPES = "@@recipesList/RENDER_RECIPES";
+var ADD_COMMENTARY = "@@recipesList/ADD_COMMENTARY"; // export const RENDER_RECIPES = "@@recipesList/RENDER_RECIPES";
+
 var FETCH_RECIPES = "@@recipesList/FETCH_RECIPES";
 var FETCH_CATEGORIES = "@@recipesList/FETCH_CATEGORIES";
 var FETCH_ERROR = "@@recipesList/FETCH_ERROR";
@@ -20154,23 +20153,22 @@ var fetchRecipes = function fetchRecipes() {
           switch (_context.prev = _context.next) {
             case 0:
               baseURL = window.location.origin;
-              console.log(baseURL);
-              _context.next = 4;
+              _context.next = 3;
               return fetch("".concat(baseURL, "/api/recipes"));
 
-            case 4:
+            case 3:
               response = _context.sent;
-              _context.next = 7;
+              _context.next = 6;
               return response.json();
 
-            case 7:
+            case 6:
               data = _context.sent;
               dispatch({
                 type: FETCH_RECIPES,
                 payload: data.recipes
               });
 
-            case 9:
+            case 8:
             case "end":
               return _context.stop();
           }
@@ -20192,23 +20190,22 @@ var fetchCategories = function fetchCategories() {
           switch (_context2.prev = _context2.next) {
             case 0:
               baseURL = window.location.origin;
-              console.log(baseURL);
-              _context2.next = 4;
+              _context2.next = 3;
               return fetch("".concat(baseURL, "/api/categories"));
 
-            case 4:
+            case 3:
               response = _context2.sent;
-              _context2.next = 7;
+              _context2.next = 6;
               return response.json();
 
-            case 7:
+            case 6:
               data = _context2.sent;
               dispatch({
                 type: FETCH_CATEGORIES,
                 payload: data.recipes
               });
 
-            case 9:
+            case 8:
             case "end":
               return _context2.stop();
           }
@@ -20395,20 +20392,20 @@ function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len 
 var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_2__.default)(function (theme) {
   return {
     difficultyContainer: {
-      height: '20px',
-      display: 'flex',
-      margin: '5px 0'
+      height: "20px",
+      display: "flex",
+      margin: "5px 0"
     },
     difficultyElement: {
-      width: '10px',
-      height: '20px',
-      margin: '0 1px'
+      width: "10px",
+      height: "20px",
+      margin: "0 1px"
     },
     difficultyElementInactive: {
-      width: '10px',
-      height: '20px',
-      margin: '0 1px',
-      backgroundColor: '#a5a5a5'
+      width: "10px",
+      height: "20px",
+      margin: "0 1px",
+      backgroundColor: "#a5a5a5"
     }
   };
 });
@@ -20421,57 +20418,57 @@ var DifficuiltyBar = function DifficuiltyBar(props) {
     switch (difficulty) {
       case 1:
         {
-          return '#5aad53';
+          return "#5aad53";
         }
 
       case 2:
         {
-          return '#5aad53';
+          return "#5aad53";
         }
 
       case 3:
         {
-          return '#b1cd4c';
+          return "#b1cd4c";
         }
 
       case 4:
         {
-          return '#b1cd4c';
+          return "#b1cd4c";
         }
 
       case 5:
         {
-          return '#fce148';
+          return "#fce148";
         }
 
       case 6:
         {
-          return '#fce148';
+          return "#fce148";
         }
 
       case 7:
         {
-          return '#f39451';
+          return "#f39451";
         }
 
       case 8:
         {
-          return '#f39451';
+          return "#f39451";
         }
 
       case 9:
         {
-          return '#f39451';
+          return "#f39451";
         }
 
       case 10:
         {
-          return '#f39451';
+          return "#f39451";
         }
 
       default:
         {
-          return '#000';
+          return "#000";
         }
     }
   };
@@ -20532,35 +20529,30 @@ __webpack_require__.r(__webpack_exports__);
 var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_2__.default)(function (theme) {
   return {
     footer: {
-      backgroundColor: '#4caf50',
-      display: 'flex',
-      justifyContent: 'center',
-      position: 'fixed',
-      left: '0px',
-      bottom: '0px',
-      width: '100%',
-      maxHeight: '5vh'
+      backgroundColor: "#4caf50",
+      display: "flex",
+      justifyContent: "center",
+      position: "fixed",
+      left: "0px",
+      bottom: "0px",
+      width: "100%",
+      maxHeight: "5vh"
     },
     footerWrapper: {
-      minWidth: '700px',
-      display: 'flex',
-      alignItems: 'center',
-      justifyContent: 'space-between'
+      minWidth: "700px",
+      display: "flex",
+      alignItems: "center",
+      justifyContent: "space-between"
     },
     content: {
-      color: 'lightgray',
-      textAlign: 'center'
+      color: "lightgray",
+      textAlign: "center"
     }
   };
 });
 
 var Footer = function Footer() {
   var classes = useStyles();
-
-  var preventDefault = function preventDefault(event) {
-    return event.preventDefault();
-  };
-
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
     className: classes.footer,
     children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
@@ -20568,8 +20560,8 @@ var Footer = function Footer() {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         className: classes.content,
         style: {
-          display: 'flex',
-          alignItems: 'center'
+          display: "flex",
+          alignItems: "center"
         },
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("i", {
           className: "fa fa-youtube fa-2x",
@@ -20613,7 +20605,9 @@ var Footer = function Footer() {
         })]
       }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(_material_ui_core_Link__WEBPACK_IMPORTED_MODULE_3__.default, {
         href: "#",
-        onClick: preventDefault,
+        onClick: function onClick(e) {
+          return e.preventDefault();
+        },
         style: {
           color: _material_ui_core_colors__WEBPACK_IMPORTED_MODULE_4__.default[300]
         },
@@ -20645,9 +20639,53 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! formik */ "./node_modules/formik/dist/formik.esm.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _actions_articlesActions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/articlesActions */ "./resources/js/actions/articlesActions.js");
 /* harmony import */ var _actions_usersActions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/usersActions */ "./resources/js/actions/usersActions.js");
-/* harmony import */ var _AddArticleForm_module_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./AddArticleForm.module.css */ "./resources/js/components/Forms/AddArticleForm.module.css");
+
+
+
+function _templateObject4() {
+  var data = _taggedTemplateLiteral(["\n    flex-basis: 100%;\n    min-height: 500px;\n"]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n    flex-basis: 100%;\n"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    margin-bottom: 10px;\n\n    &:last-child {\n        margin-bottom: 0;\n    }\n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n    width: 500px;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
 
@@ -20655,60 +20693,56 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+var AddArticleForm = styled_components__WEBPACK_IMPORTED_MODULE_6__.default.form(_templateObject());
+var FormItem = styled_components__WEBPACK_IMPORTED_MODULE_6__.default.div(_templateObject2());
+var FormInput = styled_components__WEBPACK_IMPORTED_MODULE_6__.default.input(_templateObject3());
+var FormTextarea = styled_components__WEBPACK_IMPORTED_MODULE_6__.default.textarea(_templateObject4());
 
 var AddArticleFormik = function AddArticleFormik(_ref) {
-  var id = _ref.id,
-      addArticle = _ref.addArticle,
-      updateUserArticlesIds = _ref.updateUserArticlesIds;
+  var id = _ref.id;
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
   var formik = (0,formik__WEBPACK_IMPORTED_MODULE_3__.useFormik)({
     initialValues: {
-      name: '',
-      text: ''
+      name: "",
+      text: ""
     },
     onSubmit: function onSubmit(_ref2) {
       var name = _ref2.name,
           text = _ref2.text;
-      var newArticleId = '' + id;
+      var newArticleId = "" + id;
       var newArticle = {
         id: newArticleId,
         name: name,
         text: text
       };
-      updateUserArticlesIds(newArticleId);
-      addArticle(newArticle);
+      dispatch((0,_actions_usersActions__WEBPACK_IMPORTED_MODULE_5__.updateUserArticlesIds)(newArticleId));
+      dispatch((0,_actions_articlesActions__WEBPACK_IMPORTED_MODULE_4__.addArticle)(newArticle));
     }
   });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(AddArticleForm, {
     onSubmit: formik.handleSubmit,
-    className: _AddArticleForm_module_css__WEBPACK_IMPORTED_MODULE_6__.add_article_form,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: _AddArticleForm_module_css__WEBPACK_IMPORTED_MODULE_6__.form_item,
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(FormItem, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
         htmlFor: "name",
         children: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(FormInput, {
         value: formik.values.name,
         onChange: formik.handleChange,
-        className: _AddArticleForm_module_css__WEBPACK_IMPORTED_MODULE_6__.form_input,
         name: "name",
         type: "text",
         id: "name"
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: _AddArticleForm_module_css__WEBPACK_IMPORTED_MODULE_6__.form_item,
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(FormItem, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
         htmlFor: "text",
         children: "\u0422\u0435\u043A\u0441\u0442 \u0441\u0442\u0430\u0442\u044C\u0438"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(FormTextarea, {
         value: formik.values.description,
         onChange: formik.handleChange,
-        className: _AddArticleForm_module_css__WEBPACK_IMPORTED_MODULE_6__.form_textarea,
         name: "text",
         id: "text"
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: _AddArticleForm_module_css__WEBPACK_IMPORTED_MODULE_6__.form_item,
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(FormItem, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
         type: "submit",
         children: "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0440\u0435\u0446\u0435\u043F\u0442"
@@ -20717,15 +20751,7 @@ var AddArticleFormik = function AddArticleFormik(_ref) {
   });
 };
 
-var mapStateToProps = function mapStateToProps() {
-  return {};
-};
-
-var mapDispatchToProps = {
-  addArticle: _actions_articlesActions__WEBPACK_IMPORTED_MODULE_4__.addArticle,
-  updateUserArticlesIds: _actions_usersActions__WEBPACK_IMPORTED_MODULE_5__.updateUserArticlesIds
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps, mapDispatchToProps)(AddArticleFormik));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddArticleFormik);
 
 /***/ }),
 
@@ -20744,9 +20770,53 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var formik__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! formik */ "./node_modules/formik/dist/formik.esm.js");
+/* harmony import */ var styled_components__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! styled-components */ "./node_modules/styled-components/dist/styled-components.browser.esm.js");
 /* harmony import */ var _actions_recipesListActions__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../actions/recipesListActions */ "./resources/js/actions/recipesListActions.js");
 /* harmony import */ var _actions_usersActions__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../actions/usersActions */ "./resources/js/actions/usersActions.js");
-/* harmony import */ var _AddRecipeForm_module_css__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./AddRecipeForm.module.css */ "./resources/js/components/Forms/AddRecipeForm.module.css");
+
+
+
+function _templateObject4() {
+  var data = _taggedTemplateLiteral(["\n    flex-basis: 100%;\n    resize: none;\n"]);
+
+  _templateObject4 = function _templateObject4() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject3() {
+  var data = _taggedTemplateLiteral(["\n    flex-basis: 100%;\n"]);
+
+  _templateObject3 = function _templateObject3() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject2() {
+  var data = _taggedTemplateLiteral(["\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n    margin-bottom: 10px;\n\n    &:last-child {\n        margin-bottom: 0;\n    }\n"]);
+
+  _templateObject2 = function _templateObject2() {
+    return data;
+  };
+
+  return data;
+}
+
+function _templateObject() {
+  var data = _taggedTemplateLiteral(["\n    width: 500px;\n"]);
+
+  _templateObject = function _templateObject() {
+    return data;
+  };
+
+  return data;
+}
+
+function _taggedTemplateLiteral(strings, raw) { if (!raw) { raw = strings.slice(0); } return Object.freeze(Object.defineProperties(strings, { raw: { value: Object.freeze(raw) } })); }
 
 
 
@@ -20754,25 +20824,27 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
-
+var AddRecipeForm = styled_components__WEBPACK_IMPORTED_MODULE_6__.default.form(_templateObject());
+var FormItem = styled_components__WEBPACK_IMPORTED_MODULE_6__.default.div(_templateObject2());
+var FormInput = styled_components__WEBPACK_IMPORTED_MODULE_6__.default.input(_templateObject3());
+var FormTextarea = styled_components__WEBPACK_IMPORTED_MODULE_6__.default.textarea(_templateObject4());
 
 var AddRecipeFormik = function AddRecipeFormik(_ref) {
-  var id = _ref.id,
-      addRecipe = _ref.addRecipe,
-      updateUserRecipesIds = _ref.updateUserRecipesIds;
+  var id = _ref.id;
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
   var formik = (0,formik__WEBPACK_IMPORTED_MODULE_3__.useFormik)({
     initialValues: {
-      name: '',
+      name: "",
       time: 0,
-      difficulty: '1',
-      description: ''
+      difficulty: "1",
+      description: ""
     },
     onSubmit: function onSubmit(_ref2) {
       var name = _ref2.name,
           time = _ref2.time,
           difficulty = _ref2.difficulty,
           description = _ref2.description;
-      var newRecipeId = '' + id;
+      var newRecipeId = "" + id;
       var newRecipe = {
         newRecipeId: newRecipeId,
         name: name,
@@ -20780,41 +20852,35 @@ var AddRecipeFormik = function AddRecipeFormik(_ref) {
         difficulty: difficulty,
         description: description
       };
-      updateUserRecipesIds(newRecipeId);
-      addRecipe(newRecipe);
+      dispatch((0,_actions_usersActions__WEBPACK_IMPORTED_MODULE_5__.updateUserRecipesIds)(newRecipeId));
+      dispatch((0,_actions_recipesListActions__WEBPACK_IMPORTED_MODULE_4__.addRecipe)(newRecipe));
     }
   });
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("form", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(AddRecipeForm, {
     onSubmit: formik.handleSubmit,
-    className: _AddRecipeForm_module_css__WEBPACK_IMPORTED_MODULE_6__.add_recipe_form,
-    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: _AddRecipeForm_module_css__WEBPACK_IMPORTED_MODULE_6__.form_item,
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(FormItem, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
         htmlFor: "name",
         children: "\u041D\u0430\u0437\u0432\u0430\u043D\u0438\u0435"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(FormInput, {
         value: formik.values.name,
         onChange: formik.handleChange,
-        className: _AddRecipeForm_module_css__WEBPACK_IMPORTED_MODULE_6__.form_input,
         name: "name",
         type: "text",
         id: "name"
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: _AddRecipeForm_module_css__WEBPACK_IMPORTED_MODULE_6__.form_item,
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(FormItem, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
         htmlFor: "time",
         children: "\u0412\u0440\u0435\u043C\u044F \u043F\u0440\u0438\u0433\u043E\u0442\u043E\u0432\u043B\u0435\u043D\u0438\u044F"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("input", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(FormInput, {
         value: formik.values.time,
         onChange: formik.handleChange,
-        className: _AddRecipeForm_module_css__WEBPACK_IMPORTED_MODULE_6__.form_input,
         name: "time",
         type: "text",
         id: "time"
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: _AddRecipeForm_module_css__WEBPACK_IMPORTED_MODULE_6__.form_item,
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(FormItem, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
         htmlFor: "difficulty",
         children: "\u0421\u043B\u043E\u0436\u043D\u043E\u0441\u0442\u044C \u043F\u0440\u0438\u0433\u043E\u0442\u043E\u0432\u043B\u0435\u043D\u0438\u044F"
@@ -20854,20 +20920,17 @@ var AddRecipeFormik = function AddRecipeFormik(_ref) {
           children: "10"
         })]
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
-      className: _AddRecipeForm_module_css__WEBPACK_IMPORTED_MODULE_6__.form_item,
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)(FormItem, {
       children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("label", {
         htmlFor: "description",
         children: "\u041E\u043F\u0438\u0441\u0430\u043D\u0438\u0435 \u0440\u0435\u0446\u0435\u043F\u0442\u0430"
-      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("textarea", {
+      }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(FormTextarea, {
         value: formik.values.description,
         onChange: formik.handleChange,
-        className: _AddRecipeForm_module_css__WEBPACK_IMPORTED_MODULE_6__.form_input,
         name: "description",
         id: "description"
       })]
-    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-      className: _AddRecipeForm_module_css__WEBPACK_IMPORTED_MODULE_6__.form_item,
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(FormItem, {
       children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("button", {
         type: "submit",
         children: "\u0414\u043E\u0431\u0430\u0432\u0438\u0442\u044C \u0440\u0435\u0446\u0435\u043F\u0442"
@@ -20876,15 +20939,7 @@ var AddRecipeFormik = function AddRecipeFormik(_ref) {
   });
 };
 
-var mapStateToProps = function mapStateToProps() {
-  return {};
-};
-
-var mapDispatchToProps = {
-  addRecipe: _actions_recipesListActions__WEBPACK_IMPORTED_MODULE_4__.addRecipe,
-  updateUserRecipesIds: _actions_usersActions__WEBPACK_IMPORTED_MODULE_5__.updateUserRecipesIds
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps, mapDispatchToProps)(AddRecipeFormik));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (AddRecipeFormik);
 
 /***/ }),
 
@@ -21661,26 +21716,26 @@ __webpack_require__.r(__webpack_exports__);
 var useStyles = (0,_material_ui_core_styles__WEBPACK_IMPORTED_MODULE_3__.default)(function (theme) {
   return {
     scrolling: {
-      height: '70vh',
-      paddingRight: '20px',
-      paddingLeft: '20px',
-      overflowY: 'scroll',
-      overflowX: 'hidden',
-      '&::-webkit-scrollbar': {
-        display: 'block',
-        width: '5px'
+      height: "70vh",
+      paddingRight: "20px",
+      paddingLeft: "20px",
+      overflowY: "scroll",
+      overflowX: "hidden",
+      "&::-webkit-scrollbar": {
+        display: "block",
+        width: "5px"
       },
-      '&::-webkit-scrollbar-track': {
-        backgroundColor: '#bfbfbf99',
-        borderRadius: '2.5px'
+      "&::-webkit-scrollbar-track": {
+        backgroundColor: "#bfbfbf99",
+        borderRadius: "2.5px"
       },
-      '&::-webkit-scrollbar-thumb': {
-        backgroundColor: '#afb3b5',
-        borderRadius: '2.5px'
+      "&::-webkit-scrollbar-thumb": {
+        backgroundColor: "#afb3b5",
+        borderRadius: "2.5px"
       }
     },
     buttonContainer: {
-      textAlign: 'center'
+      textAlign: "center"
     }
   };
 });
@@ -21716,7 +21771,7 @@ var RecipesList = function RecipesList(props) {
       });
     } else {
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("div", {
-        children: 'No recipes :-('
+        children: "No recipes :-("
       });
     }
   };
@@ -21847,16 +21902,15 @@ var AllArticles = function AllArticles(_ref) {
     children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("h1", {
       children: "\u0412\u0441\u0435 \u0441\u0442\u0430\u0442\u044C\u0438"
     }), articles.map(function (article) {
-      console.log(article);
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("div", {
         children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("h3", {
           children: [article.id, ". ", article.name]
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)("p", {
           children: article.text
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsxs)("p", {
-          children: ["\u0410\u0432\u0442\u043E\u0440 -", ' ', /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
+          children: ["\u0410\u0432\u0442\u043E\u0440 -", " ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_0__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_3__.Link, {
             style: {
-              color: 'blue'
+              color: "blue"
             },
             to: "/profile/".concat(article.authorId + 1),
             children: users.find(function (user) {
@@ -22309,10 +22363,10 @@ var Recipe = function Recipe(_ref) {
   var recipeId = _ref.recipeId,
       recipe = _ref.recipe,
       users = _ref.users,
-      reviewsList = _ref.reviewsList,
-      fetchRecipe = _ref.fetchRecipe;
+      reviewsList = _ref.reviewsList;
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    fetchRecipe(Number(location.href.slice(location.href.lastIndexOf('/') + 1)));
+    dispatch((0,_actions_recipeActions_js__WEBPACK_IMPORTED_MODULE_4__.fetchRecipe)(Number(location.href.slice(location.href.lastIndexOf("/") + 1))));
   }, []);
   var reviews = reviewsList.reviews;
 
@@ -22340,9 +22394,7 @@ var mapStateToProps = function mapStateToProps(state, ownProps) {
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps, {
-  fetchRecipe: _actions_recipeActions_js__WEBPACK_IMPORTED_MODULE_4__.fetchRecipe
-})(Recipe));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps)(Recipe));
 
 /***/ }),
 
@@ -22374,11 +22426,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 var Recipes = function Recipes(_ref) {
-  var recipesList = _ref.recipesList,
-      fetchRecipes = _ref.fetchRecipes;
+  var recipesList = _ref.recipesList;
+  var dispatch = (0,react_redux__WEBPACK_IMPORTED_MODULE_2__.useDispatch)();
   (0,react__WEBPACK_IMPORTED_MODULE_1__.useEffect)(function () {
-    fetchRecipes();
-  }, []);
+    if (!recipesList.length) dispatch((0,_actions_recipesListActions_js__WEBPACK_IMPORTED_MODULE_4__.fetchRecipes)());
+  }, [dispatch]);
 
   var renderRecipes = function renderRecipes(count) {// renderRecipes(count);
   };
@@ -22410,9 +22462,7 @@ var mapStateToProps = function mapStateToProps(state) {
   };
 };
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps, {
-  fetchRecipes: _actions_recipesListActions_js__WEBPACK_IMPORTED_MODULE_4__.fetchRecipes
-})(Recipes));
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ((0,react_redux__WEBPACK_IMPORTED_MODULE_2__.connect)(mapStateToProps)(Recipes));
 
 /***/ }),
 
@@ -22710,10 +22760,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "recipeReducer": () => /* binding */ recipeReducer
 /* harmony export */ });
-/* harmony import */ var react_addons_update__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react-addons-update */ "./node_modules/react-addons-update/index.js");
-/* harmony import */ var react_addons_update__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react_addons_update__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _actions_recipeActions__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../actions/recipeActions */ "./resources/js/actions/recipeActions.js");
-
+/* harmony import */ var _actions_recipeActions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/recipeActions */ "./resources/js/actions/recipeActions.js");
 
 var recipeObject = {
   recipe: {},
@@ -22725,23 +22772,13 @@ var recipeReducer = function recipeReducer() {
   var action = arguments.length > 1 ? arguments[1] : undefined;
 
   switch (action.type) {
-    case _actions_recipeActions__WEBPACK_IMPORTED_MODULE_1__.FETCH_RECIPE:
+    case _actions_recipeActions__WEBPACK_IMPORTED_MODULE_0__.FETCH_RECIPE:
       {
-        // recipe.recipe = action.payload.recipe[0];
-        // recipe.ingredients = action.payload.ingredients;
-        // recipe.reviews = action.payload.reviews;
-        // return recipe;
-        return react_addons_update__WEBPACK_IMPORTED_MODULE_0___default()(recipe, {
-          recipe: {
-            $set: action.payload.recipe[0]
-          },
-          ingredients: {
-            $set: action.payload.ingredients
-          },
-          reviews: {
-            $set: action.payload.reviews
-          }
-        });
+        return {
+          recipe: action.payload.recipe[0],
+          ingredients: action.payload.ingredients,
+          reviews: action.payload.reviews
+        };
       }
 
     default:
@@ -22766,18 +22803,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var immer__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! immer */ "./node_modules/immer/dist/immer.esm.js");
 /* harmony import */ var _actions_recipesListActions__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../actions/recipesListActions */ "./resources/js/actions/recipesListActions.js");
-function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread(); }
-
-function _nonIterableSpread() { throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
-
-function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
-
-function _iterableToArray(iter) { if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter); }
-
-function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) return _arrayLikeToArray(arr); }
-
-function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
-
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -22899,145 +22924,6 @@ var recipesListReducer = function recipesListReducer() {
     case _actions_recipesListActions__WEBPACK_IMPORTED_MODULE_0__.FETCH_RECIPES:
       {
         return action.payload;
-      }
-
-    case _actions_recipesListActions__WEBPACK_IMPORTED_MODULE_0__.RENDER_RECIPES:
-      {
-        //Заглушка - данные будут с сервера, условия не будет
-        var tempAddedRecipes = [];
-
-        switch (recipes[recipes.length - 1].id) {
-          case "3":
-            {
-              tempAddedRecipes = [{
-                id: "4",
-                name: "Фрикасе",
-                author: "Елена",
-                time: 30,
-                difficulty: 4,
-                description: "Вкусный сливочный соус с кусочками куриного филе. Ещё один рецепт, в котором куриное филе выступает в выигрышном варианте. Благодаря сливочному соусу, куриное филе получается очень нежным и ...",
-                image: "https://via.placeholder.com/150/abd",
-                rating: 6,
-                commentaries: [{
-                  id: 8,
-                  authorId: 4,
-                  text: "Мне не понравился рецепт"
-                }, {
-                  id: 8,
-                  authorId: 4,
-                  text: "Мне не понравился рецепт"
-                }]
-              }, {
-                id: "5",
-                name: "Бефстроганов",
-                author: "Fjodor",
-                time: 100,
-                difficulty: 7,
-                description: "Для бефстроганов из говядины со сметаной подойдет практически любой выруб мяса. Если хотите избежать процесса отбивания, то надо взять мясо получше и нарезать его потоньше.",
-                image: "https://via.placeholder.com/150/aba",
-                rating: 9,
-                commentaries: [{
-                  id: 2,
-                  authorId: 2,
-                  text: "Отличный рецепт Бефстроганова!"
-                }, {
-                  id: 4,
-                  authorId: 4,
-                  text: "Мне не понравился рецепт!"
-                }]
-              }, {
-                id: "6",
-                name: "Бефстроганов",
-                author: "Fjodor",
-                time: 100,
-                difficulty: 7,
-                description: "Для бефстроганов из говядины со сметаной подойдет практически любой выруб мяса. Если хотите избежать процесса отбивания, то надо взять мясо получше и нарезать его потоньше.",
-                image: "https://via.placeholder.com/150/aba",
-                rating: 9,
-                commentaries: [{
-                  id: 2,
-                  authorId: 2,
-                  text: "Отличный рецепт Бефстроганова!"
-                }, {
-                  id: 4,
-                  authorId: 4,
-                  text: "Мне не понравился рецепт!"
-                }]
-              }];
-              break;
-            }
-
-          case "6":
-            {
-              tempAddedRecipes = [{
-                id: "7",
-                name: "Бефстроганов",
-                author: "Fjodor",
-                time: 100,
-                difficulty: 7,
-                description: "Для бефстроганов из говядины со сметаной подойдет практически любой выруб мяса. Если хотите избежать процесса отбивания, то надо взять мясо получше и нарезать его потоньше.",
-                image: "https://via.placeholder.com/150/aba",
-                rating: 9,
-                commentaries: [{
-                  id: 2,
-                  authorId: 2,
-                  text: "Отличный рецепт Бефстроганова!"
-                }, {
-                  id: 4,
-                  authorId: 4,
-                  text: "Мне не понравился рецепт!"
-                }]
-              }, {
-                id: "8",
-                name: "Бефстроганов",
-                author: "Fjodor",
-                time: 100,
-                difficulty: 7,
-                description: "Для бефстроганов из говядины со сметаной подойдет практически любой выруб мяса. Если хотите избежать процесса отбивания, то надо взять мясо получше и нарезать его потоньше.",
-                image: "https://via.placeholder.com/150/aba",
-                rating: 9,
-                commentaries: [{
-                  id: 2,
-                  authorId: 2,
-                  text: "Отличный рецепт Бефстроганова!"
-                }, {
-                  id: 4,
-                  authorId: 4,
-                  text: "Мне не понравился рецепт!"
-                }]
-              }, {
-                id: "9",
-                name: "Бефстроганов",
-                author: "Fjodor",
-                time: 100,
-                difficulty: 7,
-                description: "Для бефстроганов из говядины со сметаной подойдет практически любой выруб мяса. Если хотите избежать процесса отбивания, то надо взять мясо получше и нарезать его потоньше.",
-                image: "https://via.placeholder.com/150/aba",
-                rating: 9,
-                commentaries: [{
-                  id: 2,
-                  authorId: 2,
-                  text: "Отличный рецепт Бефстроганова!"
-                }, {
-                  id: 4,
-                  authorId: 4,
-                  text: "Мне не понравился рецепт!"
-                }]
-              }];
-              break;
-            }
-
-          default:
-            {
-              tempAddedRecipes = [];
-            }
-        }
-
-        if (tempAddedRecipes.length !== 0) {
-          return [].concat(_toConsumableArray(recipes), [tempAddedRecipes[0], tempAddedRecipes[1], tempAddedRecipes[2]]);
-        } else {
-          return recipes;
-        }
       }
 
     default:
@@ -27645,141 +27531,6 @@ function toVal(mix) {
 	return str;
 }
 
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./resources/js/components/Forms/AddArticleForm.module.css":
-/*!***************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./resources/js/components/Forms/AddArticleForm.module.css ***!
-  \***************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, "._1N_iH6dcMnK1EuSwx7x-Tj {\r\n    width: 500px;\r\n}\r\n\r\n._3VAP9Ihmk53dM4k6QguBxL {\r\n    width: 100%;\r\n    display: flex;\r\n    flex-direction: column;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n._3VAP9Ihmk53dM4k6QguBxL:last-child {\r\n    margin-bottom: 0;\r\n}\r\n\r\n._2u11nqnF3uPRdkq-F_xrO9 {\r\n    flex-basis: 100%;\r\n}\r\n\r\n.p_9sMOqXOEuwsHm2aJoQz {\r\n    flex-basis: 100%;\r\n    min-height: 500px;\r\n}\r\n", ""]);
-// Exports
-___CSS_LOADER_EXPORT___.locals = {
-	"add_article_form": "_1N_iH6dcMnK1EuSwx7x-Tj",
-	"form_item": "_3VAP9Ihmk53dM4k6QguBxL",
-	"form_input": "_2u11nqnF3uPRdkq-F_xrO9",
-	"form_textarea": "p_9sMOqXOEuwsHm2aJoQz"
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./resources/js/components/Forms/AddRecipeForm.module.css":
-/*!**************************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./resources/js/components/Forms/AddRecipeForm.module.css ***!
-  \**************************************************************************************************************************************************************************************************************************/
-/***/ ((module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ "./node_modules/css-loader/dist/runtime/api.js");
-/* harmony import */ var _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0__);
-// Imports
-
-var ___CSS_LOADER_EXPORT___ = _node_modules_css_loader_dist_runtime_api_js__WEBPACK_IMPORTED_MODULE_0___default()(function(i){return i[1]});
-// Module
-___CSS_LOADER_EXPORT___.push([module.id, ".TXI1CMCh4tcdPlh9QSN_4 {\r\n    width: 500px;\r\n}\r\n\r\n.HOVi8i7KYoWbNxylQDOZ_ {\r\n    width: 100%;\r\n    display: flex;\r\n    flex-direction: column;\r\n    margin-bottom: 10px;\r\n}\r\n\r\n.HOVi8i7KYoWbNxylQDOZ_:last-child {\r\n    margin-bottom: 0;\r\n}\r\n\r\n._3zOcg8NJVUWjG2aJj2bKxQ {\r\n    flex-basis: 100%;\r\n}\r\n", ""]);
-// Exports
-___CSS_LOADER_EXPORT___.locals = {
-	"add_recipe_form": "TXI1CMCh4tcdPlh9QSN_4",
-	"form_item": "HOVi8i7KYoWbNxylQDOZ_",
-	"form_input": "_3zOcg8NJVUWjG2aJj2bKxQ"
-};
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (___CSS_LOADER_EXPORT___);
-
-
-/***/ }),
-
-/***/ "./node_modules/css-loader/dist/runtime/api.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
-  \*****************************************************/
-/***/ ((module) => {
-
-"use strict";
-
-
-/*
-  MIT License http://www.opensource.org/licenses/mit-license.php
-  Author Tobias Koppers @sokra
-*/
-// css base code, injected by the css-loader
-// eslint-disable-next-line func-names
-module.exports = function (cssWithMappingToString) {
-  var list = []; // return the list of modules as css string
-
-  list.toString = function toString() {
-    return this.map(function (item) {
-      var content = cssWithMappingToString(item);
-
-      if (item[2]) {
-        return "@media ".concat(item[2], " {").concat(content, "}");
-      }
-
-      return content;
-    }).join('');
-  }; // import a list of modules into the list
-  // eslint-disable-next-line func-names
-
-
-  list.i = function (modules, mediaQuery, dedupe) {
-    if (typeof modules === 'string') {
-      // eslint-disable-next-line no-param-reassign
-      modules = [[null, modules, '']];
-    }
-
-    var alreadyImportedModules = {};
-
-    if (dedupe) {
-      for (var i = 0; i < this.length; i++) {
-        // eslint-disable-next-line prefer-destructuring
-        var id = this[i][0];
-
-        if (id != null) {
-          alreadyImportedModules[id] = true;
-        }
-      }
-    }
-
-    for (var _i = 0; _i < modules.length; _i++) {
-      var item = [].concat(modules[_i]);
-
-      if (dedupe && alreadyImportedModules[item[0]]) {
-        // eslint-disable-next-line no-continue
-        continue;
-      }
-
-      if (mediaQuery) {
-        if (!item[2]) {
-          item[2] = mediaQuery;
-        } else {
-          item[2] = "".concat(mediaQuery, " and ").concat(item[2]);
-        }
-      }
-
-      list.push(item);
-    }
-  };
-
-  return list;
-};
 
 /***/ }),
 
@@ -72650,211 +72401,6 @@ if (false) {} else {
 
 /***/ }),
 
-/***/ "./node_modules/react-addons-update/index.js":
-/*!***************************************************!*\
-  !*** ./node_modules/react-addons-update/index.js ***!
-  \***************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-/**
- * Copyright (c) 2013-present, Facebook, Inc.
- *
- * This source code is licensed under the MIT license found in the
- * LICENSE file in the root directory of this source tree.
- */
-
-
-
-var _assign = __webpack_require__(/*! object-assign */ "./node_modules/object-assign/index.js");
-var hasOwnProperty = {}.hasOwnProperty;
-
-var validateFormat = function validateFormat(format) {};
-
-if (true) {
-  validateFormat = function validateFormat(format) {
-    if (format === undefined) {
-      throw new Error('invariant requires an error message argument');
-    }
-  };
-}
-
-function invariant(condition, format, a, b, c, d, e, f) {
-  validateFormat(format);
-
-  if (!condition) {
-    var error;
-    if (format === undefined) {
-      error = new Error('Minified exception occurred; use the non-minified dev environment ' + 'for the full error message and additional helpful warnings.');
-    } else {
-      var args = [a, b, c, d, e, f];
-      var argIndex = 0;
-      error = new Error(format.replace(/%s/g, function () {
-        return args[argIndex++];
-      }));
-      error.name = 'Invariant Violation';
-    }
-
-    error.framesToPop = 1; // we don't care about invariant's own frame
-    throw error;
-  }
-}
-
-function shallowCopy(x) {
-  if (Array.isArray(x)) {
-    return x.concat();
-  } else if (x && typeof x === 'object') {
-    return _assign(new x.constructor(), x);
-  } else {
-    return x;
-  }
-}
-
-var COMMAND_PUSH = '$push';
-var COMMAND_UNSHIFT = '$unshift';
-var COMMAND_SPLICE = '$splice';
-var COMMAND_SET = '$set';
-var COMMAND_MERGE = '$merge';
-var COMMAND_APPLY = '$apply';
-
-var ALL_COMMANDS_LIST = [
-  COMMAND_PUSH,
-  COMMAND_UNSHIFT,
-  COMMAND_SPLICE,
-  COMMAND_SET,
-  COMMAND_MERGE,
-  COMMAND_APPLY
-];
-
-var ALL_COMMANDS_SET = {};
-
-ALL_COMMANDS_LIST.forEach(function(command) {
-  ALL_COMMANDS_SET[command] = true;
-});
-
-function invariantArrayCase(value, spec, command) {
-  invariant(
-    Array.isArray(value),
-    'update(): expected target of %s to be an array; got %s.',
-    command,
-    value
-  );
-  var specValue = spec[command];
-  invariant(
-    Array.isArray(specValue),
-    'update(): expected spec of %s to be an array; got %s. ' +
-      'Did you forget to wrap your parameter in an array?',
-    command,
-    specValue
-  );
-}
-
-/**
- * Returns a updated shallow copy of an object without mutating the original.
- * See https://facebook.github.io/react/docs/update.html for details.
- */
-function update(value, spec) {
-  invariant(
-    typeof spec === 'object',
-    'update(): You provided a key path to update() that did not contain one ' +
-      'of %s. Did you forget to include {%s: ...}?',
-    ALL_COMMANDS_LIST.join(', '),
-    COMMAND_SET
-  );
-
-  if (hasOwnProperty.call(spec, COMMAND_SET)) {
-    invariant(
-      Object.keys(spec).length === 1,
-      'Cannot have more than one key in an object with %s',
-      COMMAND_SET
-    );
-
-    return spec[COMMAND_SET];
-  }
-
-  var nextValue = shallowCopy(value);
-
-  if (hasOwnProperty.call(spec, COMMAND_MERGE)) {
-    var mergeObj = spec[COMMAND_MERGE];
-    invariant(
-      mergeObj && typeof mergeObj === 'object',
-      "update(): %s expects a spec of type 'object'; got %s",
-      COMMAND_MERGE,
-      mergeObj
-    );
-    invariant(
-      nextValue && typeof nextValue === 'object',
-      "update(): %s expects a target of type 'object'; got %s",
-      COMMAND_MERGE,
-      nextValue
-    );
-    _assign(nextValue, spec[COMMAND_MERGE]);
-  }
-
-  if (hasOwnProperty.call(spec, COMMAND_PUSH)) {
-    invariantArrayCase(value, spec, COMMAND_PUSH);
-    spec[COMMAND_PUSH].forEach(function(item) {
-      nextValue.push(item);
-    });
-  }
-
-  if (hasOwnProperty.call(spec, COMMAND_UNSHIFT)) {
-    invariantArrayCase(value, spec, COMMAND_UNSHIFT);
-    spec[COMMAND_UNSHIFT].forEach(function(item) {
-      nextValue.unshift(item);
-    });
-  }
-
-  if (hasOwnProperty.call(spec, COMMAND_SPLICE)) {
-    invariant(
-      Array.isArray(value),
-      'Expected %s target to be an array; got %s',
-      COMMAND_SPLICE,
-      value
-    );
-    invariant(
-      Array.isArray(spec[COMMAND_SPLICE]),
-      'update(): expected spec of %s to be an array of arrays; got %s. ' +
-        'Did you forget to wrap your parameters in an array?',
-      COMMAND_SPLICE,
-      spec[COMMAND_SPLICE]
-    );
-    spec[COMMAND_SPLICE].forEach(function(args) {
-      invariant(
-        Array.isArray(args),
-        'update(): expected spec of %s to be an array of arrays; got %s. ' +
-          'Did you forget to wrap your parameters in an array?',
-        COMMAND_SPLICE,
-        spec[COMMAND_SPLICE]
-      );
-      nextValue.splice.apply(nextValue, args);
-    });
-  }
-
-  if (hasOwnProperty.call(spec, COMMAND_APPLY)) {
-    invariant(
-      typeof spec[COMMAND_APPLY] === 'function',
-      'update(): expected spec of %s to be a function; got %s.',
-      COMMAND_APPLY,
-      spec[COMMAND_APPLY]
-    );
-    nextValue = spec[COMMAND_APPLY](nextValue);
-  }
-
-  for (var k in spec) {
-    if (!(ALL_COMMANDS_SET.hasOwnProperty(k) && ALL_COMMANDS_SET[k])) {
-      nextValue[k] = update(value[k], spec[k]);
-    }
-  }
-
-  return nextValue;
-}
-
-module.exports = update;
-
-
-/***/ }),
-
 /***/ "./node_modules/react-dom/cjs/react-dom.development.js":
 /*!*************************************************************!*\
   !*** ./node_modules/react-dom/cjs/react-dom.development.js ***!
@@ -108359,345 +107905,6 @@ module.exports = function shallowEqual(objA, objB, compare, compareContext) {
   return true;
 };
 
-
-/***/ }),
-
-/***/ "./resources/js/components/Forms/AddArticleForm.module.css":
-/*!*****************************************************************!*\
-  !*** ./resources/js/components/Forms/AddArticleForm.module.css ***!
-  \*****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_2_AddArticleForm_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./AddArticleForm.module.css */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./resources/js/components/Forms/AddArticleForm.module.css");
-
-            
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_2_AddArticleForm_module_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_2_AddArticleForm_module_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
-
-/***/ }),
-
-/***/ "./resources/js/components/Forms/AddRecipeForm.module.css":
-/*!****************************************************************!*\
-  !*** ./resources/js/components/Forms/AddRecipeForm.module.css ***!
-  \****************************************************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export */ __webpack_require__.d(__webpack_exports__, {
-/* harmony export */   "default": () => __WEBPACK_DEFAULT_EXPORT__
-/* harmony export */ });
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! !../../../../node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js */ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js");
-/* harmony import */ var _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_2_AddRecipeForm_module_css__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! !!../../../../node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!../../../../node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./AddRecipeForm.module.css */ "./node_modules/css-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[1]!./node_modules/postcss-loader/dist/cjs.js??ruleSet[1].rules[5].oneOf[1].use[2]!./resources/js/components/Forms/AddRecipeForm.module.css");
-
-            
-
-var options = {};
-
-options.insert = "head";
-options.singleton = false;
-
-var update = _node_modules_style_loader_dist_runtime_injectStylesIntoStyleTag_js__WEBPACK_IMPORTED_MODULE_0___default()(_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_2_AddRecipeForm_module_css__WEBPACK_IMPORTED_MODULE_1__.default, options);
-
-
-
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (_node_modules_css_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_1_node_modules_postcss_loader_dist_cjs_js_ruleSet_1_rules_5_oneOf_1_use_2_AddRecipeForm_module_css__WEBPACK_IMPORTED_MODULE_1__.default.locals || {});
-
-/***/ }),
-
-/***/ "./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js":
-/*!****************************************************************************!*\
-  !*** ./node_modules/style-loader/dist/runtime/injectStylesIntoStyleTag.js ***!
-  \****************************************************************************/
-/***/ ((module, __unused_webpack_exports, __webpack_require__) => {
-
-"use strict";
-
-
-var isOldIE = function isOldIE() {
-  var memo;
-  return function memorize() {
-    if (typeof memo === 'undefined') {
-      // Test for IE <= 9 as proposed by Browserhacks
-      // @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805
-      // Tests for existence of standard globals is to allow style-loader
-      // to operate correctly into non-standard environments
-      // @see https://github.com/webpack-contrib/style-loader/issues/177
-      memo = Boolean(window && document && document.all && !window.atob);
-    }
-
-    return memo;
-  };
-}();
-
-var getTarget = function getTarget() {
-  var memo = {};
-  return function memorize(target) {
-    if (typeof memo[target] === 'undefined') {
-      var styleTarget = document.querySelector(target); // Special case to return head of iframe instead of iframe itself
-
-      if (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {
-        try {
-          // This will throw an exception if access to iframe is blocked
-          // due to cross-origin restrictions
-          styleTarget = styleTarget.contentDocument.head;
-        } catch (e) {
-          // istanbul ignore next
-          styleTarget = null;
-        }
-      }
-
-      memo[target] = styleTarget;
-    }
-
-    return memo[target];
-  };
-}();
-
-var stylesInDom = [];
-
-function getIndexByIdentifier(identifier) {
-  var result = -1;
-
-  for (var i = 0; i < stylesInDom.length; i++) {
-    if (stylesInDom[i].identifier === identifier) {
-      result = i;
-      break;
-    }
-  }
-
-  return result;
-}
-
-function modulesToDom(list, options) {
-  var idCountMap = {};
-  var identifiers = [];
-
-  for (var i = 0; i < list.length; i++) {
-    var item = list[i];
-    var id = options.base ? item[0] + options.base : item[0];
-    var count = idCountMap[id] || 0;
-    var identifier = "".concat(id, " ").concat(count);
-    idCountMap[id] = count + 1;
-    var index = getIndexByIdentifier(identifier);
-    var obj = {
-      css: item[1],
-      media: item[2],
-      sourceMap: item[3]
-    };
-
-    if (index !== -1) {
-      stylesInDom[index].references++;
-      stylesInDom[index].updater(obj);
-    } else {
-      stylesInDom.push({
-        identifier: identifier,
-        updater: addStyle(obj, options),
-        references: 1
-      });
-    }
-
-    identifiers.push(identifier);
-  }
-
-  return identifiers;
-}
-
-function insertStyleElement(options) {
-  var style = document.createElement('style');
-  var attributes = options.attributes || {};
-
-  if (typeof attributes.nonce === 'undefined') {
-    var nonce =  true ? __webpack_require__.nc : 0;
-
-    if (nonce) {
-      attributes.nonce = nonce;
-    }
-  }
-
-  Object.keys(attributes).forEach(function (key) {
-    style.setAttribute(key, attributes[key]);
-  });
-
-  if (typeof options.insert === 'function') {
-    options.insert(style);
-  } else {
-    var target = getTarget(options.insert || 'head');
-
-    if (!target) {
-      throw new Error("Couldn't find a style target. This probably means that the value for the 'insert' parameter is invalid.");
-    }
-
-    target.appendChild(style);
-  }
-
-  return style;
-}
-
-function removeStyleElement(style) {
-  // istanbul ignore if
-  if (style.parentNode === null) {
-    return false;
-  }
-
-  style.parentNode.removeChild(style);
-}
-/* istanbul ignore next  */
-
-
-var replaceText = function replaceText() {
-  var textStore = [];
-  return function replace(index, replacement) {
-    textStore[index] = replacement;
-    return textStore.filter(Boolean).join('\n');
-  };
-}();
-
-function applyToSingletonTag(style, index, remove, obj) {
-  var css = remove ? '' : obj.media ? "@media ".concat(obj.media, " {").concat(obj.css, "}") : obj.css; // For old IE
-
-  /* istanbul ignore if  */
-
-  if (style.styleSheet) {
-    style.styleSheet.cssText = replaceText(index, css);
-  } else {
-    var cssNode = document.createTextNode(css);
-    var childNodes = style.childNodes;
-
-    if (childNodes[index]) {
-      style.removeChild(childNodes[index]);
-    }
-
-    if (childNodes.length) {
-      style.insertBefore(cssNode, childNodes[index]);
-    } else {
-      style.appendChild(cssNode);
-    }
-  }
-}
-
-function applyToTag(style, options, obj) {
-  var css = obj.css;
-  var media = obj.media;
-  var sourceMap = obj.sourceMap;
-
-  if (media) {
-    style.setAttribute('media', media);
-  } else {
-    style.removeAttribute('media');
-  }
-
-  if (sourceMap && typeof btoa !== 'undefined') {
-    css += "\n/*# sourceMappingURL=data:application/json;base64,".concat(btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))), " */");
-  } // For old IE
-
-  /* istanbul ignore if  */
-
-
-  if (style.styleSheet) {
-    style.styleSheet.cssText = css;
-  } else {
-    while (style.firstChild) {
-      style.removeChild(style.firstChild);
-    }
-
-    style.appendChild(document.createTextNode(css));
-  }
-}
-
-var singleton = null;
-var singletonCounter = 0;
-
-function addStyle(obj, options) {
-  var style;
-  var update;
-  var remove;
-
-  if (options.singleton) {
-    var styleIndex = singletonCounter++;
-    style = singleton || (singleton = insertStyleElement(options));
-    update = applyToSingletonTag.bind(null, style, styleIndex, false);
-    remove = applyToSingletonTag.bind(null, style, styleIndex, true);
-  } else {
-    style = insertStyleElement(options);
-    update = applyToTag.bind(null, style, options);
-
-    remove = function remove() {
-      removeStyleElement(style);
-    };
-  }
-
-  update(obj);
-  return function updateStyle(newObj) {
-    if (newObj) {
-      if (newObj.css === obj.css && newObj.media === obj.media && newObj.sourceMap === obj.sourceMap) {
-        return;
-      }
-
-      update(obj = newObj);
-    } else {
-      remove();
-    }
-  };
-}
-
-module.exports = function (list, options) {
-  options = options || {}; // Force single-tag solution on IE6-9, which has a hard limit on the # of <style>
-  // tags it will allow on a page
-
-  if (!options.singleton && typeof options.singleton !== 'boolean') {
-    options.singleton = isOldIE();
-  }
-
-  list = list || [];
-  var lastIdentifiers = modulesToDom(list, options);
-  return function update(newList) {
-    newList = newList || [];
-
-    if (Object.prototype.toString.call(newList) !== '[object Array]') {
-      return;
-    }
-
-    for (var i = 0; i < lastIdentifiers.length; i++) {
-      var identifier = lastIdentifiers[i];
-      var index = getIndexByIdentifier(identifier);
-      stylesInDom[index].references--;
-    }
-
-    var newLastIdentifiers = modulesToDom(newList, options);
-
-    for (var _i = 0; _i < lastIdentifiers.length; _i++) {
-      var _identifier = lastIdentifiers[_i];
-
-      var _index = getIndexByIdentifier(_identifier);
-
-      if (stylesInDom[_index].references === 0) {
-        stylesInDom[_index].updater();
-
-        stylesInDom.splice(_index, 1);
-      }
-    }
-
-    lastIdentifiers = newLastIdentifiers;
-  };
-};
 
 /***/ }),
 
