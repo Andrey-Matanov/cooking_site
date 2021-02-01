@@ -12,4 +12,12 @@ class CatalogController extends Controller
     {
         return Catalog::get();
     }
+
+    public function deletePositionFromCatalog($id)
+    {
+        $id = (int)$id;
+        Catalog::destroy($id);
+
+        return response()->json(['status' => true]);
+    }
 }
