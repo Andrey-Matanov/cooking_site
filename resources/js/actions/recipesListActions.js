@@ -1,18 +1,19 @@
-export const ADD_RECIPE = "ADD_RECIPE";
-export const ADD_COMMENTARY = "ADD_COMMENTARY";
-export const RENDER_RECIPES = "RENDER_RECIPES";
-export const FETCH_RECIPES = "FETCH_RECIPES";
-export const FETCH_ERROR = "FETCH_ERROR";
+export const ADD_RECIPE = "@@recipesList/ADD_RECIPE";
+export const ADD_COMMENTARY = "@@recipesList/ADD_COMMENTARY";
+// export const RENDER_RECIPES = "@@recipesList/RENDER_RECIPES";
+export const FETCH_RECIPES = "@@recipesList/FETCH_RECIPES";
+export const FETCH_CATEGORIES = "@@recipesList/FETCH_CATEGORIES";
+export const FETCH_ERROR = "@@recipesList/FETCH_ERROR";
 
 export const addRecipe = (recipe) => ({
     type: ADD_RECIPE,
     payload: recipe,
 });
 
-export const renderRecipes = (count) => ({
-    type: RENDER_RECIPES,
-    payload: count,
-});
+// export const renderRecipes = (count) => ({
+//     type: RENDER_RECIPES,
+//     payload: count,
+// });
 
 export const addCommentary = (recipeId, text) => ({
     type: ADD_COMMENTARY,
@@ -41,4 +42,13 @@ export const fetchRecipes = () => async (dispatch) => {
     const data = await response.json();
 
     dispatch({ type: FETCH_RECIPES, payload: data.recipes });
+};
+
+export const fetchCategories = () => async (dispatch) => {
+    const baseURL = window.location.origin;
+    console.log(baseURL);
+    const response = await fetch(`${baseURL}/api/categories`);
+    const data = await response.json();
+
+    dispatch({ type: FETCH_CATEGORIES, payload: data.recipes });
 };
