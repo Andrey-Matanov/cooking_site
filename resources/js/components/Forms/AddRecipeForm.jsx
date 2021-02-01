@@ -1,9 +1,10 @@
-import React from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { connect, useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import styled from "styled-components";
 import { addRecipe } from "../../actions/recipesListActions";
 import { updateUserRecipesIds } from "../../actions/usersActions";
+import { fetchIngredients } from "../../actions/ingredientsAction";
 
 const AddRecipeForm = styled.form`
     width: 500px;
@@ -29,8 +30,12 @@ const FormTextarea = styled.textarea`
     resize: none;
 `;
 
-const AddRecipeFormik = ({ id }) => {
+const AddRecipeFormik = ({ ingredients, id }) => {
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchIngredients());
+    }, [dispatch]);
 
     const formik = useFormik({
         initialValues: {
@@ -53,6 +58,8 @@ const AddRecipeFormik = ({ id }) => {
             dispatch(addRecipe(newRecipe));
         },
     });
+
+    console.log(ingredients);
 
     return (
         <AddRecipeForm onSubmit={formik.handleSubmit}>
@@ -96,6 +103,16 @@ const AddRecipeFormik = ({ id }) => {
                 </select>
             </FormItem>
             <FormItem>
+                <label htmlFor="ingredients">Состав рецепта</label>
+                <select>
+                    {ingredients.map((ingredient) => (
+                        <option key={ingredient.id} value={ingredient.name}>
+                            {ingredient.name}
+                        </option>
+                    ))}
+                </select>
+            </FormItem>
+            <FormItem>
                 <label htmlFor="description">Описание рецепта</label>
                 <FormTextarea
                     value={formik.values.description}
@@ -111,4 +128,8 @@ const AddRecipeFormik = ({ id }) => {
     );
 };
 
-export default AddRecipeFormik;
+const mapStateToProps = (state) => ({
+    ingredients: state.ingredients,
+});
+
+export default connect(mapStateToProps)(AddRecipeFormik);
