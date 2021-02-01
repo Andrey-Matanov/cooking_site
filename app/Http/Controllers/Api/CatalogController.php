@@ -20,4 +20,15 @@ class CatalogController extends Controller
 
         return response()->json(['status' => true]);
     }
+
+    public function addPositionCatalog(Request $request)
+    {
+        $data = $request->only(['name']);
+        $Catalog = new Catalog();
+        $Catalog->name = $data['name'];
+        $Catalog->save();
+
+        return response()->json(['status' => true]);
+    }
+
 }
