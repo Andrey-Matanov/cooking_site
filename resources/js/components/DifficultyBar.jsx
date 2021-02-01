@@ -1,13 +1,30 @@
 import React from 'react';
 
-import {
-    difficulty_container,
-    difficulty_element,
-    difficulty_element_inactive,
-} from './DifficultyBar.module.css';
+import { makeStyles } from '@material-ui/core/styles'
+
+const useStyles = makeStyles((theme) => ({
+    difficultyContainer: {
+        height: '20px',
+        display: 'flex',
+        margin: '5px 0',
+    },
+    difficultyElement: {
+        width: '10px',
+        height: '20px',
+        margin: '0 1px',
+    },
+    difficultyElementInactive: {
+        width: '10px',
+        height: '20px',
+        margin: '0 1px',
+        backgroundColor: '#a5a5a5',
+    },
+}))
 
 const DifficuiltyBar = (props) => {
-    let { diff } = props;
+    const { diff } = props;
+    
+    const classes = useStyles();
 
     let setDifficuiltyColor = (difficulty) => {
         switch (difficulty) {
@@ -54,7 +71,7 @@ const DifficuiltyBar = (props) => {
                 ...renderArray,
                 <div
                     key={i}
-                    className={difficulty_element}
+                    className={classes.difficultyElement}
                     style={{ backgroundColor: setDifficuiltyColor(difficulty) }}
                 ></div>,
             ];
@@ -62,13 +79,13 @@ const DifficuiltyBar = (props) => {
         for (let i = difficulty + 1; i <= 10; i++) {
             renderArray = [
                 ...renderArray,
-                <div key={i} className={difficulty_element_inactive}></div>,
+                <div key={i} className={classes.difficultyElementInactive}></div>,
             ];
         }
         return renderArray;
     };
 
-    return <div className={difficulty_container}>{renderScale(diff)}</div>;
+    return <div className={classes.difficultyContainer}>{renderScale(diff)}</div>;
 };
 
 export default DifficuiltyBar;

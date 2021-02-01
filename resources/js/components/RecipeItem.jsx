@@ -2,18 +2,36 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 import DifficultyBar from './DifficultyBar.jsx'
-import { recipe_item_inner,
-        recipe_item_info_block,
-        recipe_item_info_block_inner,
-        recipe_time } from './RecipeItem.module.css';
 
-import { Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles'
+import { Box, Paper, Typography, Grid, ButtonBase } from '@material-ui/core';
 import AccessTimeIcon from '@material-ui/icons/AccessTime';
 
-const RecipeItem = (props) => {
-    let { id, name, author, time, difficulty, rating, description, image } = props;
+const useStyles = makeStyles((theme) => ({
+    image: {
+        width: 160,
+        height: 160,
+        alignItems: 'center',
+    },
+    img: {
+        margin: 'auto',
+        display: 'block',
+        maxWidth: '100%',
+        maxHeight: '100%',
+    },
+    link: {
+        textDecoration: 'none',
+        color: 'inherit',
+    },
+}))
 
-    let formatTime = (sourceTime) => {
+const RecipeItem = (props) => {
+
+    const classes = useStyles();
+
+    const { id, name, author, time, difficulty, rating, description, image } = props;
+
+    const formatTime = (sourceTime) => {
         let retVal;
         if (sourceTime <= 60) {
             retVal = sourceTime + ' мин.';
@@ -28,30 +46,62 @@ const RecipeItem = (props) => {
     };
 
     return (
-        <Paper elevation={3} square={true}> 
-            <div className={recipe_item_inner}>
-                <Link to={`/recipes/${id}`}>
-                    <h2 className='recipe-item-header'>{name}</h2>
-                </Link>
-                <h4 className='recipe-item-author'>{author}</h4>
-                <div className={recipe_item_info_block}>
-                    <img src={image} alt='recipe'></img>
-                    <div className={recipe_item_info_block_inner}>
-                        <div className={recipe_time}>
-                        <AccessTimeIcon />
-                            <p>{formatTime(time)}</p>
+        <Box my={0}>
+            <Paper elevation={3} square={true}> 
+                <Box p={4}>
+                    <Grid container direction='row' alignItems='center' spacing={2}>
+                        <Grid item className={classes.image}>
+                            <img className={classes.img} src={'https://via.placeholder.com/150'} alt='recipe'></img>
+                        </Grid>
+                        <Grid container item sm direction='column' justify='space-between' spacing={1}>
+                            <Grid item>
+                                <Link to={`/recipes/${id}`} className={classes.link}>
+                                    <Typography variant='h4'>{name}</Typography>
+                                </Link>
+                            </Grid>
+                            <Grid item>
+                                <Typography variant='h5'>{author}</Typography>
+                            </Grid>
+                            <Grid item container xs alignItems='center' spacing={2}>
+                                <Grid item><AccessTimeIcon /></Grid>
+                                <Grid item><Typography variant='body1'>{formatTime(time)}</Typography></Grid>
+                            </Grid>
+                            <Grid item>
+                                <DifficultyBar diff={difficulty}/>
+                            </Grid>
+                            <Grid item>
+                                <Typography variant='body1'>Рейтинг: {rating}</Typography>
+                            </Grid>
+                            <Grid item>
+                                <Typography variant='body2'>{description}</Typography>
+                            </Grid>
+                        </Grid>
+                    </Grid> 
+
+
+                    {/* <Link to={`/recipes/${id}`}>
+                        <Typography vriant='h2'>{name}</Typography>
+                    </Link>
+                    <Typography variant='h4'>{author}</Typography>
+                    <div>
+                        <img src={image} alt='recipe'></img>
+                        <div>
+                            <Box>
+                                <AccessTimeIcon />
+                                <p>{formatTime(time)}</p>
+                            </Box>
+                            <div className='recipe-difficuilty'>
+                                <DifficultyBar diff={difficulty}/>
+                            </div>
+                            <div className='recipe-rating'>
+                                <p>Рейтинг: {rating}</p>
+                            </div>
+                            <p className='recipe-item-text'>{description}</p>
                         </div>
-                        <div className='recipe-difficuilty'>
-                            <DifficultyBar diff={difficulty}/>
-                        </div>
-                        <div className='recipe-rating'>
-                            <p>Рейтинг: {rating}</p>
-                        </div>
-                        <p className='recipe-item-text'>{description}</p>
-                    </div>
-                </div>
-            </div>
-        </Paper>
+                    </div> */}
+                </Box>
+            </Paper>
+        </Box>
     );
 };
 

@@ -10,6 +10,7 @@ import Menu from './Menu';
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
+        maxHeight: '10vh',
     },
     menuButton: {
         marginRight: theme.spacing(2),
