@@ -18,6 +18,9 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+
+Route::view('/test', 'test/addRecipe');
+
 Route::get('/{any}', function (){
     return view('app');
 })->where('any', '.*');
@@ -25,6 +28,5 @@ Route::get('/{any}', function (){
 
 Auth::routes();
 
-Route::get('/catalog', [CatalogController::class, 'showAllCatalog'])->name('catalog');
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
