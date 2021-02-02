@@ -12,4 +12,8 @@ class Recipe extends Model
     protected $table = 'recipes';
     protected $primaryKey = "id";
 
+    public function step()
+    {
+        return $this->hasMany(Step::class);
+    }
 }

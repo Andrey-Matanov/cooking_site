@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CatalogController;
+use App\Models\Step;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,11 +15,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-
 Route::view('/test', 'test/addRecipe');
 
 Route::view('/addPositionCatalog', 'test/addPositionCatalog');
@@ -26,7 +22,6 @@ Route::view('/addPositionCatalog', 'test/addPositionCatalog');
 Route::get('/{any}', function (){
     return view('app');
 })->where('any', '.*');
-//Route::view('/{path?}', 'app');
 
 Auth::routes();
 
