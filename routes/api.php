@@ -24,6 +24,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::get('/catalog', [CatalogController::class, 'showAllCatalog'])->name('catalog');
 Route::get('/deletePositionFromCatalog/{id}', [CatalogController::class, 'deletePositionFromCatalog'])->where('id', '[0-9]+')->name('deletePositionFromCatalog');
 Route::post('/addPositionCatalog', [CatalogController::class, 'addPositionCatalog'])->name('addPositionCatalog');
+Route::post('/renameCategory', [CatalogController::class, 'renameCategory'])->name('renameCategory');
 
 Route::get('/recipes', [RecipesController::class, 'index'])->name('recipes');
 Route::get('/recipes/{id}', [RecipesController::class, 'recipe'])->where('id', '[0-9]+')->name('recipe');

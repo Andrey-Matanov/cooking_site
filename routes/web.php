@@ -19,6 +19,8 @@ Route::view('/test', 'test/addRecipe');
 
 Route::view('/addPositionCatalog', 'test/addPositionCatalog');
 
+Route::view('/renameCategory', 'test/renameCategory');
+
 Route::get('/{any}', function (){
     return view('app');
 })->where('any', '.*');
