@@ -7,7 +7,7 @@ use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 
-class IngredientsSeeder2 extends Seeder
+class IngredientsSeeder extends Seeder
 {
     /**
      * Run the database seeds.

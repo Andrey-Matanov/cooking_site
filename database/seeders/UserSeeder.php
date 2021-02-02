@@ -5,7 +5,7 @@ namespace Database\Seeders;
 use Faker\Factory;
 use Illuminate\Database\Seeder;
 
-class UserSeeder2 extends Seeder
+class UserSeeder extends Seeder
 {
     /**
      * Run the database seeds.
