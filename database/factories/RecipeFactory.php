@@ -24,6 +24,7 @@ class RecipeFactory extends Factory
         return [
             'status' => rand(0, 1),   // rand(1, $maxCategoryId)
             'name' => $this->faker->sentence(rand(3, 5)),
+            'image' => 'https://imgholder.ru/600x300/8493a8/adb9ca&text=IMAGE+HOLDER&font=kelson',
             'catalog_id' => rand(1, 2),
             'author_id' => 1,
             'description' => $this->faker->text(rand(100, 200))

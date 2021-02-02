@@ -18,9 +18,11 @@ class CreateRecipesTable extends Migration
             $table->timestamps();
             $table->boolean('status')->default(false);
             $table->string('name',255);
+            $table->string('image',255);
             $table->unsignedBigInteger('catalog_id');
             $table->unsignedBigInteger('author_id');
             $table->text('description');
+
 
             $table->foreign('catalog_id')->references('id')->on('catalog')->cascadeOnDelete();
             $table->foreign('author_id')->references('id')->on('users')->cascadeOnDelete();
