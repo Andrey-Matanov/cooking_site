@@ -4,6 +4,7 @@
 namespace App\Services;
 
 
+use App\Models\Step;
 use Illuminate\Support\Facades\DB;
 
 class RecipeService
@@ -16,6 +17,8 @@ class RecipeService
 
         $reviews = DB::table('reviews')->select('users.name as user_name','reviews.description','reviews.updated_at', 'users.id as user_id')->where('reviews.recipe_id','=',$id)->join('users','reviews.author_id','=','users.id')->get();
 
-        return array($recipe, $ingredients, $reviews);
+        $steps = Step::where('recipe_id', $id)->get(['heading','image', 'description', 'step']);
+
+        return array($recipe, $ingredients, $reviews,$steps);
     }
 }

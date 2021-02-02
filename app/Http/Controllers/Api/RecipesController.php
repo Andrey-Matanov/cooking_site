@@ -27,12 +27,13 @@ class RecipesController extends Controller
 
     public function recipe($id)
     {
-        list ($recipe, $ingredients, $reviews) = $this->recipeService->make($id);
+        list ($recipe, $ingredients, $reviews, $steps) = $this->recipeService->make($id);
         return response()->json([
             'status' => 'success',
             'recipe' =>  $recipe,
             'ingredients' => $ingredients,
-            'reviews'=> $reviews
+            'reviews'=> $reviews,
+            'steps' => $steps
         ]);
     }
 }
