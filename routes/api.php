@@ -28,6 +28,7 @@ Route::post('/renameCategory', [CatalogController::class, 'renameCategory'])->na
 
 Route::get('/recipes', [RecipesController::class, 'index'])->name('recipes');
 Route::get('/recipes/{id}', [RecipesController::class, 'recipe'])->where('id', '[0-9]+')->name('recipe');
+Route::get('/nextrecipes/{id}', [RecipesController::class, 'nextrecipes'])->where('id', '[0-9]+')->name('nextrecipes');
 
 Route::get('/ingredients', [IngredientsController::class, 'index'])->name('ingredients');
 Route::get('/ingredients/{ingredients}', [IngredientsController::class, 'item'])->where('id', '[0-9]+')->name('ingredient');

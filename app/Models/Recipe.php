@@ -16,4 +16,10 @@ class Recipe extends Model
     {
         return $this->hasMany(Step::class);
     }
+
+    public function author()
+    {
+        return $this->belongsTo(User::class,'author_id','id');
+    }
+
 }
