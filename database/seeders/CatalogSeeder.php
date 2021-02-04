@@ -8,7 +8,7 @@ use Illuminate\Support\Str;
 
 class CatalogSeeder extends Seeder
 {
-    public $catalog = ['Суп', 'Второе', 'Десерт'];
+    public $catalog = ['Салат','Суп', 'Горячее', 'Десерт'];
     /**
      * Run the database seeds.
      *
