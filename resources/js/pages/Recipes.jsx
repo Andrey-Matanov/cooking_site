@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import RecipesList from "../components/RecipesList.jsx";
 import {
     fetchRecipes,
@@ -7,11 +7,15 @@ import {
 } from "../actions/recipesListActions.js";
 import { Container, Box, Typography, Chip } from "@material-ui/core";
 
-const Recipes = ({ recipesList }) => {
+const Recipes = () => {
     const dispatch = useDispatch();
+    const recipesList = useSelector((state) => state.recipesObject.recipes);
+    const currentLastId = useSelector(
+        (state) => state.recipesObject.currentLastId
+    );
 
     useEffect(() => {
-        if (!recipesList.length) dispatch(fetchRecipes());
+        if (!recipesList.length) dispatch(fetchRecipes(currentLastId));
     }, [dispatch]);
 
     const renderRecipes = (count) => {
@@ -27,36 +31,16 @@ const Recipes = ({ recipesList }) => {
                 <Typography variant="h4">Категории</Typography>
                 <Box></Box>
             </Box>
-            <RecipesList
-                recipesList={recipesList}
-                loadRecipes={renderRecipes}
-            />
-            {/* {recipesList ? (
-                <div>
-                    {recipesList.map((recipe, i) => (
-                        <div
-                            style={{
-                                border: "1px solid black",
-                                padding: "10px",
-                                marginBottom: "10px",
-                            }}
-                            key={recipe.id}
-                        >
-                            <p>№ {i + 1}</p>
-                            <p>Название: {recipe.name}</p>
-                            <p>Описание: {recipe.description}</p>
-                        </div>
-                    ))}
-                </div>
+            {recipesList.length ? (
+                <RecipesList
+                    recipesList={recipesList}
+                    loadRecipes={renderRecipes}
+                />
             ) : (
                 <div>Рецепты загружаются</div>
-            )} */}
+            )}
         </Container>
     );
 };
 
-const mapStateToProps = (state) => ({
-    recipesList: state.recipes,
-});
-
-export default connect(mapStateToProps)(Recipes);
+export default Recipes;

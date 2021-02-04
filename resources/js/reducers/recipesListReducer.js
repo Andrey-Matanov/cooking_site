@@ -82,8 +82,20 @@ const recipesList = [
     // },
 ];
 
-export const recipesListReducer = (recipes = [], action) => {
+export const recipesListReducer = (
+    recipesObject = {
+        recipes: [],
+        currentLastId: 0,
+    },
+    action
+) => {
     switch (action.type) {
+        case FETCH_RECIPES: {
+            return {
+                recipes: [...recipesObject.recipes, ...action.payload],
+                currentLastId: recipesObject.currentLastId + 10,
+            };
+        }
         case ADD_RECIPE: {
             return produce(recipes, (newRecipes) => {
                 newRecipes.push({
@@ -109,11 +121,8 @@ export const recipesListReducer = (recipes = [], action) => {
                     });
             });
         }
-        case FETCH_RECIPES: {
-            return action.payload;
-        }
         default: {
-            return recipes;
+            return recipesObject;
         }
     }
 };

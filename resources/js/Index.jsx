@@ -8,6 +8,7 @@ import rootReducer from "./reducers";
 import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
 import { green, lightGreen } from "@material-ui/core/colors";
 import BasicLayout from "./components/Layouts/BasicLayout";
+import "./index.css";
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const store = createStore(
