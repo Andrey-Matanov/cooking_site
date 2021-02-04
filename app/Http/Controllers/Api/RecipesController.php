@@ -25,9 +25,11 @@ class RecipesController extends Controller
         $data = $request->only(['amount','last']);
 
         if (isset($data['amount'])and(isset($data['last']))) {
+            list ($recipes, $isLastRecipes) = $this->recipesGiveBunchService->make($data);
             return response()->json([
                 'status' => 'success',
-                'recipes' =>  $this->recipesGiveBunchService->make($data)
+                'recipes' =>  $recipes,
+                'isLastRecipes' => $isLastRecipes
             ]);
         }
         return response()->json([
