@@ -1,7 +1,9 @@
 import React from "react";
-import RecipeItem from "../components/RecipeItem.jsx";
-import { makeStyles } from "@material-ui/core/styles";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchRecipes } from "../actions/recipesListActions.js";
 import { Button, Grid } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
+import RecipeItem from "../components/RecipeItem.jsx";
 
 const useStyles = makeStyles((theme) => ({
     scrolling: {
@@ -29,6 +31,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 const RecipesList = (props) => {
+    const dispatch = useDispatch();
+    const currentLastId = useSelector(
+        (state) => state.recipesObject.currentLastId
+    );
     const classes = useStyles();
     const { recipesList, renderRecipes } = props;
 
@@ -39,17 +45,15 @@ const RecipesList = (props) => {
     const renderRecipesList = () => {
         if (recipesList || recipesList.length == 0) {
             return recipesList.map((item) => {
+                console.log(item);
                 return (
                     <Grid item xs={12} key={item.id}>
                         <RecipeItem
                             id={item.id}
                             name={item.name}
                             author="Author"
-                            // author={item.author}
-                            time={Math.floor(Math.random() * 150) + 20}
-                            // time={item.time}
-                            difficulty={Math.floor(Math.random() * 11)}
-                            // difficulty={item.difficulty}
+                            time={item.time}
+                            complexity={item.complexity}
                             rating={item.rating}
                             description={item.description}
                             image={item.image}
@@ -64,13 +68,21 @@ const RecipesList = (props) => {
 
     return (
         <div>
-            <Grid container className={classes.scrolling} spacing={5}>
+            <Grid
+                style={{ height: "60vh" }}
+                container
+                className={classes.scrolling}
+                spacing={5}
+            >
                 {renderRecipesList()}
                 {/* <Grid item xs={12} className={classes.buttonContainer}>
                         <Button color='primary' variant='contained' onClick={() => {loadRecipesInner(3)}}>
                             Больше рецептов!
                         </Button>
                     </Grid> */}
+                <button onClick={() => dispatch(fetchRecipes(currentLastId))}>
+                    Загрузить еще
+                </button>
             </Grid>
         </div>
     );

@@ -7,7 +7,7 @@ import { reviewsReducer } from "./reviewsReducer.js";
 import { ingredientsReducer } from "./ingredientsReducer";
 
 export default combineReducers({
-    recipes: recipesListReducer,
+    recipesObject: recipesListReducer,
     ingredients: ingredientsReducer,
     users: usersReducer,
     articles: articlesListReducer,
