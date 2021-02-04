@@ -53,10 +53,17 @@ class RecipesController extends Controller
     public function nextrecipes($id)
     {
         $id = (int)$id;
+        if ($id < 0) $id = 0;
         $recipes = DB::table('recipes')->select('recipes.name', 'recipes.id', 'recipes.description','recipes.image','recipes.rating','recipes.time', 'recipes.complexity', 'users.name as author', 'users.id as author_id')->where('recipes.id','>',$id)->limit(10)->orderBy('recipes.id', 'asc')->join('users','recipes.author_id','=','users.id')->get();
+
+        $maxIdInBunch = $recipes->max('id');
+        $maxIdRecipes = Recipe::max('id');
+        ($maxIdRecipes > $maxIdInBunch)?$isLastRecipes = 0:$isLastRecipes = 1;
+
         return response()->json([
             'status' => 'success',
-            'recipes' =>  $recipes
+            'recipes' =>  $recipes,
+            'isLastRecipes' => $isLastRecipes
         ]);
     }
 
