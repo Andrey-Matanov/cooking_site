@@ -10,7 +10,21 @@
 <body>
     <h1>Тестовая форма для добавления нового рецепта.</h1>
     <br>
-    <form action="#" method="POST">
+    <form action="{{route('addRecipe')}}" method="POST">
+        @php
+          use App\Models\User;
+            $authors = User::all();
+        @endphp
+
+        Автор:
+        <select name="author">
+            @forelse($authors as $author)
+                <option value="{{$author->id}}">{{ $author->name }}</option>
+            @empty
+                <option value="0">-</option>
+            @endforelse
+        </select>
+        <br>
         Наименование блюда: <input type="text" name="name">
         <br><br>
         Описание блюда:
@@ -59,12 +73,97 @@
             <option value="10">10</option>
         </select>
         <br><br>
-        Раздел каталога:
-        <select name="catalog" id="catalog">
 
+        @php
+        use App\Models\Catalog;
+        $categories = Catalog::all();
+        @endphp
+
+        Раздел каталога:
+        <select name="categories" id="categories">
+            @forelse($categories as $category)
+                <option value="{{$category->id}}">{{ $category->name }}</option>
+            @empty
+                <option value="0">-</option>
+            @endforelse
         </select>
 
         <br><br>
+
+        @php
+            use Illuminate\Support\Facades\DB;
+            $ingredients = DB::table('ingredients')->select('ingredients.id as id', 'ingredients.name', 'units.name as units_name')->join('units','ingredients.unit_id','=','units.id')->get();
+        @endphp
+
+        <fieldset>
+            <legend>Ингредиенты</legend>
+            <select name="ingredients[0]">
+                @forelse($ingredients as $ingredient)
+                    <option value="{{$ingredient->id}}">{{ $ingredient->name }}({{$ingredient->units_name}})</option>
+                @empty
+                    <option value="0">-</option>
+                @endforelse
+            </select>
+            <input type="text" name="count[0]" value="5">
+            <br>
+            <select name="ingredients[1]">
+                @forelse($ingredients as $ingredient)
+                    <option value="{{$ingredient->id}}">{{ $ingredient->name }}({{$ingredient->units_name}})</option>
+                @empty
+                    <option value="0">-</option>
+                @endforelse
+            </select>
+            <input type="text" name="count[1]" value="5">
+            <br>
+            <select name="ingredients[2]">
+                @forelse($ingredients as $ingredient)
+                    <option value="{{$ingredient->id}}">{{ $ingredient->name }}({{$ingredient->units_name}})</option>
+                @empty
+                    <option value="0">-</option>
+                @endforelse
+            </select>
+            <input type="text" name="count[2]" value="5">
+            <br>
+
+        </fieldset>
+
+        <fieldset>
+            <legend>Этапы</legend>
+            <fieldset>
+                <legend>Этап 1</legend>
+                Заголовок:
+                <input type="text" name="stage_title[0]" value="">
+                <br>
+                Описание:
+                <textarea name="stage_description[0]" cols="30" rows="10"></textarea>
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Этап 2</legend>
+                Заголовок:
+                <input type="text" name="stage_title[1]" value="">
+                <br>
+                Описание:
+                <textarea name="stage_description[1]" cols="30" rows="10"></textarea>
+
+            </fieldset>
+
+            <fieldset>
+                <legend>Этап 3</legend>
+                Заголовок:
+                <input type="text" name="stage_title[2]" value="">
+                <br>
+                Описание:
+                <textarea name="stage_description[2]" cols="30" rows="10"></textarea>
+
+            </fieldset>
+
+
+        </fieldset>
+
+
+
         <button type="submit">Добавить</button>
     </form>
 </body>

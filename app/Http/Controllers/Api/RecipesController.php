@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\Recipe;
+use App\Services\AddRecipeService;
 use App\Services\RecipeService;
 use App\Services\RecipesGiveBunchService;
 use Illuminate\Http\Request;
@@ -13,11 +14,13 @@ class RecipesController extends Controller
 {
     protected $recipeService;
     protected $recipesGiveBunchService;
+    protected $addRecipeService;
 
-    public function __construct(RecipeService $recipeService, RecipesGiveBunchService $recipesGiveBunchService)
+    public function __construct(RecipeService $recipeService, RecipesGiveBunchService $recipesGiveBunchService, AddRecipeService $addRecipeService)
     {
         $this->recipeService = $recipeService;
         $this->recipesGiveBunchService = $recipesGiveBunchService;
+        $this->addRecipeService = $addRecipeService;
     }
 
     public function index (Request $request)
@@ -64,6 +67,17 @@ class RecipesController extends Controller
             'status' => 'success',
             'recipes' =>  $recipes,
             'isLastRecipes' => $isLastRecipes
+        ]);
+    }
+
+    public function addRecipe(Request $request)
+    {
+        $data = $request->only(['author','name','description','time','complexity','categories','ingredients','count','stage_title','stage_description']);
+
+        ($this->addRecipeService->make($data))?$result = 'success':$result = 'fail';
+
+        return response()->json([
+            'status' => $result
         ]);
     }
 

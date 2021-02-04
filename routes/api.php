@@ -26,6 +26,7 @@ Route::get('/category/{id}', [CatalogController::class, 'deletePositionFromCatal
 Route::post('/addCategory', [CatalogController::class, 'addPositionCatalog'])->name('addPositionCatalog');
 Route::post('/renameCategory', [CatalogController::class, 'renameCategory'])->name('renameCategory');
 
+Route::post('/addrecipe', [RecipesController::class, 'addRecipe'])->name('addRecipe');
 Route::get('/recipes', [RecipesController::class, 'index'])->name('recipes');
 Route::get('/recipes/{id}', [RecipesController::class, 'recipe'])->where('id', '[0-9]+')->name('recipe');
 Route::get('/nextrecipes/{id}', [RecipesController::class, 'nextrecipes'])->where('id', '[0-9]+')->name('nextrecipes');
