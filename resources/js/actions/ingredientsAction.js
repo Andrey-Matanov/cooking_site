@@ -1,7 +1,5 @@
 export const FETCH_INGREDIENTS = "@@ingredients/FETCH_INGREDIENTS";
 
-const baseURL = "";
-
 export const fetchIngredients = () => async (dispatch) => {
     const baseURL = window.location.origin;
     const response = await fetch(`${baseURL}/api/ingredients`);
