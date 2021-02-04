@@ -35,6 +35,9 @@ const RecipesList = (props) => {
     const currentLastId = useSelector(
         (state) => state.recipesObject.currentLastId
     );
+    const isLastRecipes = useSelector(
+        (state) => state.recipesObject.isLastRecipes
+    );
     const classes = useStyles();
     const { recipesList, renderRecipes } = props;
 
@@ -80,9 +83,13 @@ const RecipesList = (props) => {
                             Больше рецептов!
                         </Button>
                     </Grid> */}
-                <button onClick={() => dispatch(fetchRecipes(currentLastId))}>
-                    Загрузить еще
-                </button>
+                {!isLastRecipes && (
+                    <button
+                        onClick={() => dispatch(fetchRecipes(currentLastId))}
+                    >
+                        Загрузить еще
+                    </button>
+                )}
             </Grid>
         </div>
     );

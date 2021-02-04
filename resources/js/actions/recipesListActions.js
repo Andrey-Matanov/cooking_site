@@ -40,7 +40,13 @@ export const fetchRecipes = (currentLastId) => async (dispatch) => {
     const response = await fetch(`${baseURL}/api/nextrecipes/${currentLastId}`);
     const data = await response.json();
 
-    dispatch({ type: FETCH_RECIPES, payload: data.recipes });
+    dispatch({
+        type: FETCH_RECIPES,
+        payload: {
+            recipes: data.recipes,
+            isLastRecipes: data.isLastRecipes,
+        },
+    });
 };
 
 export const fetchCategories = () => async (dispatch) => {
