@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import AddRecipeForm from '../components/Forms/AddRecipeForm';
+import React from "react";
+import { connect } from "react-redux";
+import AddRecipeForm from "../components/Forms/AddRecipeForm/AddRecipeForm";
 
 const AddRecipe = ({ recipesLength }) => {
     return (
@@ -12,7 +12,7 @@ const AddRecipe = ({ recipesLength }) => {
 };
 
 const mapStateToProps = (state) => ({
-    recipesLength: state.recipes.length,
+    recipesLength: state.recipesObject.recipes.length,
 });
 
 export default connect(mapStateToProps)(AddRecipe);
