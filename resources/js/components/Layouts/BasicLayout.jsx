@@ -6,8 +6,8 @@ import Header from "../../components/Header";
 const BasicLayout = () => {
     return (
         <>
-            <Header />
             <main>
+                <Header />
                 <div className="wrapper">
                     <RootRouter />
                 </div>

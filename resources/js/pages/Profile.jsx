@@ -1,6 +1,6 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Profile = ({
     recipes,
@@ -22,7 +22,7 @@ const Profile = ({
         myRecipes.map((recipe) => (
             <div key={recipe.id}>
                 <Link
-                    style={{ textDecoration: 'underline', color: 'gray' }}
+                    style={{ textDecoration: "underline", color: "gray" }}
                     to={`/recipes/${recipe.id}`}
                 >
                     {recipe.name}
@@ -32,8 +32,8 @@ const Profile = ({
     ) : (
         <p>
             {id === 0
-                ? 'Добавьте свой первый рецепт'
-                : 'Пользователь еще не добавлял рецепты'}
+                ? "Добавьте свой первый рецепт"
+                : "Пользователь еще не добавлял рецепты"}
         </p>
     );
 
@@ -41,8 +41,8 @@ const Profile = ({
         myArticles.map((article) => (
             <div key={article.id}>
                 <Link
-                    style={{ textDecoration: 'underline', color: 'gray' }}
-                    to='/articles/'
+                    style={{ textDecoration: "underline", color: "gray" }}
+                    to="/articles/"
                 >
                     {article.name}
                 </Link>
@@ -51,8 +51,8 @@ const Profile = ({
     ) : (
         <p>
             {id === 0
-                ? 'Добавьте свою первую статью'
-                : 'Пользователь еще не добавлял статьи'}
+                ? "Добавьте свою первую статью"
+                : "Пользователь еще не добавлял статьи"}
         </p>
     );
 
@@ -64,23 +64,23 @@ const Profile = ({
                 <p>{user.name}</p>
             </div>
             <div>
-                <h2>{id === 0 ? 'Мои рецепты' : 'Рецепты пользователя'}</h2>
+                <h2>{id === 0 ? "Мои рецепты" : "Рецепты пользователя"}</h2>
                 <div>{renderedRecipes}</div>
             </div>
             <div>
-                <h2>{id === 0 ? 'Мои статьи' : 'Статьи пользователя'}</h2>
+                <h2>{id === 0 ? "Мои статьи" : "Статьи пользователя"}</h2>
                 <div>{renderedArticles}</div>
             </div>
             {id === 0 && (
                 <div>
                     <h2>Ссылки</h2>
                     <div>
-                        <Link style={{ color: 'blue' }} to='/add_recipe'>
+                        <Link style={{ color: "blue" }} to="/add_recipe">
                             Добавить рецепт
                         </Link>
                     </div>
                     <div>
-                        <Link style={{ color: 'blue' }} to='/add_article'>
+                        <Link style={{ color: "blue" }} to="/add_article">
                             Добавить статью
                         </Link>
                     </div>
@@ -94,7 +94,7 @@ const mapStateToProps = (state, ownProps) => {
     const { id } = ownProps;
 
     return {
-        recipes: state.recipes,
+        recipes: state.recipesObject.recipes,
         myRecipesIds: state.users[id].recipesIds,
         articles: state.articles,
         myArticleIds: state.users[id].articlesIds,
