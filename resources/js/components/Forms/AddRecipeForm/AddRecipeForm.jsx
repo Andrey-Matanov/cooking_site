@@ -7,6 +7,7 @@ import styled from "styled-components";
 import { fetchIngredients } from "../../../actions/ingredientsAction";
 import AddRecipeFormStep from "./AddRecipeFormStep";
 import AddRecipeFormIngredient from "./AddRecipeFormIngredient";
+import { fetchCategories } from "../../../actions/categoriesActions";
 
 const AddRecipeForm = styled.form`
     width: 500px;
@@ -32,12 +33,16 @@ const FormTextarea = styled.textarea`
     resize: none;
 `;
 
-const AddRecipeFormik = ({ ingredients, id }) => {
+const AddRecipeFormik = ({ ingredients, categories, id }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
         if (!ingredients.length) {
             dispatch(fetchIngredients());
+        }
+
+        if (!categories.length) {
+            dispatch(fetchCategories());
         }
     }, [dispatch]);
 
@@ -47,15 +52,23 @@ const AddRecipeFormik = ({ ingredients, id }) => {
         }
     }, [ingredients]);
 
+    useEffect(() => {
+        if (categories.length) {
+            formik.setFieldValue("categories", categories[0].name);
+        }
+    }, [categories]);
+
     const formik = useFormik({
         initialValues: {
             name: "",
+            category_id: 1,
             time: 0,
             difficulty: "1",
             ingredients: [
                 {
                     name: "",
                     amount: 0,
+                    unit_id: 1,
                 },
             ],
             description: "",
@@ -80,16 +93,16 @@ const AddRecipeFormik = ({ ingredients, id }) => {
             // dispatch(updateUserRecipesIds(newRecipeId));
             // dispatch(addRecipe(newRecipe));
 
-            const newRecipe = {
-                id: newRecipeId,
-                name: values.name,
-                time: values.time,
-                difficulty: values.difficulty,
-                description: values.description,
-                steps: values.steps,
-            };
+            // const newRecipe = {
+            //     id: newRecipeId,
+            //     name: values.name,
+            //     time: values.time,
+            //     difficulty: values.difficulty,
+            //     description: values.description,
+            //     steps: values.steps,
+            // };
 
-            console.log(newRecipe);
+            console.log("test");
         },
     });
 
@@ -104,6 +117,21 @@ const AddRecipeFormik = ({ ingredients, id }) => {
                     type="text"
                     id="name"
                 />
+            </FormItem>
+            <FormItem>
+                <label htmlFor="category">Категория</label>
+                <select
+                    value={formik.values.category_id}
+                    onChange={formik.handleChange}
+                    name="category_id"
+                    id="category"
+                >
+                    {categories.map((category) => (
+                        <option key={category.id} value={category.id}>
+                            {category.name}
+                        </option>
+                    ))}
+                </select>
             </FormItem>
             <FormItem>
                 <label htmlFor="time">Время приготовления</label>
@@ -153,6 +181,7 @@ const AddRecipeFormik = ({ ingredients, id }) => {
                             {
                                 name: ingredients[0].name,
                                 amount: 0,
+                                unit_id: 1,
                             },
                         ]);
                     }}
@@ -216,6 +245,7 @@ const AddRecipeFormik = ({ ingredients, id }) => {
 
 const mapStateToProps = (state) => ({
     ingredients: state.ingredients,
+    categories: state.categories,
 });
 
 export default connect(mapStateToProps)(AddRecipeFormik);
