@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
-import RecipeStepsList from "../components/RecipeStepsList.jsx";
+import RecipeStepsList from "../components/PagesComponents/RecipePage/RecipeStepsList";
 import { Container } from "@material-ui/core";
 import { fetchRecipe } from "../actions/recipeActions.js";
 
