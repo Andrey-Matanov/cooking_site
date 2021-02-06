@@ -60,7 +60,7 @@
         </select>
         <br><br>
         Сложность:
-        <select name="complexity" id="complexity">
+        <select name="difficulty" id="difficulty">
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -97,32 +97,32 @@
 
         <fieldset>
             <legend>Ингредиенты</legend>
-            <select name="ingredients[0]">
+            <select name="ingredients[0].name">
                 @forelse($ingredients as $ingredient)
                     <option value="{{$ingredient->id}}">{{ $ingredient->name }}({{$ingredient->units_name}})</option>
                 @empty
                     <option value="0">-</option>
                 @endforelse
             </select>
-            <input type="text" name="count[0]" value="5">
+            <input type="text" name="ingredients[0].amount" value="5">
             <br>
-            <select name="ingredients[1]">
+            <select name="ingredients[1].name">
                 @forelse($ingredients as $ingredient)
                     <option value="{{$ingredient->id}}">{{ $ingredient->name }}({{$ingredient->units_name}})</option>
                 @empty
                     <option value="0">-</option>
                 @endforelse
             </select>
-            <input type="text" name="count[1]" value="5">
+            <input type="text" name="ingredients[1].amount" value="5">
             <br>
-            <select name="ingredients[2]">
+            <select name="ingredients[2].name">
                 @forelse($ingredients as $ingredient)
                     <option value="{{$ingredient->id}}">{{ $ingredient->name }}({{$ingredient->units_name}})</option>
                 @empty
                     <option value="0">-</option>
                 @endforelse
             </select>
-            <input type="text" name="count[2]" value="5">
+            <input type="text" name="ingredients[2].amount" value="5">
             <br>
 
         </fieldset>
@@ -132,30 +132,30 @@
             <fieldset>
                 <legend>Этап 1</legend>
                 Заголовок:
-                <input type="text" name="stage_title[0]" value="">
+                <input type="text" name="steps[0].title" value="">
                 <br>
                 Описание:
-                <textarea name="stage_description[0]" cols="30" rows="10"></textarea>
+                <textarea name="steps[0].description" cols="30" rows="10"></textarea>
 
             </fieldset>
 
             <fieldset>
                 <legend>Этап 2</legend>
                 Заголовок:
-                <input type="text" name="stage_title[1]" value="">
+                <input type="text" name="steps[1].title" value="">
                 <br>
                 Описание:
-                <textarea name="stage_description[1]" cols="30" rows="10"></textarea>
+                <textarea name="steps[1].description" cols="30" rows="10"></textarea>
 
             </fieldset>
 
             <fieldset>
                 <legend>Этап 3</legend>
                 Заголовок:
-                <input type="text" name="stage_title[2]" value="">
+                <input type="text" name="steps[2].title" value="">
                 <br>
                 Описание:
-                <textarea name="stage_description[2]" cols="30" rows="10"></textarea>
+                <textarea name="steps[2].description" cols="30" rows="10"></textarea>
 
             </fieldset>
 
