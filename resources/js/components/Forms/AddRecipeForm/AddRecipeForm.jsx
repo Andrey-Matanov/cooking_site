@@ -8,6 +8,7 @@ import { fetchIngredients } from "../../../actions/ingredientsAction";
 import AddRecipeFormStep from "./AddRecipeFormStep";
 import AddRecipeFormIngredient from "./AddRecipeFormIngredient";
 import { fetchCategories } from "../../../actions/categoriesActions";
+import { addRecipe } from "../../../actions/recipesListActions";
 
 const AddRecipeForm = styled.form`
     width: 500px;
@@ -52,12 +53,6 @@ const AddRecipeFormik = ({ ingredients, categories, id }) => {
         }
     }, [ingredients]);
 
-    useEffect(() => {
-        if (categories.length) {
-            formik.setFieldValue("categories", categories[0].name);
-        }
-    }, [categories]);
-
     const formik = useFormik({
         initialValues: {
             name: "",
@@ -66,7 +61,7 @@ const AddRecipeFormik = ({ ingredients, categories, id }) => {
             difficulty: "1",
             ingredients: [
                 {
-                    name: "",
+                    id: 1,
                     amount: 0,
                     unit_id: 1,
                 },
@@ -81,28 +76,8 @@ const AddRecipeFormik = ({ ingredients, categories, id }) => {
             ],
         },
         onSubmit: (values) => {
-            const newRecipeId = "" + id;
-            // const newRecipe = {
-            //     newRecipeId,
-            //     name,
-            //     time,
-            //     difficulty,
-            //     description,
-            // };
-
-            // dispatch(updateUserRecipesIds(newRecipeId));
-            // dispatch(addRecipe(newRecipe));
-
-            // const newRecipe = {
-            //     id: newRecipeId,
-            //     name: values.name,
-            //     time: values.time,
-            //     difficulty: values.difficulty,
-            //     description: values.description,
-            //     steps: values.steps,
-            // };
-
-            console.log("test");
+            console.log(values);
+            dispatch(addRecipe(values));
         },
     });
 
@@ -179,7 +154,7 @@ const AddRecipeFormik = ({ ingredients, categories, id }) => {
                         formik.setFieldValue("ingredients", [
                             ...formik.values.ingredients,
                             {
-                                name: ingredients[0].name,
+                                id: 1,
                                 amount: 0,
                                 unit_id: 1,
                             },

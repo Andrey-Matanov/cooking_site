@@ -1,19 +1,11 @@
 export const ADD_RECIPE = "@@recipesList/ADD_RECIPE";
 export const ADD_COMMENTARY = "@@recipesList/ADD_COMMENTARY";
-// export const RENDER_RECIPES = "@@recipesList/RENDER_RECIPES";
 export const FETCH_RECIPES = "@@recipesList/FETCH_RECIPES";
 export const FETCH_CATEGORIES = "@@recipesList/FETCH_CATEGORIES";
 export const FETCH_ERROR = "@@recipesList/FETCH_ERROR";
+export const SUCCESS = "@@recipesList/SUCCESS";
 
-export const addRecipe = (recipe) => ({
-    type: ADD_RECIPE,
-    payload: recipe,
-});
-
-// export const renderRecipes = (count) => ({
-//     type: RENDER_RECIPES,
-//     payload: count,
-// });
+const baseURL = window.location.origin;
 
 export const addCommentary = (recipeId, text) => ({
     type: ADD_COMMENTARY,
@@ -52,7 +44,24 @@ export const fetchRecipes = (currentLastId) => async (dispatch) => {
 export const fetchCategories = () => async (dispatch) => {
     const baseURL = window.location.origin;
     const response = await fetch(`${baseURL}/api/categories`);
-    const data = await response.json();
+    const json = await response.json();
 
-    dispatch({ type: FETCH_CATEGORIES, payload: data.recipes });
+    dispatch({
+        type: FETCH_CATEGORIES,
+        payload: {
+            recipes: json.recipes,
+        },
+    });
+};
+
+export const addRecipe = (recipe) => async (dispatch) => {
+    const response = await fetch(`${baseURL}/api/addrecipe`, {
+        method: "POST",
+        body: JSON.stringify(recipe),
+    });
+
+    console.log(response);
+    // const json = await response.json();
+
+    dispatch({ type: SUCCESS });
 };

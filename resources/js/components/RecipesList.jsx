@@ -48,7 +48,6 @@ const RecipesList = (props) => {
     const renderRecipesList = () => {
         if (recipesList || recipesList.length == 0) {
             return recipesList.map((item) => {
-                console.log(item);
                 return (
                     <Grid item xs={12} key={item.id}>
                         <RecipeItem
