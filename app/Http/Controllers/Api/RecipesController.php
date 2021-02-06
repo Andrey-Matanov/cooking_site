@@ -72,14 +72,19 @@ class RecipesController extends Controller
 
     public function addRecipe(Request $request)
     {
-        dd($request);
-        $data = $request->only(['author','name','description','time','complexity','categories','ingredients','count','stage_title','stage_description']);
+
+        return response()->json([$request->all()]);
+        /*
+        //dd($request);
+        //$data = $request->only(['author','name','description','time','complexity','categories','ingredients','count','stage_title','stage_description']);
+        $data = $request->only(['category_id','description','difficulty','ingredients','name','steps','time']);
 
         ($this->addRecipeService->make($data))?$result = 'success':$result = 'fail';
 
         return response()->json([
             'status' => $result
         ]);
+        */
     }
 
 }
