@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const RecipesList = (props) => {
+const RecipesList = ({ recipesList }) => {
     const dispatch = useDispatch();
     const currentLastId = useSelector(
         (state) => state.recipesObject.currentLastId
@@ -39,11 +39,6 @@ const RecipesList = (props) => {
         (state) => state.recipesObject.isLastRecipes
     );
     const classes = useStyles();
-    const { recipesList, renderRecipes } = props;
-
-    const loadRecipesInner = (count) => {
-        // loadRecipes(3);
-    };
 
     const renderRecipesList = () => {
         if (recipesList || recipesList.length == 0) {
