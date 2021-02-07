@@ -13,16 +13,15 @@ class AddRecipeService
 {
     public function make($data)
     {
-        $author = $data['author'];
+        //$author = $data['author'];
+        $author = 1;
         $name = $data['name'];
         $description = $data['description'];
         $time = $data['time'];
-        $complexity = $data['complexity'];
-        $categories = $data['categories'];
+        $complexity = $data['difficulty'];
+        $categories = $data['category_id'];
         $ingredients= $data['ingredients'];
-        $count = $data['count'];
-        $stage_title = $data['stage_title'];
-        $stage_description = $data['stage_description'];
+        $steps= $data['steps'];
 
         DB::beginTransaction();
             $recipe = new Recipe();
@@ -41,17 +40,17 @@ class AddRecipeService
             for ($i = 0; $i < count($ingredients); $i++){
                 $ingredient = new Ingredient_in_recipe();
                 $ingredient->recipe_id = $idRecipe;
-                $ingredient->ingredient_id = $ingredients[$i];
-                $ingredient->count = $count[$i];
+                $ingredient->ingredient_id = $ingredients[$i]['id'];
+                $ingredient->count = $ingredients[$i]['amount'];
                 $ingredient->save();
             }
 
-            for ($i = 0; $i < count($stage_title); $i++){
+            for ($i = 0; $i < count($steps); $i++){
                 $step = new Step();
                 $step->recipe_id = $idRecipe;
-                $step->heading = $stage_title[$i];
-                $step->image = '';
-                $step->description = $stage_description[$i];
+                $step->heading = '';
+                $step->image = $steps[$i]['image'];
+                $step->description = $steps[$i]['description'];
                 $step->step = $i+1;
                 $step->save();
             }
