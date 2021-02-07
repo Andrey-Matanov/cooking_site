@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { connect, useDispatch } from "react-redux";
+import React, { useEffect } from "react";
+import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import styled from "styled-components";
-// import { addRecipe } from "../../actions/recipesListActions";
-// import { updateUserRecipesIds } from "../../actions/usersActions";
 import { fetchIngredients } from "../../../actions/ingredientsAction";
-import AddRecipeFormStep from "./AddRecipeFormStep";
-import AddRecipeFormIngredient from "./AddRecipeFormIngredient";
 import { fetchCategories } from "../../../actions/categoriesActions";
 import { addRecipe } from "../../../actions/recipesListActions";
+import AddRecipeFormStep from "./AddRecipeFormStep";
+import AddRecipeFormIngredient from "./AddRecipeFormIngredient";
+import FormTextarea from "../../Inputs/FormTextArea";
+import FormInput from "../../Inputs/FormInput";
 
 const AddRecipeForm = styled.form`
     width: 500px;
@@ -25,16 +25,7 @@ const FormItem = styled.div`
     }
 `;
 
-const FormInput = styled.input`
-    flex-basis: 100%;
-`;
-
-const FormTextarea = styled.textarea`
-    flex-basis: 100%;
-    resize: none;
-`;
-
-const AddRecipeFormik = ({ ingredients, categories, id }) => {
+const AddRecipeFormik = ({ ingredients, categories }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -46,12 +37,6 @@ const AddRecipeFormik = ({ ingredients, categories, id }) => {
             dispatch(fetchCategories());
         }
     }, [dispatch]);
-
-    useEffect(() => {
-        if (ingredients.length) {
-            formik.setFieldValue("ingredients[0].name", ingredients[0].name);
-        }
-    }, [ingredients]);
 
     const formik = useFormik({
         initialValues: {
@@ -69,6 +54,7 @@ const AddRecipeFormik = ({ ingredients, categories, id }) => {
             description: "",
             steps: [
                 {
+                    name: "",
                     description: "",
                     image:
                         "https://imgholder.ru/600x300/8493a8/adb9ca&text=IMAGE+HOLDER&font=kelson",
@@ -145,8 +131,9 @@ const AddRecipeFormik = ({ ingredients, categories, id }) => {
                         i={i}
                         name={ingredient.name}
                         amount={ingredient.amount}
-                        handleChange={formik.handleChange}
                         ingredients={ingredients}
+                        unitId={ingredient.unit_id}
+                        handleChange={formik.handleChange}
                     />
                 ))}
                 <button
@@ -177,21 +164,25 @@ const AddRecipeFormik = ({ ingredients, categories, id }) => {
             <FormItem>
                 <p>Ход приготовления</p>
                 <div className="steps">
-                    {formik.values.steps.map(({ description, image }, i) => (
-                        <AddRecipeFormStep
-                            key={i}
-                            number={i + 1}
-                            description={description}
-                            image={image}
-                            handleChange={formik.handleChange}
-                        />
-                    ))}
+                    {formik.values.steps.map(
+                        ({ name, description, image }, i) => (
+                            <AddRecipeFormStep
+                                key={i}
+                                number={i + 1}
+                                name={name}
+                                description={description}
+                                image={image}
+                                handleChange={formik.handleChange}
+                            />
+                        )
+                    )}
                 </div>
                 <button
                     onClick={() => {
                         formik.setFieldValue("steps", [
                             ...formik.values.steps,
                             {
+                                name: "",
                                 description: "",
                                 image:
                                     "https://imgholder.ru/600x300/8493a8/adb9ca&text=IMAGE+HOLDER&font=kelson",
@@ -218,9 +209,4 @@ const AddRecipeFormik = ({ ingredients, categories, id }) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    ingredients: state.ingredients,
-    categories: state.categories,
-});
-
-export default connect(mapStateToProps)(AddRecipeFormik);
+export default AddRecipeFormik;

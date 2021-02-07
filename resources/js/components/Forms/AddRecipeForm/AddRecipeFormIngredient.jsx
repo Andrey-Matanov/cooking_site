@@ -4,9 +4,13 @@ const AddRecipeFormIngredient = ({
     i,
     name,
     amount,
-    handleChange,
     ingredients,
+    unitId,
+    handleChange,
 }) => {
+    const getUnitName = (unitId) =>
+        ["граммы", "миллилитры", "штуки", "ч.л.", "ст.л."][unitId - 1];
+
     return (
         <div
             style={{
@@ -23,7 +27,7 @@ const AddRecipeFormIngredient = ({
             >
                 {ingredients.map((ingredient) => (
                     <option key={ingredient.id} value={ingredient.name}>
-                        {ingredient.name}
+                        {ingredient.name} {`(${getUnitName(unitId)})`}
                     </option>
                 ))}
             </select>
