@@ -64,15 +64,39 @@ const renderReviews = (reviews) => {
     }
 };
 
+const renderSteps = (steps) => {
+    if (steps) {
+        return steps.map((step, i) => (
+            <Grid item xs={12} key={`step${i}`}>
+                <Paper elevation={3} square={true}>
+                    <Box p={2}>
+                        <Box py={2}>
+                            <Grid container alignItems="center">
+                                <Grid item><Box pr={2}><Typography variant="h2">{step.step}</Typography></Box></Grid>
+                                <Grid item><Typography variant="h5">{step.heading}</Typography></Grid>
+                            </Grid>
+                        </Box>
+                        <Box py={2} textAlign="center"><img src={step.image} alt={step.heading} /></Box>
+                        <Box py={2}><Typography variant="body1">{step.description}</Typography></Box>
+                    </Box>
+                </Paper>
+            </Grid>
+        ))
+    } else {
+        return <div></div>
+    }
+    
+}
+
 const RecipeStepsList = (props) => {
     const classes = useStyles();
 
-    const { ingredients, recipe, reviews } = props;
+    const { ingredients, recipe, reviews, steps } = props;
 
     const {
         name,
         author,
-        difficulty,
+        complexity,
         image,
         description,
         time,
@@ -89,7 +113,7 @@ const RecipeStepsList = (props) => {
                             <Box mt={3}>
                                 <Typography variant="h4">{name}</Typography>
                             </Box>
-                            <Box my={3}>
+                            <Box my={3} textAlign="center">
                                 <img src={image} alt={name} />
                             </Box>
                             <Box my={3}>
@@ -100,18 +124,8 @@ const RecipeStepsList = (props) => {
                                     </Link>
                                 </p>
                             </Box>
-                            <DifficultyBar
-                                diff={Math.floor(Math.random() * 11)}
-                            />
-                            {/* <DifficultyBar diff={difficulty}/> */}
-                            {/* <Box my={3}>Сложность рецепта: {difficulty} / 10</Box> */}
-                            <Box my={3}>
-                                Время приготовления:{" "}
-                                {formatTime(
-                                    Math.floor(Math.random() * 150) + 20
-                                )}
-                            </Box>
-                            {/* <Box my={3}>Время приготовления: {formatTime(time)} минут</Box> */}
+                            <DifficultyBar diff={complexity}/>
+                            <Box my={3}>Время приготовления: {formatTime(time)}</Box>
                             <Box my={3}>Рейтинг: {rating}</Box>
                         </Box>
                     </Paper>
@@ -130,6 +144,7 @@ const RecipeStepsList = (props) => {
                         </Box>
                     </Paper>
                 </Grid>
+                {renderSteps(steps)}
                 <Grid item>
                     <div
                         style={{

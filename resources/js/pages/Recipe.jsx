@@ -4,7 +4,7 @@ import RecipeStepsList from "../components/PagesComponents/RecipePage/RecipeStep
 import { Container } from "@material-ui/core";
 import { fetchRecipe } from "../actions/recipeActions.js";
 
-const Recipe = ({ recipeId, recipe, users, reviewsList }) => {
+const Recipe = ({ recipeId, recipe, users, reviewsList, steps }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
@@ -19,11 +19,12 @@ const Recipe = ({ recipeId, recipe, users, reviewsList }) => {
 
     if (recipe.recipe.name) {
         return (
-            <Container maxWidth="lg">
+            <Container maxWidth="md">
                 <RecipeStepsList
                     recipe={recipe.recipe}
                     ingredients={recipe.ingredients}
                     reviews={reviews}
+                    steps={recipe.steps}
                 />
             </Container>
         );
@@ -35,6 +36,7 @@ const Recipe = ({ recipeId, recipe, users, reviewsList }) => {
 const mapStateToProps = (state, ownProps) => ({
     recipeId: ownProps.id,
     recipe: state.recipe,
+    steps: state.steps,
     // recipe: state.recipes.find((recipe) => recipe.id === ownProps.id),
     users: state.users,
     reviewsList: state.reviews,
