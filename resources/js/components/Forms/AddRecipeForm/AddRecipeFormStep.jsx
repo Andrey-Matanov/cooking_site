@@ -23,7 +23,7 @@ const AddRecipeFormStep = ({
             <FormInput
                 value={name}
                 onChange={handleChange}
-                name={`steps[${number - 1}].name}`}
+                name={`steps[${number - 1}].name`}
             />
             <label htmlFor={`step${number}_description`}>Описание</label>
             <FormTextarea
