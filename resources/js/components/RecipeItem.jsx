@@ -121,27 +121,6 @@ const RecipeItem = (props) => {
                             </Grid>
                         </Grid>
                     </Grid>
-
-                    {/* <Link to={`/recipes/${id}`}>
-                        <Typography vriant='h2'>{name}</Typography>
-                    </Link>
-                    <Typography variant='h4'>{author}</Typography>
-                    <div>
-                        <img src={image} alt='recipe'></img>
-                        <div>
-                            <Box>
-                                <AccessTimeIcon />
-                                <p>{formatTime(time)}</p>
-                            </Box>
-                            <div className='recipe-difficuilty'>
-                                <DifficultyBar diff={difficulty}/>
-                            </div>
-                            <div className='recipe-rating'>
-                                <p>Рейтинг: {rating}</p>
-                            </div>
-                            <p className='recipe-item-text'>{description}</p>
-                        </div>
-                    </div> */}
                 </Box>
             </Paper>
         </Box>
