@@ -43,6 +43,12 @@ class RecipesController extends Controller
 
     public function recipe($id)
     {
+        $res = Recipe::find($id);
+        if (!(optional($res)->name)){
+            return response()->json([
+                'status' => 'failed'
+            ]);
+        };
         list ($recipe, $ingredients, $reviews, $steps) = $this->recipeService->make($id);
         return response()->json([
             'status' => 'success',
