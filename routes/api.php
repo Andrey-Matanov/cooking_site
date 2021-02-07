@@ -3,6 +3,7 @@
 use App\Http\Controllers\api\CatalogController;
 use App\Http\Controllers\Api\RecipesController;
 use App\Http\Controllers\Api\IngredientsController;
+use App\Http\Controllers\Api\ReviewsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,5 +32,6 @@ Route::get('/recipes', [RecipesController::class, 'index'])->name('recipes');
 Route::get('/recipes/{id}', [RecipesController::class, 'recipe'])->where('id', '[0-9]+')->name('recipe');
 Route::get('/nextrecipes/{id}', [RecipesController::class, 'nextrecipes'])->where('id', '[0-9]+')->name('nextrecipes');
 
-Route::get('/ingredients', [IngredientsController::class, 'index'])->name('ingredients');
-Route::get('/ingredients/{ingredients}', [IngredientsController::class, 'item'])->where('id', '[0-9]+')->name('ingredient');
+Route::resource('ingredients', IngredientsController::class);
+
+Route::resource('reviews', ReviewsController::class);

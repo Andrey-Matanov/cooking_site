@@ -3,11 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Ingredients;
-use App\Models\Recipe;
+use App\Models\Reviews;
 use Illuminate\Http\Request;
 
-class IngredientsController extends Controller
+class ReviewsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +15,7 @@ class IngredientsController extends Controller
      */
     public function index()
     {
-        return response()->json(['status' => true, 'data' => Ingredients::all()]);
+        return response()->json(['status' => true, 'data' => Reviews::all()]);
     }
 
     /**
@@ -48,7 +47,7 @@ class IngredientsController extends Controller
      */
     public function show($id)
     {
-        return response()->json(['status' => true, 'data' => Ingredients::find($id)]);
+        return response()->json(['status' => true, 'data' => Reviews::find($id)]);
     }
 
     /**

@@ -8,6 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Ingredients extends Model
 {
     protected $table = 'ingredients';
-    public $timestamps = false;
-    public $incrementing = true;
+    
+    public function author()
+    {
+        return $this->belongsTo(Units::class,'unit_id','id');
+    }
 }
