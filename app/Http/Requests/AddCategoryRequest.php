@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Catalog;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AddCategoryRequest extends FormRequest
@@ -23,8 +24,9 @@ class AddCategoryRequest extends FormRequest
      */
     public function rules()
     {
+        $tableName = (new Catalog())->getTable();
         return [
-            'name' => 'required|alpha'
+            'name' => "required|alpha|unique:{$tableName},name"
         ];
     }
 }

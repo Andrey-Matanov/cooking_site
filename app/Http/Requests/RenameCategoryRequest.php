@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Models\Catalog;
 use Illuminate\Foundation\Http\FormRequest;
 
 class RenameCategoryRequest extends FormRequest
@@ -23,8 +24,9 @@ class RenameCategoryRequest extends FormRequest
      */
     public function rules()
     {
+        $tableName = (new Catalog())->getTable();
         return [
-            'name' => 'required|alpha',
+            'name' => "required|alpha|unique:{$tableName},name",
             'id' => 'required|integer'
         ];
     }
