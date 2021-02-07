@@ -9,6 +9,7 @@ import AddRecipeFormStep from "./AddRecipeFormStep";
 import AddRecipeFormIngredient from "./AddRecipeFormIngredient";
 import FormTextarea from "../../Inputs/FormTextArea";
 import FormInput from "../../Inputs/FormInput";
+import AddRecipeNutrition from "./AddRecipeNutrition";
 
 const AddRecipeForm = styled.form`
     width: 500px;
@@ -67,6 +68,12 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
         },
     });
 
+    const usedIngredients = [];
+
+    formik.values.ingredients.forEach((ingredient) =>
+        usedIngredients.push(ingredient.id)
+    );
+
     return (
         <AddRecipeForm onSubmit={formik.handleSubmit}>
             <FormItem>
@@ -83,7 +90,9 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                 <label htmlFor="category">Категория</label>
                 <select
                     value={formik.values.category_id}
-                    onChange={formik.handleChange}
+                    onChange={(e) =>
+                        formik.setFieldValue(`category_id`, +e.target.value)
+                    }
                     name="category_id"
                     id="category"
                 >
@@ -95,12 +104,12 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                 </select>
             </FormItem>
             <FormItem>
-                <label htmlFor="time">Время приготовления</label>
+                <label htmlFor="time">Время приготовления(в минутах)</label>
                 <FormInput
                     value={formik.values.time}
                     onChange={formik.handleChange}
                     name="time"
-                    type="text"
+                    type="number"
                     id="time"
                 />
             </FormItem>
@@ -108,7 +117,9 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                 <label htmlFor="difficulty">Сложность приготовления</label>
                 <select
                     value={formik.values.difficulty}
-                    onChange={formik.handleChange}
+                    onChange={(e) =>
+                        formik.setFieldValue(`difficulty`, +e.target.value)
+                    }
                     id="difficulty"
                 >
                     <option value="1">1</option>
@@ -129,11 +140,13 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                     <AddRecipeFormIngredient
                         key={i}
                         i={i}
+                        id={ingredient.id}
                         name={ingredient.name}
                         amount={ingredient.amount}
                         ingredients={ingredients}
                         unitId={ingredient.unit_id}
                         handleChange={formik.handleChange}
+                        setFieldValue={formik.setFieldValue}
                     />
                 ))}
                 <button
@@ -151,6 +164,12 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                 >
                     Добавить новый ингредиент
                 </button>
+                {ingredients.length && (
+                    <AddRecipeNutrition
+                        values={formik.values}
+                        ingredients={ingredients}
+                    />
+                )}
             </FormItem>
             <FormItem>
                 <label htmlFor="description">Описание рецепта</label>

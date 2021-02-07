@@ -2,11 +2,12 @@ import React from "react";
 
 const AddRecipeFormIngredient = ({
     i,
-    name,
+    id,
     amount,
     ingredients,
     unitId,
     handleChange,
+    setFieldValue,
 }) => {
     const getUnitName = (unitId) =>
         ["граммы", "миллилитры", "штуки", "ч.л.", "ст.л."][unitId - 1];
@@ -21,18 +22,22 @@ const AddRecipeFormIngredient = ({
         >
             <select
                 style={{ marginBottom: "10px" }}
-                value={name}
-                onChange={handleChange}
-                name={`ingredients[${i}].name`}
+                value={id}
+                onChange={(e) =>
+                    setFieldValue(`ingredients[${i}].id`, +e.target.value)
+                }
+                name={`ingredients[${i}].id`}
             >
                 {ingredients.map((ingredient) => (
-                    <option key={ingredient.id} value={ingredient.name}>
-                        {ingredient.name} {`(${getUnitName(unitId)})`}
+                    <option key={ingredient.id} value={ingredient.id}>
+                        {ingredient.name}
                     </option>
                 ))}
             </select>
             <div>
-                <label htmlFor={`ingredient${i}_amount`}>Количество</label>
+                <label htmlFor={`ingredient${i}_amount`}>
+                    Количество{`(${getUnitName(unitId)})`}
+                </label>
                 <input
                     id={`ingredient${i}_amount`}
                     type="number"
