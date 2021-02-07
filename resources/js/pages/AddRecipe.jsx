@@ -1,18 +1,24 @@
 import React from "react";
 import { connect } from "react-redux";
+import styled from "styled-components";
 import AddRecipeForm from "../components/Forms/AddRecipeForm/AddRecipeForm";
 
-const AddRecipe = ({ recipesLength }) => {
+const Wrapper = styled.div`
+    padding: 20px;
+`;
+
+const AddRecipe = ({ ingredients, categories }) => {
     return (
-        <div>
+        <Wrapper>
             <h1>Добавить рецепт</h1>
-            <AddRecipeForm id={recipesLength + 1} />
-        </div>
+            <AddRecipeForm ingredients={ingredients} categories={categories} />
+        </Wrapper>
     );
 };
 
 const mapStateToProps = (state) => ({
-    recipesLength: state.recipesObject.recipes.length,
+    ingredients: state.ingredients,
+    categories: state.categories,
 });
 
 export default connect(mapStateToProps)(AddRecipe);
