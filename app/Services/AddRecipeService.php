@@ -48,7 +48,7 @@ class AddRecipeService
             for ($i = 0; $i < count($steps); $i++){
                 $step = new Step();
                 $step->recipe_id = $idRecipe;
-                $step->heading = '';
+                $step->heading = $steps[$i]['name'];
                 $step->image = $steps[$i]['image'];
                 $step->description = $steps[$i]['description'];
                 $step->step = $i+1;
