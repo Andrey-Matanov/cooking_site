@@ -15,7 +15,6 @@ const Recipe = ({ recipeId, recipe, users, reviewsList, steps }) => {
         );
     }, []);
 
-    const { reviews } = reviewsList;
 
     if (recipe.recipe.name) {
         return (
@@ -23,8 +22,8 @@ const Recipe = ({ recipeId, recipe, users, reviewsList, steps }) => {
                 <RecipeStepsList
                     recipe={recipe.recipe}
                     ingredients={recipe.ingredients}
-                    reviews={reviews}
-                    steps={recipe.steps}
+                    reviews={reviewsList}
+                    steps={steps}
                 />
             </Container>
         );
@@ -36,10 +35,10 @@ const Recipe = ({ recipeId, recipe, users, reviewsList, steps }) => {
 const mapStateToProps = (state, ownProps) => ({
     recipeId: ownProps.id,
     recipe: state.recipe,
-    steps: state.steps,
+    steps: state.recipe.steps,
     // recipe: state.recipes.find((recipe) => recipe.id === ownProps.id),
     users: state.users,
-    reviewsList: state.reviews,
+    reviewsList: state.recipe.reviews,
 });
 
 export default connect(mapStateToProps)(Recipe);

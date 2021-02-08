@@ -13,6 +13,7 @@ export const fetchRecipe = (id) => async (dispatch) => {
             recipe: json.recipe,
             ingredients: json.ingredients,
             steps: json.steps,
+            reviews: json.reviews,
         },
     });
 };

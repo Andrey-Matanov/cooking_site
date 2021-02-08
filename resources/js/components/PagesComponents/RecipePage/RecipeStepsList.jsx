@@ -4,6 +4,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import { Link } from "react-router-dom";
 import { Paper, Grid, Box, Typography } from "@material-ui/core";
 
+import ReviewsBlock from "../../../components/ReviewsBlock.jsx"
 // import AddCommentaryForm from '../components/Forms/AddCommentaryForm';
 import DifficultyBar from "../../DifficultyBar";
 
@@ -146,7 +147,8 @@ const RecipeStepsList = (props) => {
                 </Grid>
                 {renderSteps(steps)}
                 <Grid item>
-                    <div
+                    <ReviewsBlock reviews={reviews} />
+                    {/* <div
                         style={{
                             border: "1px solid black",
                             padding: "5px",
@@ -155,7 +157,7 @@ const RecipeStepsList = (props) => {
                     >
                         <h2 style={{ marginBottom: "10px" }}>Комментарии:</h2>
                         {renderReviews()}
-                    </div>
+                    </div> */}
                     {/* <AddCommentaryForm recipeId={recipeId} /> */}
                 </Grid>
             </Grid>
