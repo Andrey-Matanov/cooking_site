@@ -1,1 +1,1 @@
-export const baseURL = 'http://cookingsite.loc';
+export const baseURL = window.location.origin;
