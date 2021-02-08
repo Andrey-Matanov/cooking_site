@@ -1,8 +1,8 @@
-import React, { useEffect } from 'react';
-import { connect, useDispatch } from 'react-redux';
-import styled from 'styled-components';
-import { fetchIngredientsAndRecipes } from '../actions/combinedActions';
-import AddRecipeForm from '../components/Forms/AddRecipeForm/AddRecipeForm';
+import React, { useEffect } from "react";
+import { connect, useDispatch } from "react-redux";
+import styled from "styled-components";
+import { fetchIngredientsAndRecipes } from "../actions/combinedActions";
+import AddRecipeForm from "../components/Forms/AddRecipeForm/AddRecipeForm";
 
 const Wrapper = styled.div`
     padding: 20px;
@@ -10,16 +10,6 @@ const Wrapper = styled.div`
 
 const AddRecipe = ({ ingredients, categories }) => {
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        console.log('rerender');
-        console.log(
-            'ingredients: ',
-            ingredients.length,
-            ' categories: ',
-            categories.length
-        );
-    });
 
     useEffect(() => {
         if (!ingredients.length && !categories.length) {

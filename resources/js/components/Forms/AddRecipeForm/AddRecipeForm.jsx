@@ -62,6 +62,20 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
         usedIngredients.push(ingredient.id)
     );
 
+    const getNewIngredientId = () => {
+        let result = 1;
+
+        while (true) {
+            if (usedIngredients.includes(result)) {
+                result += 1;
+            } else {
+                break;
+            }
+        }
+
+        return result;
+    };
+
     return (
         <AddRecipeForm onSubmit={formik.handleSubmit}>
             <FormItem>
@@ -132,6 +146,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                         name={ingredient.name}
                         amount={ingredient.amount}
                         ingredients={ingredients}
+                        usedIngredients={usedIngredients}
                         unitId={ingredient.unit_id}
                         handleChange={formik.handleChange}
                         setFieldValue={formik.setFieldValue}
@@ -142,7 +157,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                         formik.setFieldValue("ingredients", [
                             ...formik.values.ingredients,
                             {
-                                id: 1,
+                                id: getNewIngredientId(),
                                 amount: 0,
                                 unit_id: 1,
                             },

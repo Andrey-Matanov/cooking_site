@@ -5,6 +5,7 @@ const AddRecipeFormIngredient = ({
     id,
     amount,
     ingredients,
+    usedIngredients,
     unitId,
     handleChange,
     setFieldValue,
@@ -28,11 +29,17 @@ const AddRecipeFormIngredient = ({
                 }
                 name={`ingredients[${i}].id`}
             >
-                {ingredients.map((ingredient) => (
-                    <option key={ingredient.id} value={ingredient.id}>
-                        {ingredient.name}
-                    </option>
-                ))}
+                {ingredients
+                    .filter(
+                        (ingredient) =>
+                            !usedIngredients.includes(ingredient.id) ||
+                            ingredient.id === id
+                    )
+                    .map((ingredient) => (
+                        <option key={ingredient.id} value={ingredient.id}>
+                            {ingredient.name}
+                        </option>
+                    ))}
             </select>
             <div>
                 <label htmlFor={`ingredient${i}_amount`}>
