@@ -16,5 +16,6 @@ Homestead.json
 Homestead.yaml
 npm-debug.log
 yarn-error.log
+cook.sql
 
 app.js.LICENSE.txt
