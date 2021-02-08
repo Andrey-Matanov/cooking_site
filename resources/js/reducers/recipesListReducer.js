@@ -5,8 +5,6 @@ import {
     FETCH_RECIPES,
 } from "../actions/recipesListActions";
 
-const recipesList = [];
-
 export const recipesListReducer = (
     recipesObject = {
         recipes: [],
@@ -21,10 +19,12 @@ export const recipesListReducer = (
                 ...recipesObject,
                 recipes: [...recipesObject.recipes, ...action.payload.recipes],
                 currentLastId: recipesObject.currentLastId + 10,
-                isLastRecipes: action.payload.isLastRecipes == true,
+                isLastRecipes: action.payload.isLastRecipes === true,
             };
         }
         case ADD_RECIPE: {
+            const recipes = recipesObject.recipes;
+
             return produce(recipes, (newRecipes) => {
                 newRecipes.push({
                     id: "" + (recipes.length + 1),
@@ -38,6 +38,7 @@ export const recipesListReducer = (
         }
         case ADD_COMMENTARY: {
             const { recipeId, text } = action.payload;
+            const recipes = recipesObject.recipes;
 
             return produce(recipes, (newRecipes) => {
                 newRecipes

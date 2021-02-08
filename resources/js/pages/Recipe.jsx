@@ -3,18 +3,15 @@ import { connect, useDispatch } from "react-redux";
 import RecipeStepsList from "../components/PagesComponents/RecipePage/RecipeStepsList";
 import { Container } from "@material-ui/core";
 import { fetchRecipe } from "../actions/recipeActions.js";
+import { useParams } from "react-router-dom";
 
-const Recipe = ({ recipeId, recipe, users, reviewsList, steps }) => {
+const Recipe = ({ recipe, users, reviewsList, steps }) => {
     const dispatch = useDispatch();
+    const { id } = useParams();
 
     useEffect(() => {
-        dispatch(
-            fetchRecipe(
-                Number(location.href.slice(location.href.lastIndexOf("/") + 1))
-            )
-        );
+        dispatch(fetchRecipe(id));
     }, []);
-
 
     if (recipe.recipe.name) {
         return (
@@ -32,13 +29,11 @@ const Recipe = ({ recipeId, recipe, users, reviewsList, steps }) => {
     }
 };
 
-const mapStateToProps = (state, ownProps) => ({
-    recipeId: ownProps.id,
+const mapStateToProps = (state) => ({
     recipe: state.recipe,
     steps: state.recipe.steps,
-    // recipe: state.recipes.find((recipe) => recipe.id === ownProps.id),
-    users: state.users,
     reviewsList: state.recipe.reviews,
+    users: state.users,
 });
 
 export default connect(mapStateToProps)(Recipe);

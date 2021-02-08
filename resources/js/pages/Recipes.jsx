@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import RecipesList from "../components/RecipesList.jsx";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import RecipesList from '../components/RecipesList.jsx';
 import {
     fetchRecipes,
     fetchCategories,
-} from "../actions/recipesListActions.js";
-import { Container, Box, Typography, Chip } from "@material-ui/core";
+} from '../actions/recipesListActions.js';
+import { Container, Box, Typography, Chip } from '@material-ui/core';
 
 const Recipes = () => {
     const dispatch = useDispatch();
@@ -24,20 +24,20 @@ const Recipes = () => {
     }, [dispatch]);
 
     useEffect(() => {
-        if (previousLastId !==0) dispatch(fetchRecipes(currentLastId))
-    }, [previousLastId])
+        if (previousLastId !== 0) dispatch(fetchRecipes(currentLastId));
+    }, [previousLastId]);
 
     const renderRecipes = () => {
-        setPreviousLastId(currentLastId + 10)
+        setPreviousLastId(currentLastId + 10);
     };
 
     return (
-        <Container maxWidth="lg">
+        <Container maxWidth='lg'>
             <Box mt={3}>
-                <Typography variant="h3">Рецепты</Typography>
+                <Typography variant='h3'>Рецепты</Typography>
             </Box>
             <Box my={3}>
-                <Typography variant="h4">Категории</Typography>
+                <Typography variant='h4'>Категории</Typography>
                 <Box></Box>
             </Box>
             {recipesList.length ? (

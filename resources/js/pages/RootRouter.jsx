@@ -18,10 +18,7 @@ const RootRouter = () => {
             <Switch>
                 <Route exact path="/" render={() => <Main />} />
                 <Route exact path="/recipes" render={() => <Recipes />} />
-                <Route
-                    path="/recipes/:id"
-                    render={(props) => <Recipe id={props.match.params.id} />}
-                />
+                <Route path="/recipes/:id" render={() => <Recipe />} />
                 <Route path="/authors" render={() => <Authors />} />
                 <Route
                     path="/profile/:id"

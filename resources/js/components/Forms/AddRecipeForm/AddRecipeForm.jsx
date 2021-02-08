@@ -1,9 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import styled from "styled-components";
-import { fetchIngredients } from "../../../actions/ingredientsAction";
-import { fetchCategories } from "../../../actions/categoriesActions";
 import { addRecipe } from "../../../actions/recipesListActions";
 import AddRecipeFormStep from "./AddRecipeFormStep";
 import AddRecipeFormIngredient from "./AddRecipeFormIngredient";
@@ -28,16 +26,6 @@ const FormItem = styled.div`
 
 const AddRecipeFormik = ({ ingredients, categories }) => {
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        if (!ingredients.length) {
-            dispatch(fetchIngredients());
-        }
-
-        if (!categories.length) {
-            dispatch(fetchCategories());
-        }
-    }, [dispatch]);
 
     const formik = useFormik({
         initialValues: {

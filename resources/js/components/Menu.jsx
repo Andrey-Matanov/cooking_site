@@ -4,7 +4,7 @@ import styled from "styled-components";
 import HomeIcon from "@material-ui/icons/Home";
 import RecipeIcon from "./Icons/RecipeIcon";
 
-import { makeStyles } from '@material-ui/core/styles'
+import { makeStyles } from "@material-ui/core/styles";
 
 const LinkDiv = styled.div`
     display: flex;
@@ -17,66 +17,67 @@ const Heading = styled.p`
 
 const useStyles = makeStyles((theme) => ({
     menu: {
-        padding: '20px 0',
-        display: 'flex',
-        alignItems: 'center',
+        padding: "20px 0",
+        display: "flex",
+        alignItems: "center",
     },
-    'menu a': {
-        textDecoration: 'none',
-        color: 'black',
-        padding: '0 20px',
+    "menu a": {
+        textDecoration: "none",
+        color: "black",
+        padding: "0 20px",
     },
-    
+
     selected_link: {
-        color: '#999',
+        color: "#999",
     },
-}))
+}));
 
 const Menu = () => {
-
     const classes = useStyles();
 
     return (
         <div className={classes.menu}>
             <NavLink exact to="/" activeClassName={classes.selected_link}>
                 <LinkDiv>
-                    <HomeIcon color="primary" />
+                    <HomeIcon color="secondary" />
                     <Heading>Главная</Heading>
                 </LinkDiv>
             </NavLink>
             <NavLink to="/recipes" activeClassName={classes.selected_link}>
                 <LinkDiv>
-                    <RecipeIcon color="primary" />
+                    <RecipeIcon color="secondary" />
                     <Heading>Рецепты</Heading>
                 </LinkDiv>
             </NavLink>
             <NavLink to="/authors" activeClassName={classes.selected_link}>
                 <LinkDiv>
-                    <RecipeIcon color="primary" />
+                    <RecipeIcon color="secondary" />
                     <Heading>Рейтинг авторов</Heading>
                 </LinkDiv>
             </NavLink>
             <NavLink to="/profile/1" activeClassName={classes.selected_link}>
                 <LinkDiv>
-                    <RecipeIcon color="primary" />
+                    <RecipeIcon color="secondary" />
                     <Heading>Личный кабинет</Heading>
                 </LinkDiv>
             </NavLink>
-            <NavLink exact to="/articles" activeClassName={classes.selected_link}>
+            <NavLink
+                exact
+                to="/articles"
+                activeClassName={classes.selected_link}
+            >
                 <LinkDiv>
-                    <HomeIcon color="primary" />
+                    <HomeIcon color="secondary" />
                     <Heading>Все статьи</Heading>
                 </LinkDiv>
             </NavLink>
-            {/* <NavLink exact to='/welcomePage' activeClassName={classes.selected_link}>
+            <NavLink
+                exact
+                to="/welcomePage"
+                activeClassName={classes.selected_link}
+            >
                 <LinkDiv>
-                    <HomeIcon color='primary' />
-                    <Heading>Страница регистрации</Heading>
-                </LinkDiv>
-            </NavLink> */}
-            <NavLink exact to="/welcomePage" activeClassName={classes.selected_link}>
-                <LinkDiv>
-                    <HomeIcon color="primary" />
+                    <HomeIcon color="secondary" />
                     <Heading>Логин</Heading>
                 </LinkDiv>
             </NavLink>
