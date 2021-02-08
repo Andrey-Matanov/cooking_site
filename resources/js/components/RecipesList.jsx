@@ -1,7 +1,6 @@
-import React from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchRecipes } from "../actions/recipesListActions.js";
-import { Button, Grid } from "@material-ui/core";
+import React, { useState, useRef } from "react";
+import { Grid, Box, CircularProgress, Fab } from "@material-ui/core";
+import UpIcon from "@material-ui/icons/KeyboardArrowUp"
 import { makeStyles } from "@material-ui/core/styles";
 import RecipeItem from "../components/RecipeItem.jsx";
 
@@ -25,20 +24,44 @@ const useStyles = makeStyles((theme) => ({
             borderRadius: "2.5px",
         },
     },
-    buttonContainer: {
-        textAlign: "center",
+    fab: {
+        position: 'absolute',
+        bottom: theme.spacing(6),
+        right: theme.spacing(6),
     },
 }));
 
-const RecipesList = ({ recipesList }) => {
-    const dispatch = useDispatch();
-    const currentLastId = useSelector(
-        (state) => state.recipesObject.currentLastId
-    );
-    const isLastRecipes = useSelector(
-        (state) => state.recipesObject.isLastRecipes
-    );
+const RecipesList = ({ recipesList, loadRecipes, isLast }) => {
+
     const classes = useStyles();
+
+    const [isScrolled, setIsScrolled] = useState(false);
+
+    const scrollingArea = useRef(null)
+
+    const loadRecipesInner = () => {
+        loadRecipes();
+    }
+
+    const scrollUp = () => {
+        scrollingArea.current.scrollTop = 0;
+    }
+
+    const scrollingHandler = (e) => {
+        let clientHeight = e.target.clientHeight;
+        let scrollHeight = e.target.scrollHeight;
+        let scrollTop = e.target.scrollTop;
+
+        if (!isLast && (scrollHeight - scrollTop - clientHeight) < 50) {
+            loadRecipesInner()
+        }
+
+        if (scrollTop > clientHeight) {
+            setIsScrolled(true)
+        } else {
+            setIsScrolled(false)
+        }
+    }
 
     const renderRecipesList = () => {
         if (recipesList || recipesList.length == 0) {
@@ -70,21 +93,22 @@ const RecipesList = ({ recipesList }) => {
                 container
                 className={classes.scrolling}
                 spacing={5}
+                onScroll={scrollingHandler}
+                ref = {scrollingArea}
             >
                 {renderRecipesList()}
-                {/* <Grid item xs={12} className={classes.buttonContainer}>
-                        <Button color='primary' variant='contained' onClick={() => {loadRecipesInner(3)}}>
-                            Больше рецептов!
-                        </Button>
-                    </Grid> */}
-                {!isLastRecipes && (
-                    <button
-                        onClick={() => dispatch(fetchRecipes(currentLastId))}
-                    >
-                        Загрузить еще
-                    </button>
-                )}
+                {(!isLast) ? (
+                <Grid item xs={12}>
+                    <Box justifyContent="center" display="flex">
+                        <CircularProgress color="primary" />
+                    </Box>
+                </Grid>
+                ) : null}
             </Grid>
+            {(isScrolled) ? (
+                <Fab aria-label="Up" className={classes.fab} color="primary" onClick={scrollUp}>
+                <UpIcon />
+            </Fab>) : null}
         </div>
     );
 };

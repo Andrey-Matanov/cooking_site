@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import RecipesList from "../components/RecipesList.jsx";
 import {
@@ -13,13 +13,22 @@ const Recipes = () => {
     const currentLastId = useSelector(
         (state) => state.recipesObject.currentLastId
     );
+    const isLastRecipes = useSelector(
+        (state) => state.recipesObject.isLastRecipes
+    );
+
+    const [previousLastId, setPreviousLastId] = useState(0);
 
     useEffect(() => {
         if (!recipesList.length) dispatch(fetchRecipes(currentLastId));
     }, [dispatch]);
 
-    const renderRecipes = (count) => {
-        // renderRecipes(count);
+    useEffect(() => {
+        if (previousLastId !==0) dispatch(fetchRecipes(currentLastId))
+    }, [previousLastId])
+
+    const renderRecipes = () => {
+        setPreviousLastId(currentLastId + 10)
     };
 
     return (
@@ -35,6 +44,8 @@ const Recipes = () => {
                 <RecipesList
                     recipesList={recipesList}
                     loadRecipes={renderRecipes}
+                    isLast={isLastRecipes}
+                    currentLastId={currentLastId}
                 />
             ) : (
                 <div>Рецепты загружаются</div>
