@@ -8,6 +8,9 @@
 .env
 .env.backup
 .phpunit.result.cache
+.gitignore
+composer.lock
+public/mix-manifest.json
 docker-compose.override.yml
 Homestead.json
 Homestead.yaml

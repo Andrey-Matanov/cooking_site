@@ -32,6 +32,8 @@ Route::get('/recipes', [RecipesController::class, 'index'])->name('recipes');
 Route::get('/recipes/{id}', [RecipesController::class, 'recipe'])->where('id', '[0-9]+')->name('recipe');
 Route::get('/nextrecipes/{id}', [RecipesController::class, 'nextrecipes'])->where('id', '[0-9]+')->name('nextrecipes');
 
+Route::get('/ingredients/store', [IngredientsController::class, 'store'])->name('ingredients.new');;
+Route::get('/ingredients/delete/{id}', [IngredientsController::class, 'destroy'])->name('ingredients.delete');
 Route::resource('ingredients', IngredientsController::class);
 
 Route::resource('reviews', ReviewsController::class);

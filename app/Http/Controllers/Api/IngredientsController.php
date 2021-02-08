@@ -35,9 +35,15 @@ class IngredientsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Ingredients $ingredient)
     {
-        //
+        $ingredient->fill($request->all());
+        if( $ingredient->save()){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }
+
     }
 
     /**
@@ -69,9 +75,15 @@ class IngredientsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,  Ingredients $ingredient)
     {
-        //
+        $ingredient->fill($request->all());
+        if( $ingredient->save()){
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }
+
     }
 
     /**
@@ -82,6 +94,13 @@ class IngredientsController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $id = (int)$id;
+        if( Ingredients::destroy($id))
+        {
+            return response()->json(['status' => true]);
+        }else{
+            return response()->json(['status' => false]);
+        }
     }
 }
