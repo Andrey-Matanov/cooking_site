@@ -1,6 +1,6 @@
 import React from "react";
 
-const AddRecipeCennost = ({ values, ingredients }) => {
+const AddRecipeNutrition = ({ values, ingredients }) => {
     let calories = 0;
     let proteins = 0;
     let fat = 0;
@@ -29,4 +29,4 @@ const AddRecipeCennost = ({ values, ingredients }) => {
     );
 };
 
-export default AddRecipeCennost;
+export default AddRecipeNutrition;
