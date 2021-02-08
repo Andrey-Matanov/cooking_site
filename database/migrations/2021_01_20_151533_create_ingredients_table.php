@@ -21,6 +21,7 @@ class CreateIngredientsTable extends Migration
             $table->float('product_protein',5,2);
             $table->float('product_carb',5,2);
             $table->float('calorie',5,2);
+            $table->timestamps();
 
             $table->foreign('unit_id')->references('id')->on('units')->cascadeOnDelete();
         });
