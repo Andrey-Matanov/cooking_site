@@ -1,7 +1,7 @@
-export const FETCH_RECIPE = "@@recipe/FETCH_RECIPE";
-export const FETCH_ERROR = "@@recipe/FETCH_ERROR";
+import { baseURL } from '../utils';
 
-const baseURL = window.location.origin;
+export const FETCH_RECIPE = '@@recipe/FETCH_RECIPE';
+export const FETCH_ERROR = '@@recipe/FETCH_ERROR';
 
 export const fetchRecipe = (id) => async (dispatch) => {
     const response = await fetch(`${baseURL}/api/recipes/${id}`);
