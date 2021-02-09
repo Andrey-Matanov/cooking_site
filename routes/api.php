@@ -6,6 +6,8 @@ use App\Http\Controllers\Api\IngredientsController;
 use App\Http\Controllers\Api\ReviewsController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\API\PassportAuthController;
+use App\Http\Controllers\API\ProductController;
 
 /*
 |--------------------------------------------------------------------------
@@ -35,3 +37,10 @@ Route::get('/nextrecipes/{id}', [RecipesController::class, 'nextrecipes'])->wher
 Route::resource('ingredients', IngredientsController::class);
 
 Route::resource('reviews', ReviewsController::class);
+
+Route::post('register', [PassportAuthController::class, 'register']);
+Route::post('login', [PassportAuthController::class, 'login']);
+
+Route::middleware('auth:api')->group(function () {
+    Route::get('get-user', [PassportAuthController::class, 'userInfo']);
+});

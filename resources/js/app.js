@@ -1,43 +1,15 @@
-import React from "react";
-import ReactDOM from "react-dom";
-import { applyMiddleware, compose, createStore } from "redux";
-import { Provider } from "react-redux";
-import thunk from "redux-thunk";
-import { BrowserRouter } from "react-router-dom";
-import rootReducer from "./reducers";
-import { createMuiTheme, ThemeProvider } from "@material-ui/core/styles";
-import { green, lightGreen } from "@material-ui/core/colors";
-import BasicLayout from "./components/Layouts/BasicLayout";
-import "./index.css";
+/**
+ * First we will load all of this project's JavaScript dependencies which
+ * includes React and other helpers. It's a great starting point while
+ * building robust, powerful web applications using React + Laravel.
+ */
 
-const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
-const store = createStore(
-    rootReducer,
-    composeEnhancers(applyMiddleware(thunk))
-);
+require('./bootstrap');
 
-const theme = createMuiTheme({
-    palette: {
-        primary: {
-            main: green[500],
-        },
-        secondary: {
-            main: lightGreen[500],
-        },
-    },
-});
+/**
+ * Next, we will create a fresh React component instance and attach it to
+ * the page. Then, you may begin adding components to this application
+ * or customize the JavaScript scaffolding to fit your unique needs.
+ */
 
-if (document.getElementById("root")) {
-    ReactDOM.render(
-        <React.StrictMode>
-            <Provider store={store}>
-                <BrowserRouter>
-                    <ThemeProvider theme={theme}>
-                        <BasicLayout />
-                    </ThemeProvider>
-                </BrowserRouter>
-            </Provider>
-        </React.StrictMode>,
-        document.getElementById("root")
-    );
-}
+require('./components/Example');
