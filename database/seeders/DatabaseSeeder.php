@@ -21,7 +21,7 @@ class DatabaseSeeder extends Seeder
             IngredientsSeeder::class,
             RecipeSeeder::class,
             ReviewsSeeder::class,
-            Ingredients_in_recipes_Seeder::class,
+            IngredientsInRecipesSeeder::class,
             StepSeeder::class,
         ]);
     }

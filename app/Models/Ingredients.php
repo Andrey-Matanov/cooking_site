@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Ingredients extends Model
 {
     protected $table = 'ingredients';
+    public $timestamps = false;
     protected $fillable = ['name', 'product_fat', 'product_protein', 'product_carb', 'calorie'];
     public function author()
     {

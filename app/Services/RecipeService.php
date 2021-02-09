@@ -4,12 +4,14 @@
 namespace App\Services;
 
 
+use App\Models\IngredientInRecipe;
+use App\Models\Recipe;
 use App\Models\Step;
 use Illuminate\Support\Facades\DB;
 
 class RecipeService
 {
-    public function make($id)
+    public function giveOneRecipe($id)
     {
         $recipe = DB::table('recipes')->select('recipes.image as image','recipes.time as time','recipes.rating as rating', 'recipes.complexity as complexity','recipes.id as id', 'recipes.name', 'recipes.status', 'recipes.name as name', 'users.name as user_name', 'catalog.name as catalog_name','recipes.description')->where('recipes.id',$id)->join('catalog','recipes.catalog_id', '=', 'catalog.id')->join('users', 'recipes.author_id', '=', 'users.id')->get();
 
@@ -21,4 +23,70 @@ class RecipeService
 
         return array($recipe, $ingredients, $reviews,$steps);
     }
+
+    public function saveRecipe($data)
+    {
+        //$author = $data['author'];
+        $author = 1;
+        $name = $data['name'];
+        $description = $data['description'];
+        $time = $data['time'];
+        $complexity = $data['difficulty'];
+        $categories = $data['category_id'];
+        $ingredients= $data['ingredients'];
+        $steps= $data['steps'];
+
+        DB::beginTransaction();
+        $recipe = new Recipe();
+        $recipe->name = $name;
+        $recipe->author_id = $author;
+        $recipe->description = $description;
+        $recipe->time = $time;
+        $recipe->complexity = $complexity;
+        $recipe->catalog_id = $categories;
+        $recipe->image = '';
+        $recipe->save();
+
+        $newRecipe = Recipe::orderBy('id', 'desc')->first();
+        $idRecipe = $newRecipe->id;
+
+        for ($i = 0; $i < count($ingredients); $i++){
+            $ingredient = new IngredientInRecipe();
+            $ingredient->recipe_id = $idRecipe;
+            $ingredient->ingredient_id = $ingredients[$i]['id'];
+            $ingredient->count = $ingredients[$i]['amount'];
+            $ingredient->save();
+        }
+
+        for ($i = 0; $i < count($steps); $i++){
+            $step = new Step();
+            $step->recipe_id = $idRecipe;
+            $step->heading = $steps[$i]['name'];
+            $step->image = $steps[$i]['image'];
+            $step->description = $steps[$i]['description'];
+            $step->step = $i+1;
+            $step->save();
+        }
+
+        DB::commit();
+
+        return true;
+    }
+
+    public function giveBunchRecipes($data)
+    {
+        $amount = (int)$data['amount'];
+        $last = (int)$data['last'];
+        if ($amount < 1) $amount = 10;
+        if ($last < 1)  $last = 1;
+        $recipes = DB::table('recipes')->select('recipes.image','recipes.time','recipes.rating', 'recipes.complexity','recipes.id', 'recipes.name', 'recipes.status', 'users.name as author', 'users.id as author_id','recipes.description')->where('recipes.id','>',$last)->orderBy('recipes.id', 'asc')->join('users', 'recipes.author_id', '=', 'users.id')->limit($amount)->get();
+
+        $maxIdInBunch = $recipes->max('id');
+        $maxIdRecipes = Recipe::max('id');
+        ($maxIdRecipes > $maxIdInBunch)?$isLastRecipes = 0:$isLastRecipes = 1;
+
+        return array($recipes, $isLastRecipes);
+    }
+
+
 }
