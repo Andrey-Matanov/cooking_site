@@ -9,6 +9,8 @@ class Reviews extends Model
 {
     use HasFactory;
     protected $table = 'reviews';
+
+    protected $fillable = ['recipe_id', 'author_id', 'description'];
     
     public function author() {
         return $this->belongsTo(User::class,'author_id','id');

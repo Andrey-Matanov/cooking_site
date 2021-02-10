@@ -34,9 +34,11 @@ class ReviewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Reviews $reviews)
     {
-        //
+        $reviews->create($request->all()) ? $status = true : $status = false;
+
+        return response()->json(['status' => $status]);
     }
 
     /**
@@ -70,7 +72,9 @@ class ReviewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        Reviews::find($id)->update($request->all()) ? $status = true : $status = false;
+
+        return response()->json(['status' => $status]);
     }
 
     /**
@@ -81,6 +85,8 @@ class ReviewsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Reviews::destroy($id) ? $status = true : $status = false;
+
+        return response()->json(['status' => $status]);
     }
 }
