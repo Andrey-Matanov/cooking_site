@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\api\CatalogController;
+use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\Api\RecipesController;
 use App\Http\Controllers\Api\IngredientsController;
 use App\Http\Controllers\Api\ReviewsController;
@@ -38,6 +39,7 @@ Route::get('/nextrecipes/{id}', [RecipesController::class, 'nextrecipes'])->wher
 Route::resource('ingredients', IngredientsController::class);
 Route::resource('reviews', ReviewsController::class);
 Route::apiResource('units', UnitController::class);
+Route::apiResource('categories', CategoryController::class);
 
 Route::post('register', [PassportAuthController::class, 'register']);
 Route::post('login', [PassportAuthController::class, 'login']);

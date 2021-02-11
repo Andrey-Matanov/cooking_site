@@ -5,20 +5,20 @@ namespace App\Http\Controllers\api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\AddCategoryRequest;
 use App\Http\Requests\RenameCategoryRequest;
-use App\Models\Catalog;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CatalogController extends Controller
 {
     public function showAllCatalog()
     {
-        return Catalog::get();
+        return Category::get();
     }
 
     public function deletePositionFromCatalog($id)
     {
         $id = (int)$id;
-        Catalog::destroy($id);
+        Category::destroy($id);
 
         return response()->json(['status' => true]);
     }
@@ -26,7 +26,7 @@ class CatalogController extends Controller
     public function addPositionCatalog(AddCategoryRequest $request)
     {
         $data = $request->only(['name']);
-        $Catalog = new Catalog();
+        $Catalog = new Category();
         $Catalog->name = $data['name'];
         $Catalog->save();
 
@@ -38,7 +38,7 @@ class CatalogController extends Controller
         $data = $request->only(['id','name']);
         $id = $data['id'];
         $name = $data['name'];
-        $category = Catalog::find($id);
+        $category = Category::find($id);
         $category->name = $name;
         $category->save();
 
