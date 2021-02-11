@@ -11,4 +11,11 @@ class Category extends Model
     protected $table = 'catalog';
     protected $primaryKey = "id";
     protected $fillable = ['name'];
+
+    public function recipes()
+    {
+        return $this->hasMany(Recipe::class, 'catalog_id','id');
+    }
+
+
 }

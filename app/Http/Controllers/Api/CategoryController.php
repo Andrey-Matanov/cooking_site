@@ -43,7 +43,9 @@ class CategoryController extends Controller
     public function show($id)
     {
         $id = (int)$id;
-        return response()->json(['status' => true, 'data' => Category::find($id)]);
+        $category = Category::find($id);
+        $recipes = $category->recipes()->select('id','name','author_id')->get();
+        return response()->json(['status' => true, 'category' => $category,'recipes'=>$recipes]);
     }
 
     /**
