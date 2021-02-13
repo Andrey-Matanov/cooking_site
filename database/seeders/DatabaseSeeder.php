@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -13,6 +14,16 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // \App\Models\User::factory(10)->create();
+        $this->call([
+            UserSeeder::class,
+            CatalogSeeder::class,
+            UnitsSeeder::class,
+            IngredientsSeeder::class,
+            RecipeSeeder::class,
+            ReviewsSeeder::class,
+            IngredientsInRecipesSeeder::class,
+            StepSeeder::class,
+        ]);
     }
+
 }
