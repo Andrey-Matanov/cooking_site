@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useFormik } from "formik";
 import styled from "styled-components";
@@ -26,6 +26,15 @@ const FormItem = styled.div`
 
 const AddRecipeFormik = ({ ingredients, categories }) => {
     const dispatch = useDispatch();
+    const [usedIngredients, setUsedIngredients] = useState([1]);
+    const [recipeNutrition, setRecipeNutrition] = useState({
+        calories: 0,
+        proteins: 0,
+        fat: 0,
+        carbs: 0,
+    });
+
+    useEffect(() => console.log("addRecipeForm rerender"));
 
     const formik = useFormik({
         initialValues: {
@@ -56,17 +65,12 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
         },
     });
 
-    const usedIngredients = [];
-
-    formik.values.ingredients.forEach((ingredient) =>
-        usedIngredients.push(ingredient.id)
-    );
-
     const getNewIngredientId = () => {
         let result = 1;
+        const temp = usedIngredients;
 
         while (true) {
-            if (usedIngredients.includes(result)) {
+            if (temp.includes(result)) {
                 result += 1;
             } else {
                 break;
@@ -147,6 +151,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                         amount={ingredient.amount}
                         ingredients={ingredients}
                         usedIngredients={usedIngredients}
+                        setUsedIngredients={setUsedIngredients}
                         unitId={ingredient.unit_id}
                         handleChange={formik.handleChange}
                         setFieldValue={formik.setFieldValue}
@@ -161,6 +166,10 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                 amount: 0,
                                 unit_id: 1,
                             },
+                        ]);
+                        setUsedIngredients([
+                            ...usedIngredients,
+                            getNewIngredientId(),
                         ]);
                     }}
                     type="button"

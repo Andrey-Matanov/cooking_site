@@ -1,4 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
+
+import { FixedSizeList as List } from "react-window";
+import ChooseFromListComponent from "./ChooseFromListComponent";
 
 const AddRecipeFormIngredient = ({
     i,
@@ -9,9 +12,12 @@ const AddRecipeFormIngredient = ({
     unitId,
     handleChange,
     setFieldValue,
+    setUsedIngredients,
 }) => {
     const getUnitName = (unitId) =>
         ["граммы", "миллилитры", "штуки", "ч.л.", "ст.л."][unitId - 1];
+
+    useEffect(() => console.log("addRecipeFormIngredients rerender"));
 
     return (
         <div
@@ -21,12 +27,17 @@ const AddRecipeFormIngredient = ({
                 marginBottom: "10px",
             }}
         >
-            <select
+            {/* <select
                 style={{ marginBottom: "10px" }}
                 value={id}
-                onChange={(e) =>
-                    setFieldValue(`ingredients[${i}].id`, +e.target.value)
-                }
+                onChange={(e) => {
+                    setFieldValue(`ingredients[${i}].id`, +e.target.value);
+
+                    const newUsedIngredients = [...usedIngredients];
+                    const idIndex = newUsedIngredients.indexOf(id);
+                    newUsedIngredients.splice(idIndex, 1, +e.target.value);
+                    setUsedIngredients(newUsedIngredients);
+                }}
                 name={`ingredients[${i}].id`}
             >
                 {ingredients
@@ -40,7 +51,19 @@ const AddRecipeFormIngredient = ({
                             {ingredient.name}
                         </option>
                     ))}
-            </select>
+            </select> */}
+            <ChooseFromListComponent
+                id={id}
+                list={ingredients.filter(
+                    (ingredient) =>
+                        ingredient.id === id ||
+                        !usedIngredients.includes(ingredient.id)
+                )}
+                name={"ингредиент"}
+                usedIngredients={usedIngredients}
+                setFieldValue={setFieldValue}
+                setUsedIngredients={setUsedIngredients}
+            />
             <div>
                 <label htmlFor={`ingredient${i}_amount`}>
                     Количество{`(${getUnitName(unitId)})`}

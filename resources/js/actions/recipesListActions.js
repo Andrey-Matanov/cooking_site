@@ -1,11 +1,11 @@
-import { baseURL } from '../utils';
+import { baseURL } from "../utils";
 
-export const ADD_RECIPE = '@@recipesList/ADD_RECIPE';
-export const ADD_COMMENTARY = '@@recipesList/ADD_COMMENTARY';
-export const FETCH_RECIPES = '@@recipesList/FETCH_RECIPES';
-export const FETCH_CATEGORIES = '@@recipesList/FETCH_CATEGORIES';
-export const FETCH_ERROR = '@@recipesList/FETCH_ERROR';
-export const SUCCESS = '@@recipesList/SUCCESS';
+export const ADD_RECIPE = "@@recipesList/ADD_RECIPE";
+export const ADD_COMMENTARY = "@@recipesList/ADD_COMMENTARY";
+export const FETCH_RECIPES = "@@recipesList/FETCH_RECIPES";
+export const FETCH_CATEGORIES = "@@recipesList/FETCH_CATEGORIES";
+export const FETCH_ERROR = "@@recipesList/FETCH_ERROR";
+export const SUCCESS = "@@recipesList/SUCCESS";
 
 export const addCommentary = (recipeId, text) => ({
     type: ADD_COMMENTARY,
@@ -18,6 +18,8 @@ export const addCommentary = (recipeId, text) => ({
 export const fetchRecipes = (currentLastId) => async (dispatch) => {
     const response = await fetch(`${baseURL}/api/nextrecipes/${currentLastId}`);
     const data = await response.json();
+
+    console.log(data);
 
     dispatch({
         type: FETCH_RECIPES,
@@ -42,7 +44,7 @@ export const fetchCategories = () => async (dispatch) => {
 
 export const addRecipe = (recipe) => async (dispatch) => {
     const response = await fetch(`${baseURL}/api/addrecipe`, {
-        method: 'POST',
+        method: "POST",
         body: JSON.stringify(recipe),
     });
 

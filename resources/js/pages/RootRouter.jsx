@@ -11,6 +11,7 @@ import Articles from "./Articles";
 import WelcomePage from "./WelcomePage";
 import AddRecipe from "./AddRecipe";
 import AddArticle from "./AddArticle";
+// import Test from "./Test";
 
 const RootRouter = () => {
     return (
@@ -31,6 +32,7 @@ const RootRouter = () => {
                 <Route path="/login" render={() => <Login />} />
                 <Route path="/articles" render={() => <Articles />} />
                 <Route path="/welcomePage" render={() => <WelcomePage />} />
+                {/* <Route path="/lazy" render={() => <Test />} /> */}
                 <Route render={() => <Error404 />} />
             </Switch>
         </>
