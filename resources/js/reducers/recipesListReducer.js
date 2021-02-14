@@ -3,6 +3,7 @@ import {
     ADD_COMMENTARY,
     ADD_RECIPE,
     FETCH_RECIPES,
+    CATEGORY_CHANGE,
 } from "../actions/recipesListActions";
 
 export const recipesListReducer = (
@@ -10,6 +11,7 @@ export const recipesListReducer = (
         recipes: [],
         currentLastId: 0,
         isLastRecipes: false,
+        currentCategory: '',
     },
     action
 ) => {
@@ -18,9 +20,19 @@ export const recipesListReducer = (
             return {
                 ...recipesObject,
                 recipes: [...recipesObject.recipes, ...action.payload.recipes],
-                currentLastId: recipesObject.currentLastId + 10,
-                isLastRecipes: action.payload.isLastRecipes === true,
+                currentLastId: action.payload.recipes[action.payload.recipes.length - 1].id,
+                isLastRecipes: action.payload.isLastRecipes === 1,
+                currentCategory: recipesObject.currentCategory,
             };
+        }
+        case CATEGORY_CHANGE: {
+            return {
+                ...recipesObject,
+                recipes: [],
+                currentLastId: 0,
+                isLastRecipes: false,
+                currentCategory: action.payload.currentCategory,
+            }
         }
         case ADD_RECIPE: {
             const recipes = recipesObject.recipes;

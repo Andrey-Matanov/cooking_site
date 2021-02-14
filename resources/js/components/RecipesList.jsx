@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Grid, Box, CircularProgress, Fab } from '@material-ui/core';
 import UpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { makeStyles } from '@material-ui/core/styles';
@@ -35,12 +35,13 @@ const RecipesList = ({ recipesList, loadRecipes, isLast }) => {
     const classes = useStyles();
 
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isScrolledDown, setIsScrolledDown] = useState(false);
+
+    useEffect(()=>{
+        if (isScrolledDown === true) loadRecipes();
+    }, [isScrolledDown])
 
     const scrollingArea = useRef(null);
-
-    const loadRecipesInner = () => {
-        loadRecipes();
-    };
 
     const scrollUp = () => {
         scrollingArea.current.scrollTop = 0;
@@ -51,8 +52,10 @@ const RecipesList = ({ recipesList, loadRecipes, isLast }) => {
         let scrollHeight = e.target.scrollHeight;
         let scrollTop = e.target.scrollTop;
 
-        if (!isLast && scrollHeight - scrollTop - clientHeight < 50) {
-            loadRecipesInner();
+        if (!isLast && scrollHeight - scrollTop - clientHeight < 100) {
+            setIsScrolledDown(true);
+        } else {
+            setIsScrolledDown(false);
         }
 
         if (scrollTop > clientHeight) {

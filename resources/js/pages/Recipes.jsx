@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RecipesList from '../components/RecipesList.jsx';
-import { fetchRecipes } from '../actions/recipesListActions.js';
+import { fetchRecipes, switchCategory } from '../actions/recipesListActions.js';
 import { fetchRecipesAndCategories } from '../actions/combinedActions.js';
 
 import { Container, Box, Typography, FormControl, InputLabel, Select } from '@material-ui/core';
@@ -28,31 +28,37 @@ const Recipes = () => {
     const isLastRecipes = useSelector(
         (state) => state.recipesObject.isLastRecipes
     );
+    const currentCategory = useSelector(
+        (state) => state.recipesObject.currentCategory
+    )
 
     const categories = useSelector((state) => state.categories)
 
-    const [previousLastId, setPreviousLastId] = useState(0);
-    const [currentCategory, setCurrentCategory] = useState('');
+    const [isScrolledDown, setIsScrolledDown] = useState(false);
 
     useEffect(() => {
-        if (!recipesList.length) dispatch(fetchRecipesAndCategories(currentLastId)) //dispatch(fetchRecipes(currentLastId));
+        if (!recipesList.length) dispatch(fetchRecipesAndCategories(currentLastId, currentCategory))
     }, [dispatch]);
 
     useEffect(() => {
-        if (previousLastId !== 0) dispatch(fetchRecipes(currentLastId));
-    }, [previousLastId]);
+        if (isScrolledDown && !isLastRecipes) {
+            dispatch(fetchRecipes(currentLastId, currentCategory));
+            setIsScrolledDown(false);
+        }
+    }, [isScrolledDown]);
 
     const handleChange = (e) => {
-        setCurrentCategory(e.target.value);
+        dispatch(switchCategory(e.target.value))
+        dispatch(fetchRecipes(0, e.target.value))
     }
 
     const renderRecipes = () => {
-        setPreviousLastId(currentLastId + 10);
+        setIsScrolledDown(true);
     };
 
     const renderCategoryOptions = (categories) => {
         return categories.map(item => (
-            <option key={item.id} value={item.name}>{item.name}</option>
+            <option key={item.id} value={item.id}>{item.name}</option>
         ))
     }
 
