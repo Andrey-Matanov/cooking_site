@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, ListItem, Box, Grid, Paper, Typography, makeStyles } from '@material-ui/core'
 
-import AddCommentaryForm from './Forms/AddCommentaryForm.jsx'
+import AddCommentaryForm from '../../Forms/AddCommentaryForm.jsx'
 
 const useStyles = makeStyles((theme) => ({
     reviewsFormPaper: {

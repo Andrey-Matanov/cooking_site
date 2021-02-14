@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { Box, Paper, Typography, Grid, ButtonBase } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
-import DifficultyBar from "./DifficultyBar.jsx";
+import DifficultyBar from "../Reusable/DifficultyBar.jsx";
 
 const useStyles = makeStyles((theme) => ({
     image: {

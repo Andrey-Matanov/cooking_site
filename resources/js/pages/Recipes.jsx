@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import RecipesList from '../components/RecipesList.jsx';
+import RecipesList from '../components/PagesComponents/RecipesPage/RecipesList.jsx';
 import { fetchRecipes, switchCategory } from '../actions/recipesListActions.js';
 import { fetchRecipesAndCategories } from '../actions/combinedActions.js';
 

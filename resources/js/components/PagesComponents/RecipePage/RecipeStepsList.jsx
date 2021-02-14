@@ -4,10 +4,10 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { Paper, Grid, Box, Typography } from '@material-ui/core';
 
-import ReviewsBlock from '../../../components/ReviewsBlock.jsx';
+import ReviewsBlock from '../../../components/PagesComponents/RecipePage/ReviewsBlock.jsx';
 import Nutrition from './Nutrition.jsx';
 // import AddCommentaryForm from '../components/Forms/AddCommentaryForm';
-import DifficultyBar from '../../DifficultyBar';
+import DifficultyBar from '../Reusable/DifficultyBar';
 
 const useStyles = makeStyles((theme) => ({
     scrolling: {

@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Grid, Box, CircularProgress, Fab } from '@material-ui/core';
 import UpIcon from '@material-ui/icons/KeyboardArrowUp';
 import { makeStyles } from '@material-ui/core/styles';
-import RecipeItem from '../components/RecipeItem.jsx';
+import RecipeItem from './RecipeItem.jsx';
 
 const useStyles = makeStyles((theme) => ({
     scrolling: {
