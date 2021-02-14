@@ -44,25 +44,6 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
         ),
     });
 
-    // const getNewIngredientId = () => {
-    //     let newIngredientId = 1;
-    //     const ingredients = formik.values.ingredients;
-
-    //     while (true) {
-    //         if (
-    //             ingredients.find(
-    //                 (ingredient) => ingredient.id === newIngredientId
-    //             )
-    //         ) {
-    //             newIngredientId += 1;
-    //         } else {
-    //             break;
-    //         }
-    //     }
-
-    //     return newIngredientId;
-    // };
-
     return (
         <Formik
             initialValues={{
@@ -95,6 +76,26 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                 setFieldValue,
                 isValidating,
             }) => {
+                const getNewIngredientId = () => {
+                    let newIngredientId = 1;
+                    const ingredients = values.ingredients;
+
+                    while (true) {
+                        if (
+                            ingredients.find(
+                                (ingredient) =>
+                                    ingredient.id === newIngredientId
+                            )
+                        ) {
+                            newIngredientId += 1;
+                        } else {
+                            break;
+                        }
+                    }
+
+                    return newIngredientId;
+                };
+
                 return (
                     <Form>
                         <FormItem>
@@ -188,7 +189,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                         currentName={ingredient.name}
                                         currentAmount={ingredient.amount}
                                         ingredients={ingredients}
-                                        usedIngredients={values.usedIngredients}
+                                        usedIngredients={values.ingredients}
                                         unitId={ingredient.unit_id}
                                         handleChange={handleChange}
                                         setFieldValue={setFieldValue}
@@ -202,7 +203,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                     setFieldValue("ingredients", [
                                         ...values.ingredients,
                                         {
-                                            id: 1,
+                                            id: getNewIngredientId(),
                                             amount: 0,
                                             unit_id: 1,
                                         },
