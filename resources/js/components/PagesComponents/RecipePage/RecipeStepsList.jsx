@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import { Paper, Grid, Box, Typography } from '@material-ui/core';
 
 import ReviewsBlock from '../../../components/ReviewsBlock.jsx';
+import Nutrition from './Nutrition.jsx';
 // import AddCommentaryForm from '../components/Forms/AddCommentaryForm';
 import DifficultyBar from '../../DifficultyBar';
 
@@ -152,6 +153,13 @@ const RecipeStepsList = (props) => {
                     <Paper elevation={3} square={true}>
                         <Box p={2}>
                             <Ingredients ingredients={ingredients} />
+                        </Box>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper elevation={3} square={true}>
+                        <Box p={2}>
+                            <Nutrition ingredients={ingredients} />
                         </Box>
                     </Paper>
                 </Grid>
