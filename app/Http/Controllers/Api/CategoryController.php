@@ -16,7 +16,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        return response()->json(['status' => true, 'data' => Category::all()]);
+        return response()->json(['status' => true, 'data' => Category::select('id','name')->get()]);
     }
 
     /**
@@ -44,7 +44,7 @@ class CategoryController extends Controller
     public function show($id)
     {
         $id = (int)$id;
-        $category = Category::find($id);
+        $category = Category::select('id','name')->find($id);
         $recipes = $category->recipes()->select('id','name','author_id')->get();
         return response()->json(['status' => true, 'category' => $category,'recipes'=>$recipes]);
     }
