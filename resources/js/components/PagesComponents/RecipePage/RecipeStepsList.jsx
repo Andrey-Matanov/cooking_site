@@ -8,6 +8,7 @@ import ReviewsBlock from '../../../components/PagesComponents/RecipePage/Reviews
 import Nutrition from './Nutrition.jsx';
 // import AddCommentaryForm from '../components/Forms/AddCommentaryForm';
 import DifficultyBar from '../Reusable/DifficultyBar';
+import RatingBar from "../Reusable/RatingBar.jsx";
 
 const useStyles = makeStyles((theme) => ({
     scrolling: {
@@ -145,7 +146,7 @@ const RecipeStepsList = (props) => {
                             <Box my={3}>
                                 Время приготовления: {formatTime(time)}
                             </Box>
-                            <Box my={3}>Рейтинг: {rating}</Box>
+                            <Box my={3}><RatingBar rating={rating} /></Box>
                         </Box>
                     </Paper>
                 </Grid>
