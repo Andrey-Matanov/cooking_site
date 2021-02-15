@@ -75,16 +75,23 @@ class RecipeService
 
     public function giveBunchRecipes($data)
     {
+        if (isset($data['author_id'])) {
+            $author_id = (int)$data['author_id'];
+            $recipes = DB::table('recipes')->select('recipes.id', 'recipes.name','users.name as author', 'users.id as author_id')->where('author_id','=',$author_id)->join('users', 'recipes.author_id', '=', 'users.id')->get();
+            $isLastRecipes = 0;
+            return array($recipes, $isLastRecipes);
+        }
+
         $amount = (int)$data['amount'];
         $last = (int)$data['last'];
         if ($amount < 1) $amount = 10;
         if ($last < 0)  $last = 0;
 
+        $recipes = DB::table('recipes')->select('recipes.image','recipes.catalog_id','recipes.time','recipes.rating', 'recipes.complexity','recipes.id', 'recipes.name', 'recipes.status', 'users.name as author', 'users.id as author_id','recipes.description')->where('recipes.id','>',$last)->orderBy('recipes.id', 'asc')->join('users', 'recipes.author_id', '=', 'users.id')->limit($amount)->get();
+
         if (isset($data['category'])) {
             $category = (int)$data['category'];
-            $recipes = DB::table('recipes')->select('recipes.image','recipes.catalog_id','recipes.time','recipes.rating', 'recipes.complexity','recipes.id', 'recipes.name', 'recipes.status', 'users.name as author', 'users.id as author_id','recipes.description')->where('recipes.catalog_id','=',$category)->where('recipes.id','>',$last)->orderBy('recipes.id', 'asc')->join('users', 'recipes.author_id', '=', 'users.id')->limit($amount)->get();
-        } else {
-            $recipes = DB::table('recipes')->select('recipes.image','recipes.catalog_id','recipes.time','recipes.rating', 'recipes.complexity','recipes.id', 'recipes.name', 'recipes.status', 'users.name as author', 'users.id as author_id','recipes.description')->where('recipes.id','>',$last)->orderBy('recipes.id', 'asc')->join('users', 'recipes.author_id', '=', 'users.id')->limit($amount)->get();
+            $recipes = $recipes->where('catalog_id','=',$category);
         }
 
         $maxIdInBunch = $recipes->max('id');
