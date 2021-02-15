@@ -24,9 +24,11 @@ class UnitController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Unit $unit)
+    public function store(Request $request)
     {
-        $unit->fill($request->all());
+        $data = json_decode($request->getContent(),true);
+        $unit = new Unit();
+        $unit->name = $data['name'];
         if( $unit->save()){
             return response()->json(['status' => true]);
         }else{
@@ -56,7 +58,11 @@ class UnitController extends Controller
     public function update(Request $request, $id)
     {
         $id = (int)$id;
-        Unit::find($id)->update($request->all()) ? $status = true : $status = false;
+        $data = json_decode($request->getContent(),true);
+        $unit = Unit::find($id);
+        $unit->name = $data['name'];
+
+        ($unit->save()) ? $status = true : $status = false;
 
         return response()->json(['status' => $status]);
     }
