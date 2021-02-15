@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { useFormik, Formik, Form, Field } from "formik";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
 import { addRecipe } from "../../../actions/recipesListActions";
@@ -12,6 +12,10 @@ import FormInput from "../../Inputs/FormInput";
 
 const AddRecipeForm = styled.form`
     width: 500px;
+`;
+
+const Error = styled.div`
+    color: red;
 `;
 
 const FormItem = styled.div`
@@ -28,20 +32,47 @@ const FormItem = styled.div`
 const AddRecipeFormik = ({ ingredients, categories }) => {
     const dispatch = useDispatch();
 
-    // const [recipeNutrition, setRecipeNutrition] = useState({
-    //     calories: 0,
-    //     proteins: 0,
-    //     fat: 0,
-    //     carbs: 0,
-    // });
+    const [recipeNutrition, setRecipeNutrition] = useState({
+        calories: 0,
+        proteins: 0,
+        fat: 0,
+        carbs: 0,
+    });
 
     useEffect(() => console.log("addRecipeForm rerender"));
 
-    const ValidationSchema = Yup.object().shape({
-        name: Yup.string().required("Название не должно быть пустым!"),
+    const validationSchema = Yup.object().shape({
+        name: Yup.string().required("Название не должно быть пустым"),
+        category_id: Yup.number().required(),
         time: Yup.number().positive(
-            "Время приготовления не может равно меньше одной минуты!"
+            "Время приготовления не может быть меньше одной минуты"
         ),
+        difficulty: Yup.string().required(),
+        ingredients: Yup.array()
+            .of(
+                Yup.object().shape({
+                    id: Yup.number().required(),
+                    amount: Yup.number()
+                        .min(1, "Количество не может быть меньше 1")
+                        .required(),
+                    unit_id: Yup.number().required(),
+                })
+            )
+            .min(1, "Добавьте как минимум один ингредиент"),
+        description: Yup.string().required("Описание не должно быть пустым"),
+        steps: Yup.array()
+            .of(
+                Yup.object().shape({
+                    name: Yup.string().required(
+                        "Название должно состоять минимум из одного символа"
+                    ),
+                    description: Yup.string().required(
+                        "Описание должно состоять минимум из одного символа"
+                    ),
+                    image: Yup.string(),
+                })
+            )
+            .min(1, "Добавьте как минимум один шаг"),
     });
 
     return (
@@ -53,16 +84,9 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                 difficulty: "1",
                 ingredients: [],
                 description: "",
-                steps: [
-                    {
-                        name: "",
-                        description: "",
-                        image:
-                            "https://imgholder.ru/600x300/8493a8/adb9ca&text=IMAGE+HOLDER&font=kelson",
-                    },
-                ],
+                steps: [],
             }}
-            validationSchema={ValidationSchema}
+            validationSchema={validationSchema}
             onSubmit={(values) => {
                 console.log(values);
                 dispatch(addRecipe(values));
@@ -73,6 +97,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                 errors,
                 touched,
                 handleChange,
+                handleSubmit,
                 setFieldValue,
                 isValidating,
             }) => {
@@ -108,9 +133,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                 id="name"
                             />
                             {errors.name && touched.name ? (
-                                <div style={{ color: "red" }}>
-                                    {errors.name}
-                                </div>
+                                <Error>{errors.name}</Error>
                             ) : null}
                         </FormItem>
                         <FormItem>
@@ -150,9 +173,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                 id="time"
                             />
                             {errors.time && touched.time ? (
-                                <div style={{ color: "red" }}>
-                                    {errors.time}
-                                </div>
+                                <Error>{errors.time}</Error>
                             ) : null}
                         </FormItem>
                         <FormItem>
@@ -189,6 +210,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                         currentName={ingredient.name}
                                         currentAmount={ingredient.amount}
                                         ingredients={ingredients}
+                                        errors={errors.ingredients}
                                         usedIngredients={values.ingredients}
                                         unitId={ingredient.unit_id}
                                         handleChange={handleChange}
@@ -198,13 +220,18 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                             ) : (
                                 <p>Ингредиенты загружаются...</p>
                             )}
+                            {errors.ingredients &&
+                            touched.ingredients &&
+                            typeof errors.ingredients === "string" ? (
+                                <Error>{errors.ingredients}</Error>
+                            ) : null}
                             <button
                                 onClick={() => {
                                     setFieldValue("ingredients", [
                                         ...values.ingredients,
                                         {
                                             id: getNewIngredientId(),
-                                            amount: 0,
+                                            amount: 1,
                                             unit_id: 1,
                                         },
                                     ]);
@@ -230,6 +257,9 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                 name="description"
                                 id="description"
                             />
+                            {errors.description && touched.description ? (
+                                <Error>{errors.description}</Error>
+                            ) : null}
                         </FormItem>
                         <FormItem>
                             <p>Ход приготовления</p>
@@ -238,15 +268,24 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                     ({ name, description, image }, i) => (
                                         <AddRecipeFormStep
                                             key={i}
-                                            number={i + 1}
+                                            index={i}
                                             name={name}
                                             description={description}
                                             image={image}
+                                            recipeSteps={values.steps}
+                                            errors={errors.steps}
                                             handleChange={handleChange}
+                                            setFieldValue={setFieldValue}
+                                            touched={touched}
                                         />
                                     )
                                 )}
                             </div>
+                            {errors.steps &&
+                            touched.steps &&
+                            typeof errors.steps === "string" ? (
+                                <Error>{errors.steps}</Error>
+                            ) : null}
                             <button
                                 onClick={() => {
                                     setFieldValue("steps", [
@@ -273,7 +312,9 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                             </button>
                         </FormItem>
                         <FormItem>
-                            <button type="submit">Добавить рецепт</button>
+                            <button onClick={handleSubmit} type="submit">
+                                Добавить рецепт
+                            </button>
                         </FormItem>
                     </Form>
                 );

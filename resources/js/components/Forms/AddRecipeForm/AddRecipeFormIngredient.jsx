@@ -1,11 +1,17 @@
 import React, { useEffect } from "react";
 import { FixedSizeList as List } from "react-window";
+import styled from "styled-components";
+
+const Error = styled.div`
+    color: red;
+`;
 
 const AddRecipeFormIngredient = ({
     currentNumber,
     currentId,
     currentAmount,
     ingredients,
+    errors,
     usedIngredients,
     setFieldValue,
     unitId,
@@ -84,17 +90,22 @@ const AddRecipeFormIngredient = ({
                     onChange={handleChange}
                     name={`ingredients[${currentNumber}].amount`}
                 />
+                <Error>
+                    {typeof errors === "object" && errors[currentNumber]
+                        ? errors[currentNumber].amount
+                        : null}
+                </Error>
             </div>
             <button
                 type="button"
-                onClick={() =>
+                onClick={() => {
                     setFieldValue(
                         "ingredients",
                         [...usedIngredients].filter(
                             (ingredient) => ingredient.id !== currentId
                         )
-                    )
-                }
+                    );
+                }}
             >
                 Удалить текущий ингрендиент
             </button>
