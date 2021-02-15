@@ -23,9 +23,7 @@ const RootRouter = () => {
                 <Route path="/authors" render={() => <Authors />} />
                 <Route
                     path="/profile/:id"
-                    render={(props) => (
-                        <Profile id={props.match.params.id - 1} />
-                    )}
+                    render={(props) => <Profile id={props.match.params.id} />}
                 />
                 <Route path="/add_recipe" render={() => <AddRecipe />} />
                 <Route path="/add_article" render={() => <AddArticle />} />
