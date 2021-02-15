@@ -43,7 +43,7 @@ const Nutrition = ({ ingredients }) => {
                     <Grid container justify="space-between">
                         <Grid item>
                             <Typography variant="body1">
-                                <BoltIcon color="secondary" /> Энергетическая
+                                <BoltIcon color="secondary" fontSize='inherit' /> Энергетическая
                                 ценность:
                             </Typography>
                         </Grid>
@@ -58,7 +58,7 @@ const Nutrition = ({ ingredients }) => {
                     <Grid container justify="space-between">
                         <Grid item>
                             <Typography variant="body1">
-                                <DrumstickBiteIcon color="secondary" />{" "}
+                                <DrumstickBiteIcon color="secondary" fontSize='inherit' />{" "}
                                 Протеины:
                             </Typography>
                         </Grid>
@@ -73,7 +73,7 @@ const Nutrition = ({ ingredients }) => {
                     <Grid container justify="space-between">
                         <Grid item>
                             <Typography variant="body1">
-                                <CandyCaneIcon color="secondary" /> Углеводы:
+                                <CandyCaneIcon color="secondary" fontSize='inherit' /> Углеводы:
                             </Typography>
                         </Grid>
                         <Grid item>
@@ -87,7 +87,7 @@ const Nutrition = ({ ingredients }) => {
                     <Grid container justify="space-between">
                         <Grid item>
                             <Typography variant="body1">
-                                <CheeseIcon color="secondary" /> Жиры:
+                                <CheeseIcon color="secondary" fontSize='inherit' /> Жиры:
                             </Typography>
                         </Grid>
                         <Grid item>
