@@ -18,9 +18,9 @@ class RecipesController extends Controller
 
     public function index (Request $request)
     {
-        $data = $request->only(['amount','last','category']);
+        $data = $request->only(['amount','last','category','author_id']);
 
-        if (isset($data['amount'])and(isset($data['last']))) {
+        if ((isset($data['amount'])and(isset($data['last'])))or(isset($data['author_id']))) {
             list ($recipes, $isLastRecipes) = $this->recipeService->giveBunchRecipes($data);
             return response()->json([
                 'status' => 'success',
