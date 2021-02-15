@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import HomeIcon from "@material-ui/icons/Home";
-import RecipeIcon from "./Icons/RecipeIcon";
+import RecipeIcon from "../../Icons/RecipeIcon";
 
 import { makeStyles } from "@material-ui/core/styles";
 

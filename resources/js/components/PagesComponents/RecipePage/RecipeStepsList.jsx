@@ -4,9 +4,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 import { Paper, Grid, Box, Typography } from '@material-ui/core';
 
-import ReviewsBlock from '../../../components/ReviewsBlock.jsx';
+import ReviewsBlock from '../../../components/PagesComponents/RecipePage/ReviewsBlock.jsx';
+import Nutrition from './Nutrition.jsx';
 // import AddCommentaryForm from '../components/Forms/AddCommentaryForm';
-import DifficultyBar from '../../DifficultyBar';
+import DifficultyBar from '../Reusable/DifficultyBar';
+import RatingBar from "../Reusable/RatingBar.jsx";
 
 const useStyles = makeStyles((theme) => ({
     scrolling: {
@@ -144,7 +146,7 @@ const RecipeStepsList = (props) => {
                             <Box my={3}>
                                 Время приготовления: {formatTime(time)}
                             </Box>
-                            <Box my={3}>Рейтинг: {rating}</Box>
+                            <Box my={3}><RatingBar rating={rating} /></Box>
                         </Box>
                     </Paper>
                 </Grid>
@@ -152,6 +154,13 @@ const RecipeStepsList = (props) => {
                     <Paper elevation={3} square={true}>
                         <Box p={2}>
                             <Ingredients ingredients={ingredients} />
+                        </Box>
+                    </Paper>
+                </Grid>
+                <Grid item xs={12}>
+                    <Paper elevation={3} square={true}>
+                        <Box p={2}>
+                            <Nutrition ingredients={ingredients} />
                         </Box>
                     </Paper>
                 </Grid>

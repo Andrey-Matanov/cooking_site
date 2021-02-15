@@ -1,25 +1,17 @@
-import React from "react";
-import { connect } from "react-redux";
+import React, { useEffect } from "react";
+import { connect, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { fetchUserRecipes } from "../actions/profileActions";
 
-const Profile = ({
-    recipes,
-    myRecipesIds,
-    articles,
-    myArticleIds,
-    user,
-    id,
-}) => {
-    const myRecipes = recipes.filter((recipe) =>
-        myRecipesIds.includes(recipe.id)
-    );
+const Profile = ({ recipes, user, id }) => {
+    const dispatch = useDispatch();
 
-    const myArticles = articles.filter((article) =>
-        myArticleIds.includes(article.id)
-    );
+    useEffect(() => {
+        dispatch(fetchUserRecipes(id));
+    }, [dispatch]);
 
-    const renderedRecipes = myRecipes.length ? (
-        myRecipes.map((recipe) => (
+    const renderedRecipes = recipes.length ? (
+        recipes.map((recipe) => (
             <div key={recipe.id}>
                 <Link
                     style={{ textDecoration: "underline", color: "gray" }}
@@ -31,28 +23,9 @@ const Profile = ({
         ))
     ) : (
         <p>
-            {id === 0
+            {id === "1"
                 ? "Добавьте свой первый рецепт"
                 : "Пользователь еще не добавлял рецепты"}
-        </p>
-    );
-
-    const renderedArticles = myArticles.length ? (
-        myArticles.map((article) => (
-            <div key={article.id}>
-                <Link
-                    style={{ textDecoration: "underline", color: "gray" }}
-                    to="/articles/"
-                >
-                    {article.name}
-                </Link>
-            </div>
-        ))
-    ) : (
-        <p>
-            {id === 0
-                ? "Добавьте свою первую статью"
-                : "Пользователь еще не добавлял статьи"}
         </p>
     );
 
@@ -64,14 +37,10 @@ const Profile = ({
                 <p>{user.name}</p>
             </div>
             <div>
-                <h2>{id === 0 ? "Мои рецепты" : "Рецепты пользователя"}</h2>
+                <h2>{id === "1" ? "Мои рецепты" : "Рецепты пользователя"}</h2>
                 <div>{renderedRecipes}</div>
             </div>
-            <div>
-                <h2>{id === 0 ? "Мои статьи" : "Статьи пользователя"}</h2>
-                <div>{renderedArticles}</div>
-            </div>
-            {id === 0 && (
+            {id === "1" && (
                 <div>
                     <h2>Ссылки</h2>
                     <div>
@@ -92,13 +61,11 @@ const Profile = ({
 
 const mapStateToProps = (state, ownProps) => {
     const { id } = ownProps;
+    const index = id - 1;
 
     return {
-        recipes: state.recipesObject.recipes,
-        myRecipesIds: state.users[id].recipesIds,
-        articles: state.articles,
-        myArticleIds: state.users[id].articlesIds,
-        user: state.users[id],
+        recipes: state.profile.recipes,
+        user: state.users[index],
         id,
     };
 };

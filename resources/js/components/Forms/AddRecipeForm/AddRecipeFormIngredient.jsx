@@ -1,81 +1,114 @@
 import React, { useEffect } from "react";
-
 import { FixedSizeList as List } from "react-window";
-import ChooseFromListComponent from "./ChooseFromListComponent";
+import styled from "styled-components";
+
+const Error = styled.div`
+    color: red;
+`;
 
 const AddRecipeFormIngredient = ({
-    i,
-    id,
-    amount,
+    currentNumber,
+    currentId,
+    currentAmount,
     ingredients,
+    errors,
     usedIngredients,
+    setFieldValue,
     unitId,
     handleChange,
-    setFieldValue,
-    setUsedIngredients,
 }) => {
     const getUnitName = (unitId) =>
         ["граммы", "миллилитры", "штуки", "ч.л.", "ст.л."][unitId - 1];
 
-    useEffect(() => console.log("addRecipeFormIngredients rerender"));
+    const currentName = ingredients.find(
+        (ingredient) => ingredient.id === currentId
+    ).name;
+
+    const ingredientsList = ingredients.filter((ingredient) => {
+        return (
+            ingredient.id === currentId ||
+            !usedIngredients.some(
+                (usedIngredient) => usedIngredient.id === ingredient.id
+            )
+        );
+    });
+
+    useEffect(() => {
+        if (ingredients.length) {
+            console.log("Ingredient" + currentName + " - rerender");
+        }
+    });
+
+    const Ingredient = ({ index, style }) => (
+        <button
+            onClick={() =>
+                setFieldValue(
+                    `ingredients[${currentNumber}].id`,
+                    ingredientsList[index].id
+                )
+            }
+            type="button"
+            style={{
+                ...style,
+                color:
+                    ingredientsList[index].name === currentName
+                        ? "green"
+                        : "black",
+            }}
+        >
+            {ingredientsList[index].name}
+        </button>
+    );
 
     return (
         <div
             style={{
-                border: "1px solid black",
-                padding: "10px",
                 marginBottom: "10px",
+                padding: "10px",
+                border: "2px solid black",
             }}
         >
-            {/* <select
-                style={{ marginBottom: "10px" }}
-                value={id}
-                onChange={(e) => {
-                    setFieldValue(`ingredients[${i}].id`, +e.target.value);
-
-                    const newUsedIngredients = [...usedIngredients];
-                    const idIndex = newUsedIngredients.indexOf(id);
-                    newUsedIngredients.splice(idIndex, 1, +e.target.value);
-                    setUsedIngredients(newUsedIngredients);
-                }}
-                name={`ingredients[${i}].id`}
-            >
-                {ingredients
-                    .filter(
-                        (ingredient) =>
-                            !usedIngredients.includes(ingredient.id) ||
-                            ingredient.id === id
-                    )
-                    .map((ingredient) => (
-                        <option key={ingredient.id} value={ingredient.id}>
-                            {ingredient.name}
-                        </option>
-                    ))}
-            </select> */}
-            <ChooseFromListComponent
-                id={id}
-                list={ingredients.filter(
-                    (ingredient) =>
-                        ingredient.id === id ||
-                        !usedIngredients.includes(ingredient.id)
-                )}
-                name={"ингредиент"}
-                usedIngredients={usedIngredients}
-                setFieldValue={setFieldValue}
-                setUsedIngredients={setUsedIngredients}
-            />
             <div>
-                <label htmlFor={`ingredient${i}_amount`}>
+                <List
+                    height={150}
+                    itemCount={ingredientsList.length}
+                    itemSize={35}
+                    width={300}
+                >
+                    {Ingredient}
+                </List>
+            </div>
+            <p>Выбранный ингредиент: {currentName}</p>
+            <div>
+                <label htmlFor={`ingredient${currentNumber}_amount`}>
                     Количество{`(${getUnitName(unitId)})`}
                 </label>
                 <input
-                    id={`ingredient${i}_amount`}
+                    id={`ingredient${currentNumber}_amount`}
                     type="number"
-                    value={amount}
+                    value={currentAmount}
                     onChange={handleChange}
-                    name={`ingredients[${i}].amount`}
+                    name={`ingredients[${currentNumber}].amount`}
                 />
+                <Error>
+                    {typeof errors === "object" && errors[currentNumber]
+                        ? errors[currentNumber].amount
+                        : null}
+                </Error>
             </div>
+            <button
+                type="button"
+                onClick={() => {
+                    setFieldValue(
+                        "ingredients",
+                        [...usedIngredients].filter(
+                            (ingredient) => ingredient.id !== currentId
+                        )
+                    );
+                }}
+            >
+                Удалить текущий ингрендиент
+            </button>
         </div>
     );
 };

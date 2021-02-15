@@ -3,35 +3,62 @@ import styled from "styled-components";
 import FormInput from "../../Inputs/FormInput";
 import FormTextarea from "../../Inputs/FormTextArea";
 
+const Error = styled.div`
+    color: red;
+`;
+
 const Step = styled.div`
+    padding: 10px;
+    border: 2px solid black;
     display: flex;
     flex-direction: column;
     margin-bottom: 10px;
 `;
 
 const AddRecipeFormStep = ({
-    number,
+    index,
     name,
     description,
     image,
+    recipeSteps,
+    errors,
+    touched,
     handleChange,
+    setFieldValue,
 }) => {
+    console.log(touched);
     return (
         <Step>
-            <p>Шаг № {number}</p>
-            <label htmlFor={`step${number}_name`}>Название</label>
+            <p>Шаг № {index + 1}</p>
+            <label htmlFor={`step${index + 1}_name`}>Название</label>
             <FormInput
                 value={name}
                 onChange={handleChange}
-                name={`steps[${number - 1}].name`}
+                name={`steps[${index}].name`}
             />
-            <label htmlFor={`step${number}_description`}>Описание</label>
+            {typeof errors === "object" && errors[index].name ? (
+                <Error>{errors[index].name}</Error>
+            ) : null}
+            <label htmlFor={`step${index + 1}_description`}>Описание</label>
             <FormTextarea
                 value={description}
                 onChange={handleChange}
-                name={`steps[${number - 1}].description`}
-                id={`step${number}`}
+                name={`steps[${index}].description`}
+                id={`step${index + 1}`}
             />
+            {typeof errors === "object" && errors[index].description ? (
+                <Error>{errors[index].description}</Error>
+            ) : null}
+            <button
+                onClick={() => {
+                    setFieldValue(
+                        "steps",
+                        [...recipeSteps].filter((step, i) => i !== index)
+                    );
+                }}
+            >
+                Удалить текущий шаг
+            </button>
         </Step>
     );
 };
