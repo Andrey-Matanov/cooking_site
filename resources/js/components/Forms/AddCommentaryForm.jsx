@@ -13,7 +13,7 @@ const AddCommentaryForm = ({ recipeId }) => {
             text: "",
         },
         onSubmit: ({ text }) => {
-            dispatch(addCommentary(recipeId, text));
+            dispatch(addCommentary(recipeId, 5, text));
         },
     });
 
