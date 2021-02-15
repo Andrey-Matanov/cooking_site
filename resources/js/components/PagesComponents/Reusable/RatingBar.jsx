@@ -16,7 +16,6 @@ const RatingBar = ({ rating }) => {
 
     const ratingRounded = Math.floor(rating / 0.5) * 0.5;
 
-    console.log(ratingRounded)
     const renderScale = Array(5)
         .fill(5)
         .map((item, i) =>

@@ -29,8 +29,8 @@ export const fetchIngredientsAndRecipes = () => async (dispatch) => {
     });
 };
 
-export const fetchRecipesAndCategories = (currentLastId) => async (dispatch) => {
-    const recipesResponse = await fetch(`${baseURL}/api/nextrecipes/${currentLastId}`);
+export const fetchRecipesAndCategories = (currentLastId, category='') => async (dispatch) => {
+    const recipesResponse = await fetch(`${baseURL}/api/recipes/?amount=10&last=${currentLastId}&category=${category}`);
     const recipesJson = await recipesResponse.json();
     const categoriesResponse = await fetch(`${baseURL}/api/categories`);
     const categoriesJson = await categoriesResponse.json();
