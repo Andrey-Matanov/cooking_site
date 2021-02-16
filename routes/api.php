@@ -30,6 +30,8 @@ Route::post('/addrecipe', [RecipesController::class, 'addRecipe'])->name('addRec
 Route::get('/recipes', [RecipesController::class, 'index'])->name('recipes');
 Route::get('/recipes/{id}', [RecipesController::class, 'recipe'])->where('id', '[0-9]+')->name('recipe');
 Route::get('/nextrecipes/{id}', [RecipesController::class, 'nextrecipes'])->where('id', '[0-9]+')->name('nextrecipes');
+Route::post('/recipes/update/{id}', [RecipesController::class, 'update'])->name('recipes.update');
+Route::delete('/recipes/delete/{id}', [RecipesController::class, 'delete'])->name('recipes.delete');
 
 Route::apiResource('ingredients', IngredientsController::class);
 Route::apiResource('reviews', ReviewsController::class);
