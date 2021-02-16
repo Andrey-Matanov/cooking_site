@@ -24,10 +24,14 @@ class ReviewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Reviews $reviews)
+    public function store(Request $request)
     {
-        $reviews->create($request->all()) ? $status = true : $status = false;
-
+        $data = json_decode($request->getContent(),true);
+        $review = new Reviews();
+        $review->recipe_id = $data['recipe_id'];
+        $review->author_id = 1;
+        $review->description = $data['description'];
+        ($review->save()) ? $status = true : $status = false;
         return response()->json(['status' => $status]);
     }
 
@@ -51,9 +55,15 @@ class ReviewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Reviews::find($id)->update($request->all()) ? $status = true : $status = false;
+        $id = (int)$id;
+        $data = json_decode($request->getContent(),true);
+        $review = Reviews::find($id);
+        $review->recipe_id = $data['recipe_id'];
+        $review->description = $data['description'];
+        ($review->save()) ? $status = true : $status = false;
 
         return response()->json(['status' => $status]);
+
     }
 
     /**

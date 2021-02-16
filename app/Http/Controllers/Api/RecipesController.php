@@ -85,6 +85,7 @@ class RecipesController extends Controller
      */
     public function update(Request $request, int $id)
     {
+        $id = (int)$id;
         //
     }
 
@@ -95,6 +96,7 @@ class RecipesController extends Controller
      */
     public function destroy($id)
     {
+        $id = (int)$id;
         Recipe::destroy($id);
     }
 
