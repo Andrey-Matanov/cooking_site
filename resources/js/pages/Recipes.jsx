@@ -64,7 +64,6 @@ const Recipes = () => {
 
     return (
         <Container maxWidth='lg'>
-            ASASDFSFGDGFGHFHJGJHGJK
             <Box mt={3}>
                 <Typography variant='h3'>Рецепты</Typography>
             </Box>
