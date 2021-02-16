@@ -68,9 +68,11 @@ class RecipesController extends Controller
     public function addRecipe(Request $request)
     {
         $data = json_decode($request->getContent(),true);
-        ($this->recipeService->saveRecipe($data))?$result = 'success':$result = 'fail';
+        $id = $this->recipeService->saveRecipe($data);
+        ($id)?$result = 'success':$result = 'fail';
         return response()->json([
-            'status' => $result
+            'status' => $result,
+            'id' => $id
         ]);
     }
 

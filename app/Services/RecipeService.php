@@ -26,7 +26,6 @@ class RecipeService
 
     public function saveRecipe($data)
     {
-        //$author = $data['author'];
         $author = 1;
         $name = $data['name'];
         $description = $data['description'];
@@ -47,8 +46,7 @@ class RecipeService
         $recipe->image = '';
         $recipe->save();
 
-        $newRecipe = Recipe::orderBy('id', 'desc')->first();
-        $idRecipe = $newRecipe->id;
+        $idRecipe = $recipe->id;
 
         for ($i = 0; $i < count($ingredients); $i++){
             $ingredient = new IngredientInRecipe();
@@ -70,7 +68,7 @@ class RecipeService
 
         DB::commit();
 
-        return true;
+        return $idRecipe;
     }
 
     public function giveBunchRecipes($data)
@@ -87,11 +85,11 @@ class RecipeService
         if ($amount < 1) $amount = 10;
         if ($last < 0)  $last = 0;
 
-        $recipes = DB::table('recipes')->select('recipes.image','recipes.catalog_id','recipes.time','recipes.rating', 'recipes.complexity','recipes.id', 'recipes.name', 'recipes.status', 'users.name as author', 'users.id as author_id','recipes.description')->where('recipes.id','>',$last)->orderBy('recipes.id', 'asc')->join('users', 'recipes.author_id', '=', 'users.id')->limit($amount)->get();
-
         if (isset($data['category'])) {
             $category = (int)$data['category'];
             $recipes = DB::table('recipes')->select('recipes.image','recipes.catalog_id','recipes.time','recipes.rating', 'recipes.complexity','recipes.id', 'recipes.name', 'recipes.status', 'users.name as author', 'users.id as author_id','recipes.description')->where('catalog_id','=',$category)->where('recipes.id','>',$last)->orderBy('recipes.id', 'asc')->join('users', 'recipes.author_id', '=', 'users.id')->limit($amount)->get();
+        }else{
+            $recipes = DB::table('recipes')->select('recipes.image','recipes.catalog_id','recipes.time','recipes.rating', 'recipes.complexity','recipes.id', 'recipes.name', 'recipes.status', 'users.name as author', 'users.id as author_id','recipes.description')->where('recipes.id','>',$last)->orderBy('recipes.id', 'asc')->join('users', 'recipes.author_id', '=', 'users.id')->limit($amount)->get();
         }
 
         $maxIdInBunch = $recipes->max('id');
@@ -100,6 +98,5 @@ class RecipeService
 
         return array($recipes, $isLastRecipes);
     }
-
 
 }
