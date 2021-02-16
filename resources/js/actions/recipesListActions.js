@@ -21,6 +21,7 @@ export const addCommentary = (recipeId, userId, text) => async (dispatch) => {
     });
     const data = await response.json();
     console.log(data);
+    dispatch({ type: SUCCESS });
 };
 
 export const fetchRecipes = (currentLastId, category='') => async (dispatch) => {
