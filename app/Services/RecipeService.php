@@ -24,7 +24,7 @@ class RecipeService
         return array($recipe, $ingredients, $reviews,$steps);
     }
 
-    public function saveRecipe($data)
+    public function saveRecipe($data, $id)
     {
         $author = 1;
         $name = $data['name'];
@@ -36,7 +36,7 @@ class RecipeService
         $steps= $data['steps'];
 
         DB::beginTransaction();
-        $recipe = new Recipe();
+        $id ? $recipe = Recipe::find($id) : $recipe = new Recipe();
         $recipe->name = $name;
         $recipe->author_id = $author;
         $recipe->description = $description;
