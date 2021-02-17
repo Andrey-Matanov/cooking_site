@@ -66,7 +66,7 @@ class IngredientsController extends Controller
     {
         $id = (int)$id;
         $data = json_decode($request->getContent(),true);
-        $ingredient = Ingredients::find($id);
+        $ingredient = Ingredients::findOrFail($id);
         $ingredient->name = $data['name'];
         $ingredient->unit_id = $data['unit_id'];
         $ingredient->product_fat = $data['product_fat'];
@@ -78,7 +78,6 @@ class IngredientsController extends Controller
         }else{
             return response()->json(['status' => false]);
         }
-
     }
 
     /**

@@ -108,4 +108,21 @@ class RecipeService
         return array($recipes, $isLastRecipes);
     }
 
+    public function solvingNewRating($id,$mark)
+    {
+        $id = (int)$id;
+        $mark = (int)$mark;
+        if ($mark < 0) $mark = 0;
+        if ($mark > 5) $mark = 5;
+        $recipe = Recipe::findOrFail($id);
+        $rating = $recipe->rating;
+        $count_mark = $recipe->count_mark;
+        $rating = ($rating * $count_mark + $mark) / ($count_mark + 1);
+        $recipe->rating = $rating;
+        $recipe->count_mark++;
+        $result = ($recipe->save())?'success':'fail';
+
+        return $result;
+    }
+
 }
