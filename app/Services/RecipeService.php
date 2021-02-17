@@ -13,6 +13,7 @@ class RecipeService
 {
     public function giveOneRecipe($id)
     {
+
         $recipe = DB::table('recipes')->select('recipes.image as image','recipes.time as time','recipes.rating as rating', 'recipes.complexity as complexity','recipes.id as id', 'recipes.name', 'recipes.status', 'recipes.name as name', 'users.name as user_name', 'catalog.name as catalog_name','recipes.description')->where('recipes.id',$id)->join('catalog','recipes.catalog_id', '=', 'catalog.id')->join('users', 'recipes.author_id', '=', 'users.id')->get();
 
         $ingredients = DB::table('ingredients_in_recipes')->select('ingredients.name as ingredient_name', 'ingredients_in_recipes.count as count','units.name as unit_name','ingredients.product_fat as fat', 'ingredients.product_protein as protein', 'ingredients.product_carb as carb', 'ingredients.calorie','ingredients.id as ingredient_id')->where('ingredients_in_recipes.recipe_id','=',$id)->join('ingredients','ingredients_in_recipes.ingredient_id','=','ingredients.id')->join('units','ingredients.unit_id','=','units.id')->get();
@@ -36,7 +37,15 @@ class RecipeService
         $steps= $data['steps'];
 
         DB::beginTransaction();
-        $id ? $recipe = Recipe::find($id) : $recipe = new Recipe();
+        if ($id) {
+            $recipe = Recipe::find($id);
+            IngredientInRecipe::where('recipe_id','=',$id)->delete();
+            Step::where('recipe_id','=',$id)->delete();
+        }
+        else{
+            $recipe = new Recipe();
+        }
+
         $recipe->name = $name;
         $recipe->author_id = $author;
         $recipe->description = $description;
