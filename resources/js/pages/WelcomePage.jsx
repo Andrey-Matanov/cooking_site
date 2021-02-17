@@ -17,7 +17,7 @@ const WelcomePage = () => {
         e.preventDefault();
 
         const loginURL = `${baseURL}/api/login`;
-        const getInfoURL = `${baseURL}/api/get-user`;
+        // const getInfoURL = `${baseURL}/api/get-user`;
 
         const userData = {
             email,
