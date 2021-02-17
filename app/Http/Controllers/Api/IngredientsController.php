@@ -25,9 +25,17 @@ class IngredientsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Ingredients $ingredient)
+    public function store(Request $request)
     {
-        $ingredient->fill($request->all());
+        $data = json_decode($request->getContent(),true);
+        $ingredient = new Ingredients();
+        $ingredient->name = $data['name'];
+        $ingredient->unit_id = $data['unit_id'];
+        $ingredient->product_fat = $data['product_fat'];
+        $ingredient->product_protein = $data['product_protein'];
+        $ingredient->product_carb = $data['product_carb'];
+        $ingredient->calorie = $data['calorie'];
+
         if( $ingredient->save()){
             return response()->json(['status' => true]);
         }else{
@@ -54,9 +62,17 @@ class IngredientsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request,  Ingredients $ingredient)
+    public function update(Request $request,$id)
     {
-        $ingredient->fill($request->all());
+        $id = (int)$id;
+        $data = json_decode($request->getContent(),true);
+        $ingredient = Ingredients::find($id);
+        $ingredient->name = $data['name'];
+        $ingredient->unit_id = $data['unit_id'];
+        $ingredient->product_fat = $data['product_fat'];
+        $ingredient->product_protein = $data['product_protein'];
+        $ingredient->product_carb = $data['product_carb'];
+        $ingredient->calorie = $data['calorie'];
         if( $ingredient->save()){
             return response()->json(['status' => true]);
         }else{
