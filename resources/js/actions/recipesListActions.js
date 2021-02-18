@@ -8,14 +8,18 @@ export const FETCH_ERROR = "@@recipesList/FETCH_ERR";
 export const CATEGORY_CHANGE = "@@recipesList/CATEGORY_CHANGE";
 
 export const addCommentary = (recipeId, userId, text) => async (dispatch) => {
-    console.log('data');
-    const response = await fetch(`${baseURL}/api/reviews`, {
-        method: "POST",
-        body: JSON.stringify({recipe_id: recipeId, author_id: userId, description: text}),
-    });
-    const data = await response.json();
-    console.log(data);
-    dispatch({ type: SUCCESS });
+
+    try {
+        const response = await fetch(`${baseURL}/api/reviews`, {
+            method: "POST",
+            body: JSON.stringify({recipe_id: recipeId, author_id: userId, description: text}),
+        });
+        const data = await response.json();
+
+        dispatch({ type: SUCCESS });
+    } catch (err) {
+        dispatch({ type: FETCH_ERROR });
+    }
 };
 
 export const fetchRecipes = (currentLastId, category='') => async (dispatch) => {
