@@ -110,10 +110,11 @@ class RecipesController extends Controller
         return response()->json(['status' => $status]);
     }
 
-    public function giveMark($id, $mark)
+    public function giveMark(Request $request)
     {
+        $data = json_decode($request->getContent(),true);
         return response()->json([
-                    'status' => $this->recipeService->solvingNewRating($id, $mark)
+                    'status' => $this->recipeService->solvingNewRating($data)
         ]);
     }
 

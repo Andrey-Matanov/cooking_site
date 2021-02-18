@@ -26,7 +26,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('mark/{id}/{mark}', [RecipesController::class, 'giveMark'])->where('id', '[0-9]+')->where('mark', '[0-9]+');
+Route::post('mark', [RecipesController::class, 'giveMark']);
 
 Route::apiResource('recipes', RecipesController::class);
 Route::apiResource('ingredients', IngredientsController::class);
