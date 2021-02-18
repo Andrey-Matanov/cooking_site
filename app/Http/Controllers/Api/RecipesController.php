@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use App\Models\Recipe;
-use App\Services\RecipeService;
 use Illuminate\Http\Request;
+use App\Services\RecipeService;
+use App\Models\Recipe;
 
 class RecipesController extends Controller
 {
@@ -16,7 +16,12 @@ class RecipesController extends Controller
         $this->recipeService = $recipeService;
     }
 
-    public function index (Request $request)
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index(Request $request)
     {
         $data = $request->only(['amount','last','category','author_id']);
 
@@ -28,14 +33,34 @@ class RecipesController extends Controller
                 'isLastRecipes' => $isLastRecipes
             ]);
         }
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        $data = json_decode($request->getContent(),true);
+        $id = $this->recipeService->saveRecipe($data, false);
+        ($id) ? $status = 'success' : $status = 'fail';
         return response()->json([
-            'status' => 'success',
-            'recipes' =>  Recipe::all()
+            'status' => $status,
+            'id' => $id
         ]);
     }
 
-    public function recipe($id)
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
     {
+        $id = (int)$id;
         $res = Recipe::find($id);
         if (!(optional($res)->name)){
             return response()->json([
@@ -52,44 +77,27 @@ class RecipesController extends Controller
         ]);
     }
 
-    public function nextrecipes($id)
-    {
-        $id = (int)$id;
-        $data = ['amount' => 10, 'last' => $id];
-        list ($recipes, $isLastRecipes) = $this->recipeService->giveBunchRecipes($data);
-
-        return response()->json([
-            'status' => 'success',
-            'recipes' =>  $recipes,
-            'isLastRecipes' => $isLastRecipes
-        ]);
-    }
-
-    public function addRecipe(Request $request)
-    {
-        $data = json_decode($request->getContent(),true);
-        $id = $this->recipeService->saveRecipe($data);
-        ($id)?$result = 'success':$result = 'fail';
-        return response()->json([
-            'status' => $result,
-            'id' => $id
-        ]);
-    }
-
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
-     * @param int $id
-     * @return void
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, int $id)
+    public function update(Request $request, $id)
     {
         $id = (int)$id;
-        //
+        $data = json_decode($request->getContent(),true);
+        $id_rec = $this->recipeService->saveRecipe($data, $id);
+        ($id_rec) ? $status = 'success' : $status = 'fail';
+
+        return response()->json([
+            'status' => $status,
+            'id' => $id_rec]);
     }
 
     /**
+     * Remove the specified resource from storage.
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -97,8 +105,16 @@ class RecipesController extends Controller
     public function destroy($id)
     {
         $id = (int)$id;
-        Recipe::destroy($id);
+        Recipe::destroy($id) ? $status = true : $status = false;
+
+        return response()->json(['status' => $status]);
     }
 
+    public function giveMark($id, $mark)
+    {
+        return response()->json([
+                    'status' => $this->recipeService->solvingNewRating($id, $mark)
+        ]);
+    }
 
 }

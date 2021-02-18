@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { baseURL } from "../utils";
 import Login from "./Login";
 
 const WelcomePage = () => {
@@ -11,9 +12,28 @@ const WelcomePage = () => {
     const onPasswordChahge = (e) => {
         setPassword(e.target.value);
     };
-    const onSigninSubmit = (e) => {
+
+    const onSigninSubmit = async (e) => {
         e.preventDefault();
-        console.log("email: " + email + ", password: " + password);
+
+        const loginURL = `${baseURL}/api/login`;
+        // const getInfoURL = `${baseURL}/api/get-user`;
+
+        const userData = {
+            email,
+            password,
+        };
+
+        const jsonData = JSON.stringify(userData);
+        console.log(jsonData);
+
+        const token = await fetch(loginURL, {
+            method: "POST",
+            body: JSON.stringify(userData),
+        });
+        const json = await token.json();
+
+        console.log(json);
     };
 
     return (

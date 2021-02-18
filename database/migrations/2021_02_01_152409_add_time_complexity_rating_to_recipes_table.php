@@ -16,7 +16,8 @@ class AddTimeComplexityRatingToRecipesTable extends Migration
         Schema::table('recipes', function (Blueprint $table) {
             $table->integer('time')->default(1);
             $table->integer('complexity')->default(1);
-            $table->integer('rating')->default(1);
+            $table->float('rating',5,2)->default(1);
+            $table->integer('count_mark')->default(0);
         });
     }
 
@@ -31,6 +32,7 @@ class AddTimeComplexityRatingToRecipesTable extends Migration
             $table->dropColumn('time');
             $table->dropColumn('complexity');
             $table->dropColumn('rating');
+            $table->dropColumn('count_mark');
         });
     }
 }
