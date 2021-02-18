@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -60,11 +61,13 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // if(!(auth->user('role'))) {
-        //     return response()->json(['status' => 'failed']);
-        // }
+
+
         $data = json_decode($request->getContent(),true);
         $user = User::find($id);
+    //    if(Auth::check()) {
+    //     return response()->json(['status' => 'failed']);
+    //    }
         if (isset($data['name'])) {
             $user->name = $data['name'];
         }
@@ -87,11 +90,12 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $id = (int)$id;
-        print_r auth->user();
-        die;
-        if(!(auth->user('isAdmin'))) {
-            return response()->json(['status' => 'failed']);
-        }
+        $user = Auth::user();
+        echo ($user);
+        // die;
+        // if(!(auth()->user['isAdmin'])) {
+        //     return response()->json(['status' => 'failed']);
+        // }
         User::destroy($id) ? $status = true : $status = false;
         return response()->json(['status' => $status]);
     }
