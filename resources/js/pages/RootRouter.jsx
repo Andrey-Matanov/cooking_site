@@ -28,9 +28,7 @@ const RootRouter = () => {
                 <Route path="/login" render={() => <WelcomePage />} />
                 <Route
                     path="/register"
-                    render={() => {
-                        <RegisterPage />;
-                    }}
+                    render={() => <RegisterPage />}
                 />
                 <Route render={() => <Error404 />} />
             </Switch>
