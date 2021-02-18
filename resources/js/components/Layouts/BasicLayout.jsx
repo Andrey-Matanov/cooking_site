@@ -1,7 +1,7 @@
 import React from "react";
 import RootRouter from "../../pages/RootRouter";
 import Footer from "../../components/PagesComponents/Reusable/Footer";
-import Header from "../../components/PagesComponents/Reusable/Header";
+import Header from "../../components/PagesComponents/Reusable/Header/Header";
 
 const BasicLayout = () => {
     return (

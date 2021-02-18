@@ -6,6 +6,7 @@ export const FETCH_RECIPES = "@@recipesList/FETCH_RECIPES";
 export const FETCH_CATEGORIES = "@@recipesList/FETCH_CATEGORIES";
 export const FETCH_ERROR = "@@recipesList/FETCH_ERR";
 export const CATEGORY_CHANGE = "@@recipesList/CATEGORY_CHANGE";
+export const SUCCESS = "@@recipesList/SUCCESS";
 
 // export const addCommentary = (recipeId, text) => ({
 //     type: ADD_COMMENTARY,
@@ -17,15 +18,23 @@ export const CATEGORY_CHANGE = "@@recipesList/CATEGORY_CHANGE";
 export const addCommentary = (recipeId, userId, text) => async (dispatch) => {
     const response = await fetch(`${baseURL}/api/reviews`, {
         method: "POST",
-        body: JSON.stringify({recipe_id: recipeId, author_id: userId, description: text}),
+        body: JSON.stringify({
+            recipe_id: recipeId,
+            author_id: userId,
+            description: text,
+        }),
     });
     const data = await response.json();
     console.log(data);
     dispatch({ type: SUCCESS });
 };
 
-export const fetchRecipes = (currentLastId, category='') => async (dispatch) => {
-    const response = await fetch(`${baseURL}/api/recipes/?amount=10&last=${currentLastId}&category=${category}`);
+export const fetchRecipes = (currentLastId, category = "") => async (
+    dispatch
+) => {
+    const response = await fetch(
+        `${baseURL}/api/recipes/?amount=10&last=${currentLastId}&category=${category}`
+    );
     const data = await response.json();
 
     console.log(data);
@@ -52,7 +61,7 @@ export const fetchCategories = () => async (dispatch) => {
 };
 
 export const addRecipe = (recipe) => async (dispatch) => {
-    const response = await fetch(`${baseURL}/api/addrecipe`, {
+    const response = await fetch(`${baseURL}/api/recipes`, {
         method: "POST",
         body: JSON.stringify(recipe),
     });
@@ -63,11 +72,11 @@ export const addRecipe = (recipe) => async (dispatch) => {
     dispatch({ type: SUCCESS });
 };
 
-export const switchCategory = (newCategory) => async dispatch => {
+export const switchCategory = (newCategory) => async (dispatch) => {
     dispatch({
         type: CATEGORY_CHANGE,
         payload: {
             currentCategory: newCategory,
-        }
-    })
-}
+        },
+    });
+};
