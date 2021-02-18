@@ -38,9 +38,13 @@ Route::apiResource('reviews', ReviewsController::class);
 Route::apiResource('units', UnitController::class);
 Route::apiResource('categories', CategoryController::class);
 
+
+
 Route::post('register', [PassportAuthController::class, 'register']);
 Route::post('login', [PassportAuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
     Route::get('get-user', [PassportAuthController::class, 'userInfo']);
 });
+
+Route::apiResource('users', UserController::class);
