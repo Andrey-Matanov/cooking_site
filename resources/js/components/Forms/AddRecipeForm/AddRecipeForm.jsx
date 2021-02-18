@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
@@ -31,6 +31,7 @@ const FormItem = styled.div`
 
 const AddRecipeFormik = ({ ingredients, categories }) => {
     const dispatch = useDispatch();
+    const currentUserId = useSelector((state) => state.profile.userId);
 
     const [recipeNutrition, setRecipeNutrition] = useState({
         calories: 0,
@@ -79,6 +80,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
         <Formik
             initialValues={{
                 name: "",
+                authorId: currentUserId,
                 category_id: 1,
                 time: 0,
                 difficulty: "1",

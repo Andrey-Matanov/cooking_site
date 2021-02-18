@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import Paper from "@material-ui/core/Paper";
 import CssBaseline from "@material-ui/core/CssBaseline";
 import TextField from "@material-ui/core/TextField";
@@ -7,9 +6,9 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
+import Link from "@material-ui/core/Link";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
-import { baseURL } from "../utils";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -40,12 +39,14 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Login = ({
-    onSigninSubmit,
+const Register = ({
+    onRegisterSubmit,
+    name,
+    onNameChange,
     email,
     onEmailChange,
     password,
-    onPasswordChahge,
+    onPasswordChange,
 }) => {
     const classes = useStyles();
 
@@ -67,13 +68,26 @@ const Login = ({
                         <LockOutlinedIcon />
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Заходите на сайт, всегда Вам рады!
+                        Регистрация
                     </Typography>
                     <form
                         className={classes.form}
-                        onSubmit={onSigninSubmit}
+                        onSubmit={onRegisterSubmit}
                         noValidate
                     >
+                        <TextField
+                            variant="outlined"
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="name"
+                            label="Имя"
+                            name="name"
+                            autoComplete="name"
+                            autoFocus
+                            value={name}
+                            onChange={onNameChange}
+                        />
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -98,7 +112,7 @@ const Login = ({
                             id="password"
                             autoComplete="current-password"
                             value={password}
-                            onChange={onPasswordChahge}
+                            onChange={onPasswordChange}
                         />
                         <Button
                             type="submit"
@@ -107,17 +121,12 @@ const Login = ({
                             color="primary"
                             className={classes.submit}
                         >
-                            Войти
+                            Зарегистрироваться
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link to="#" variant="body2">
-                                    Забыли пароль?
-                                </Link>
-                            </Grid>
-                            <Grid item>
-                                <Link to="/register" variant="body2">
-                                    Нет учетной записи? Регистрация
+                                <Link to="/login" variant="body2">
+                                    Вернуться на страницу авторизации
                                 </Link>
                             </Grid>
                         </Grid>
@@ -128,4 +137,4 @@ const Login = ({
     );
 };
 
-export default Login;
+export default Register;

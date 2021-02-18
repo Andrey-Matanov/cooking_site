@@ -14,8 +14,11 @@ const AddCommentaryForm = () => {
         initialValues: {
             text: "",
         },
-        onSubmit: ({ text }) => {
+        onSubmit: ({ text }, actions) => {
+            // const jsonStringify = JSON.stringify({recipe_id: recipeId, author_id: 5, description: text})
+            // console.log(jsonStringify);
             dispatch(addCommentary(recipeId, 5, text));
+            actions.resetForm();
         },
     });
 

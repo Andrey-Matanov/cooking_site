@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { baseURL } from "../utils";
 import Login from "./Login";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { fetchUserData } from "../actions/profileActions";
+import { useHistory } from "react-router-dom";
 
 const WelcomePage = () => {
+    const history = useHistory();
+    const dispatch = useDispatch();
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -17,23 +23,21 @@ const WelcomePage = () => {
         e.preventDefault();
 
         const loginURL = `${baseURL}/api/login`;
-        // const getInfoURL = `${baseURL}/api/get-user`;
-
         const userData = {
             email,
             password,
         };
 
-        const jsonData = JSON.stringify(userData);
-        console.log(jsonData);
-
-        const token = await fetch(loginURL, {
-            method: "POST",
-            body: JSON.stringify(userData),
-        });
-        const json = await token.json();
-
-        console.log(json);
+        const response = await axios.post(loginURL, userData);
+        window.localStorage.setItem("currentUserToken", response.data.token);
+        dispatch(
+            fetchUserData({
+                userId: response.data.userid,
+                userName: response.data.username,
+                userEmail: response.data.useremail,
+            })
+        );
+        history.push("/");
     };
 
     return (

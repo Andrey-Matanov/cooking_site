@@ -6,7 +6,7 @@ import { recipeReducer } from "./recipeReducer.js";
 import { reviewsReducer } from "./reviewsReducer.js";
 import { ingredientsReducer } from "./ingredientsReducer";
 import { categoriesReducer } from "./categoriesReducer";
-import profileReducer from "./profileReducers";
+import { profileReducer } from "./profileReducers";
 
 export default combineReducers({
     recipesObject: recipesListReducer,
