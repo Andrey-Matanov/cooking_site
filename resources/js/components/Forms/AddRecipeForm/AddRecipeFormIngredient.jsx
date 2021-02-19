@@ -9,6 +9,7 @@ const Error = styled.div`
 const AddRecipeFormIngredient = ({
     currentNumber,
     currentId,
+    currentName,
     currentAmount,
     ingredients,
     errors,
@@ -20,45 +21,42 @@ const AddRecipeFormIngredient = ({
     const getUnitName = (unitId) =>
         ["граммы", "миллилитры", "штуки", "ч.л.", "ст.л."][unitId - 1];
 
-    const currentName = ingredients.find(
-        (ingredient) => ingredient.id === currentId
-    ).name;
-
-    const ingredientsList = ingredients.filter((ingredient) => {
-        return (
-            ingredient.id === currentId ||
-            !usedIngredients.some(
-                (usedIngredient) => usedIngredient.id === ingredient.id
-            )
-        );
-    });
-
     useEffect(() => {
         if (ingredients.length) {
             console.log("Ingredient" + currentName + " - rerender");
         }
     });
 
-    const Ingredient = ({ index, style }) => (
-        <button
-            onClick={() =>
-                setFieldValue(
-                    `ingredients[${currentNumber}].id`,
-                    ingredientsList[index].id
-                )
-            }
-            type="button"
-            style={{
-                ...style,
-                color:
-                    ingredientsList[index].name === currentName
+    const Ingredient = ({ index, style }) => {
+        const isCurrent = ingredients[index].id === currentId;
+        const isDisabled =
+            usedIngredients.some(
+                (ingredient) => ingredient.id === ingredients[index].id
+            ) && ingredients[index].id !== currentId;
+
+        return (
+            <button
+                disabled={isDisabled}
+                onClick={() =>
+                    setFieldValue(
+                        `ingredients[${currentNumber}].id`,
+                        ingredients[index].id
+                    )
+                }
+                type="button"
+                style={{
+                    ...style,
+                    color: isCurrent
                         ? "green"
+                        : isDisabled
+                        ? "lightray"
                         : "black",
-            }}
-        >
-            {ingredientsList[index].name}
-        </button>
-    );
+                }}
+            >
+                {ingredients[index].name}
+            </button>
+        );
+    };
 
     return (
         <div
@@ -71,7 +69,7 @@ const AddRecipeFormIngredient = ({
             <div>
                 <List
                     height={150}
-                    itemCount={ingredientsList.length}
+                    itemCount={ingredients.length}
                     itemSize={35}
                     width={300}
                 >
