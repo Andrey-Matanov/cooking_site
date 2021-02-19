@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\api\CatalogController;
-use App\Http\Controllers\api\CategoryController;
+use App\Http\Controllers\Api\CatalogController;
+use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\Api\RecipesController;
 use App\Http\Controllers\Api\IngredientsController;
 use App\Http\Controllers\Api\ReviewsController;
@@ -10,8 +10,8 @@ use App\Http\Controllers\Api\UnitController;
 use App\Http\Middleware\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\PassportAuthController;
-use App\Http\Controllers\API\ProductController;
+use App\Http\Controllers\Api\PassportAuthController;
+use App\Http\Controllers\Api\ProductController;
 
 /*
 |--------------------------------------------------------------------------
