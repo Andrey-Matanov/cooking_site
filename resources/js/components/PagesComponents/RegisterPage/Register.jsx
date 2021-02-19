@@ -6,9 +6,14 @@ import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
-import Link from "@material-ui/core/Link";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
+import styled from "styled-components";
+import { Link } from "react-router-dom";
+
+const Error = styled.div`
+    color: red;
+`;
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -39,15 +44,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const Register = ({
-    onRegisterSubmit,
-    name,
-    onNameChange,
-    email,
-    onEmailChange,
-    password,
-    onPasswordChange,
-}) => {
+const Register = ({ values, errors, handleChange, handleSubmit }) => {
     const classes = useStyles();
 
     return (
@@ -70,11 +67,7 @@ const Register = ({
                     <Typography component="h1" variant="h5">
                         Регистрация
                     </Typography>
-                    <form
-                        className={classes.form}
-                        onSubmit={onRegisterSubmit}
-                        noValidate
-                    >
+                    <form className={classes.form} onSubmit={handleSubmit}>
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -85,9 +78,10 @@ const Register = ({
                             name="name"
                             autoComplete="name"
                             autoFocus
-                            value={name}
-                            onChange={onNameChange}
+                            value={values.name}
+                            onChange={handleChange}
                         />
+                        {errors.name ? <Error>{errors.name}</Error> : null}
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -98,9 +92,10 @@ const Register = ({
                             name="email"
                             autoComplete="email"
                             autoFocus
-                            value={email}
-                            onChange={onEmailChange}
+                            value={values.email}
+                            onChange={handleChange}
                         />
+                        {errors.email ? <Error>{errors.email}</Error> : null}
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -111,9 +106,12 @@ const Register = ({
                             type="password"
                             id="password"
                             autoComplete="current-password"
-                            value={password}
-                            onChange={onPasswordChange}
+                            value={values.password}
+                            onChange={handleChange}
                         />
+                        {errors.password ? (
+                            <Error>{errors.password}</Error>
+                        ) : null}
                         <Button
                             type="submit"
                             fullWidth

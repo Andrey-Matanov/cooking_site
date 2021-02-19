@@ -9,7 +9,7 @@ import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import LockOutlinedIcon from "@material-ui/icons/LockOutlined";
 import { makeStyles } from "@material-ui/core/styles";
-import { baseURL } from "../utils";
+import { baseURL } from "../../../utils";
 
 const useStyles = makeStyles((theme) => ({
     root: {
