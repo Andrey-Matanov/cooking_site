@@ -32,27 +32,16 @@ const Header = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
+        console.log("header rerender");
+    });
+
+    useEffect(() => {
+        console.log(window.localStorage.getItem("currentUserToken"));
+
         if (window.localStorage.getItem("currentUserToken") && !userLoggedIn) {
-            axios
-                .get(`${baseURL}/api/get-user`, {
-                    headers: {
-                        Authorization: `Bearer ${window.localStorage.getItem(
-                            "currentUserToken"
-                        )}`,
-                    },
-                })
-                .then((responseData) =>
-                    dispatch(
-                        getUserDataByToken({
-                            userId: responseData.data.user.id,
-                            userName: responseData.data.user.name,
-                            userEmail: responseData.data.user.email,
-                        })
-                    )
-                )
-                .catch(console.log);
+            dispatch(getUserDataByToken());
         }
-    }, []);
+    }, [dispatch]);
 
     return (
         <div className={classes.root}>

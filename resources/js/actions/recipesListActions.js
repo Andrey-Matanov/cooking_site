@@ -61,6 +61,11 @@ export const addRecipe = (recipe) => async (dispatch) => {
     const response = await fetch(`${baseURL}/api/recipes`, {
         method: "POST",
         body: JSON.stringify(recipe),
+        headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+                "currentUserToken"
+            )}`,
+        },
     });
 
     console.log(response);

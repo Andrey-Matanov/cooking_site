@@ -27,7 +27,7 @@ export const profileReducer = (
             };
         }
         case FETCH_USER_RECIPES: {
-            return { ...profile, recipes: action.payload.userRecipes };
+            return { ...profile, userRecipes: action.payload.userRecipes };
         }
         case USER_LOGOUT: {
             return {
