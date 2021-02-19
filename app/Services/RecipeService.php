@@ -25,9 +25,9 @@ class RecipeService
         return array($recipe, $ingredients, $reviews,$steps);
     }
 
-    public function saveRecipe($data, $id)
+    public function saveRecipe($data, $id, $user_id)
     {
-        $author = 1;
+        $author = (int)$user_id;
         $name = $data['name'];
         $description = $data['description'];
         $time = $data['time'];

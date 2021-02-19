@@ -26,6 +26,9 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('register', [PassportAuthController::class, 'register']);
+Route::post('login', [PassportAuthController::class, 'login']);
+
 Route::post('mark', [RecipesController::class, 'giveMark']);
 
 Route::apiResource('recipes', RecipesController::class);
@@ -34,9 +37,7 @@ Route::apiResource('reviews', ReviewsController::class);
 Route::apiResource('units', UnitController::class);
 Route::apiResource('categories', CategoryController::class);
 
-Route::post('register', [PassportAuthController::class, 'register']);
-Route::post('login', [PassportAuthController::class, 'login']);
-
 Route::middleware('auth:api')->group(function () {
     Route::get('get-user', [PassportAuthController::class, 'userInfo']);
 });
+
