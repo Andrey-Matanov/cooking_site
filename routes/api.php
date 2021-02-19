@@ -35,21 +35,19 @@ Route::apiResource('ingredients', IngredientsController::class);
 Route::apiResource('reviews', ReviewsController::class);
 Route::apiResource('units', UnitController::class);
 Route::apiResource('categories', CategoryController::class);
-
+Route::apiResource('users', UsersController::class);
 
 
 Route::post('register', [PassportAuthController::class, 'register']);
 Route::post('login', [PassportAuthController::class, 'login']);
 
 Route::middleware('auth:api')->group(function () {
-    Route::get('get-user', [PassportAuthController::class, 'userInfo'])->name('get-user');
-    Route::post('users/{id}', [UsersController::class, 'update'])->name('update_user');
+    Route::get('get-user', [PassportAuthController::class, 'userinfo'])->name('get-user');
+
 });
 
-Route::middleware('admin')->group(function () {
-    Route::delete('users/{id}', [UsersController::class, 'destroy'])->name('delete_user');
-});
 
-Route::get('users', [UsersController::class, 'index'])->name('users');
-Route::put('users', [UsersController::class, 'store'])->name('save_user');
+
+
+
 

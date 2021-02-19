@@ -4,11 +4,18 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
+use \App\Http\Middleware\Authenticate;
 use App\Models\User;
+use App\Http\Middleware\Admin;
 use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
+    public function __construct() {
+        $this->middleware ('auth:api')->only('store', 'update', 'destroy');
+        $this->middleware (['admin'])->only('destroy');
+    }
+
     // protected $isAdmin = session('isAdmin');
 
     /**
@@ -85,6 +92,12 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $id = (int)$id;
+        $user=auth()->user();
+        if(!$user['isAdmin']) {
+            if(!$user['id'] == $id) {
+                return json(['status' => false]);
+            }
+        }
         User::destroy($id) ? $status = true : $status = false;
         return response()->json(['status' => $status]);
     }

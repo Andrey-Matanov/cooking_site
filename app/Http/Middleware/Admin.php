@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Support\Facades\Auth;
+use \App\Http\Middleware\Authenticate;
 
 use Illuminate\Http\Request;
 
