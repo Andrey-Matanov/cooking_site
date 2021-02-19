@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { baseURL } from "../utils";
-import Login from "./Login";
+import Login from "../components/PagesComponents/LoginPage/Login";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { fetchUserData } from "../actions/profileActions";

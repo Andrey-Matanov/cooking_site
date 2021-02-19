@@ -1,11 +1,11 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Authors = ({ users }) => {
     return (
         <>
-            <h1>Рейтинг авторов</h1>
+            {/* <h1>Рейтинг авторов</h1>
             <div className='users'>
                 {users.map((user, i) => (
                     <div key={i}>
@@ -21,7 +21,8 @@ const Authors = ({ users }) => {
                         </p>
                     </div>
                 ))}
-            </div>
+            </div> */}
+            <h1>Страница временно недоступна</h1>
         </>
     );
 };

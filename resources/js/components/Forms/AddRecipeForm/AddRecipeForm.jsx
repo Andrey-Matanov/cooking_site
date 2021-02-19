@@ -8,6 +8,12 @@ import AddRecipeFormStep from "./AddRecipeFormStep";
 import AddRecipeFormIngredient from "./AddRecipeFormIngredient";
 import FormTextarea from "../../Inputs/FormTextArea";
 import FormInput from "../../Inputs/FormInput";
+import {
+    fetchUserData,
+    fetchUserRecipes,
+    getUserDataByToken,
+} from "../../../actions/profileActions";
+import { useHistory } from "react-router-dom";
 // import AddRecipeNutrition from "./AddRecipeNutrition";
 
 const AddRecipeForm = styled.form`
@@ -31,6 +37,7 @@ const FormItem = styled.div`
 
 const AddRecipeFormik = ({ ingredients, categories }) => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const currentUserId = useSelector((state) => state.profile.userId);
 
     const [recipeNutrition, setRecipeNutrition] = useState({
@@ -40,7 +47,9 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
         carbs: 0,
     });
 
-    useEffect(() => console.log("addRecipeForm rerender"));
+    useEffect(() => {
+        console.log("addRecipeForm rerender");
+    });
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Название не должно быть пустым"),
@@ -90,8 +99,9 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
             }}
             validationSchema={validationSchema}
             onSubmit={(values) => {
-                console.log(values);
                 dispatch(addRecipe(values));
+                dispatch(fetchUserRecipes(currentUserId));
+                history.push(`/profile/${currentUserId}`);
             }}
         >
             {({
@@ -101,8 +111,8 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                 handleChange,
                 handleSubmit,
                 setFieldValue,
-                isValidating,
             }) => {
+                console.log("steps: ", values.steps);
                 const getNewIngredientId = () => {
                     let newIngredientId = 1;
                     const ingredients = values.ingredients;
@@ -209,7 +219,12 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                         key={i}
                                         currentNumber={i}
                                         currentId={ingredient.id}
-                                        currentName={ingredient.name}
+                                        currentName={
+                                            ingredients.find(
+                                                (item) =>
+                                                    item.id === ingredient.id
+                                            ).name
+                                        }
                                         currentAmount={ingredient.amount}
                                         ingredients={ingredients}
                                         errors={errors.ingredients}
@@ -274,11 +289,16 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                             name={name}
                                             description={description}
                                             image={image}
-                                            recipeSteps={values.steps}
                                             errors={errors.steps}
                                             handleChange={handleChange}
-                                            setFieldValue={setFieldValue}
-                                            touched={touched}
+                                            removeCurrentStep={() => {
+                                                setFieldValue(
+                                                    "steps",
+                                                    [...values.steps].filter(
+                                                        (step, j) => j !== i
+                                                    )
+                                                );
+                                            }}
                                         />
                                     )
                                 )}
@@ -289,7 +309,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                 <Error>{errors.steps}</Error>
                             ) : null}
                             <button
-                                onClick={() => {
+                                onClick={() =>
                                     setFieldValue("steps", [
                                         ...values.steps,
                                         {
@@ -298,8 +318,8 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                             image:
                                                 "https://imgholder.ru/600x300/8493a8/adb9ca&text=IMAGE+HOLDER&font=kelson",
                                         },
-                                    ]);
-                                }}
+                                    ])
+                                }
                                 type="button"
                             >
                                 Добавить новый шаг
