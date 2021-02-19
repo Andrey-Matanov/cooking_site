@@ -50,6 +50,6 @@ Route::middleware('admin')->group(function () {
     Route::delete('users/{id}', [UsersController::class, 'destroy'])->name('delete_user');
 });
 
-
-// Route::apiResource('users', UsersController::class);
+Route::get('users', [UsersController::class, 'index'])->name('users');
+Route::put('users', [UsersController::class, 'store'])->name('save_user');
 

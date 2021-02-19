@@ -61,13 +61,8 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-
         $data = json_decode($request->getContent(),true);
         $user = User::find($id);
-    //    if(Auth::check()) {
-    //     return response()->json(['status' => 'failed']);
-    //    }
         if (isset($data['name'])) {
             $user->name = $data['name'];
         }
@@ -90,12 +85,6 @@ class UsersController extends Controller
     public function destroy($id)
     {
         $id = (int)$id;
-        $user = Auth::user();
-        echo ($user);
-        // die;
-        // if(!(auth()->user['isAdmin'])) {
-        //     return response()->json(['status' => 'failed']);
-        // }
         User::destroy($id) ? $status = true : $status = false;
         return response()->json(['status' => $status]);
     }
