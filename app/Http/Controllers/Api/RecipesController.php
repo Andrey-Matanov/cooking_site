@@ -14,6 +14,7 @@ class RecipesController extends Controller
     public function __construct(RecipeService $recipeService)
     {
         $this->recipeService = $recipeService;
+        $this->middleware('auth:api')->only('store','update','giveMark','destroy');
     }
 
     /**
@@ -43,8 +44,9 @@ class RecipesController extends Controller
      */
     public function store(Request $request)
     {
+        $user = auth()->user();
         $data = json_decode($request->getContent(),true);
-        $id = $this->recipeService->saveRecipe($data, false);
+        $id = $this->recipeService->saveRecipe($data, false, $user->id);
         ($id) ? $status = 'success' : $status = 'fail';
         return response()->json([
             'status' => $status,
@@ -87,8 +89,9 @@ class RecipesController extends Controller
     public function update(Request $request, $id)
     {
         $id = (int)$id;
+        $user = auth()->user();
         $data = json_decode($request->getContent(),true);
-        $id_rec = $this->recipeService->saveRecipe($data, $id);
+        $id_rec = $this->recipeService->saveRecipe($data, $id, $user->id);
         ($id_rec) ? $status = 'success' : $status = 'fail';
 
         return response()->json([
