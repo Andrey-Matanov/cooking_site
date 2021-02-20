@@ -11,10 +11,7 @@ import LoginPage from "./LoginPage";
 import AddRecipe from "./AddRecipe";
 import AddArticle from "./AddArticle";
 import RegisterPage from "./RegisterPage";
-<<<<<<< HEAD
 import ImageUpload from "./ImageUpload";
-=======
->>>>>>> f8920fb50345ad7ed0dcbc170b4833ec30ac98d3
 
 const RootRouter = () => {
     return (
@@ -30,10 +27,7 @@ const RootRouter = () => {
                 <Route path="/articles" render={() => <Articles />} />
                 <Route path="/login" render={() => <LoginPage />} />
                 <Route path="/register" render={() => <RegisterPage />} />
-<<<<<<< HEAD
                 <Route path="/image" render={() => <ImageUpload />} />
-=======
->>>>>>> f8920fb50345ad7ed0dcbc170b4833ec30ac98d3
                 <Route render={() => <Error404 />} />
             </Switch>
         </>
