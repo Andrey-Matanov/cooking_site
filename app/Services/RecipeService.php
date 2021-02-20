@@ -98,12 +98,13 @@ class RecipeService
         if (isset($data['category'])) {
             $category = (int)$data['category'];
             $recipes = DB::table('recipes')->select('recipes.image','recipes.catalog_id','recipes.time','recipes.rating', 'recipes.complexity','recipes.id', 'recipes.name', 'recipes.status', 'users.name as author', 'users.id as author_id','recipes.description')->where('catalog_id','=',$category)->where('recipes.id','>',$last)->orderBy('recipes.id', 'asc')->join('users', 'recipes.author_id', '=', 'users.id')->limit($amount)->get();
+            $maxIdRecipes = Recipe::where('catalog_id','=',$category)->max('id');
         }else{
             $recipes = DB::table('recipes')->select('recipes.image','recipes.catalog_id','recipes.time','recipes.rating', 'recipes.complexity','recipes.id', 'recipes.name', 'recipes.status', 'users.name as author', 'users.id as author_id','recipes.description')->where('recipes.id','>',$last)->orderBy('recipes.id', 'asc')->join('users', 'recipes.author_id', '=', 'users.id')->limit($amount)->get();
+            $maxIdRecipes = Recipe::max('id');
         }
 
         $maxIdInBunch = $recipes->max('id');
-        $maxIdRecipes = Recipe::max('id');
         ($maxIdRecipes > $maxIdInBunch)?$isLastRecipes = 0:$isLastRecipes = 1;
 
         return array($recipes, $isLastRecipes);
