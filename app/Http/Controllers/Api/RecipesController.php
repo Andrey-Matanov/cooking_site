@@ -116,8 +116,9 @@ class RecipesController extends Controller
     public function giveMark(Request $request)
     {
         $data = json_decode($request->getContent(),true);
+        $user = auth()->user();
         return response()->json([
-                    'status' => $this->recipeService->solvingNewRating($data)
+                    'status' => $this->recipeService->solvingNewRating($data,$user->id)
         ]);
     }
 

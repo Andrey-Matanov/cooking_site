@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\IngredientInRecipe;
+use App\Models\MarkControl;
 use App\Models\Recipe;
 use App\Models\Step;
 use Illuminate\Support\Facades\DB;
@@ -108,10 +109,21 @@ class RecipeService
         return array($recipes, $isLastRecipes);
     }
 
-    public function solvingNewRating($data)
+    public function solvingNewRating($data,$userId)
     {
         $recipeId  = (int)$data['recipeId'];
         $newMark = (int)$data['newMark'];
+
+        $result = MarkControl::where('recipe_id',$recipeId)->where('user_id',$userId)->count();
+        if ($result != 0) {
+            return 'fail';
+        }
+
+        $control = new MarkControl();
+        $control->recipe_id = $recipeId;
+        $control->user_id = $userId;
+        $control->save();
+
         if ($newMark < 1) $newMark = 1;
         if ($newMark > 5) $newMark = 5;
         $recipe = Recipe::findOrFail($recipeId);
