@@ -12,8 +12,8 @@ const Profile = () => {
     const id = parseInt(params.id);
 
     useEffect(() => {
-        dispatch(fetchUserRecipes(userId));
-    }, [dispatch]);
+        dispatch(fetchUserRecipes(id));
+    }, [dispatch, id]);
 
     const renderedRecipes = userRecipes.length ? (
         userRecipes.map((recipe) => (
