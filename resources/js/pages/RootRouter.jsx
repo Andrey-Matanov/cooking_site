@@ -11,6 +11,7 @@ import LoginPage from "./LoginPage";
 import AddRecipe from "./AddRecipe";
 import AddArticle from "./AddArticle";
 import RegisterPage from "./RegisterPage";
+import ImageUpload from "./ImageUpload";
 
 const RootRouter = () => {
     return (
@@ -26,6 +27,7 @@ const RootRouter = () => {
                 <Route path="/articles" render={() => <Articles />} />
                 <Route path="/login" render={() => <LoginPage />} />
                 <Route path="/register" render={() => <RegisterPage />} />
+                <Route path="/image" render={() => <ImageUpload />} />
                 <Route render={() => <Error404 />} />
             </Switch>
         </>

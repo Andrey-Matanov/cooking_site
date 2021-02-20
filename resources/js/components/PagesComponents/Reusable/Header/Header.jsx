@@ -32,12 +32,6 @@ const Header = () => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        console.log("header rerender");
-    });
-
-    useEffect(() => {
-        console.log(window.localStorage.getItem("currentUserToken"));
-
         if (window.localStorage.getItem("currentUserToken") && !userLoggedIn) {
             dispatch(getUserDataByToken());
         }
