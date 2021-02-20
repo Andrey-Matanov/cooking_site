@@ -15,22 +15,27 @@ class PassportAuthController extends Controller
      */
     public function register(Request $request)
     {
+
         $this->validate($request, [
             'name' => 'required|min:4',
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
-
+        $existuseremail = User::where('email', '=', $request->email)->first();
+        if ($existuseremail === null){
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => \Hash::make($request->password)
         ]);
-
         $token = $user->createToken('Laravel8PassportAuth')->accessToken;
-
-
-        return response()->json(['token' => $token], 200);
+        $data = ['token' => $token, 'access' => 'true'];
+        $status = '200';
+        }else{
+            $data = ['error' => 'Email exist', 'access' => 'false'];
+            $status = '401';
+        }
+        return response()->json($data, $status);
     }
 
     /**
