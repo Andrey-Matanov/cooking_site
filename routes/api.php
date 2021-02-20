@@ -29,6 +29,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('mark', [RecipesController::class, 'giveMark']);
+Route::get('rating', [UsersController::class, 'ratingList']);
 
 Route::apiResource('recipes', RecipesController::class);
 Route::apiResource('ingredients', IngredientsController::class);

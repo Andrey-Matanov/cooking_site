@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 use \App\Http\Middleware\Authenticate;
 use App\Models\User;
@@ -11,9 +12,13 @@ use Illuminate\Http\Request;
 
 class UsersController extends Controller
 {
-    public function __construct() {
+    protected $userService;
+
+    public function __construct(UserService $userService) {
         $this->middleware ('auth:api')->only('store', 'update', 'destroy');
         $this->middleware (['admin'])->only('destroy');
+
+        $this->userService = $userService;
     }
 
     // protected $isAdmin = session('isAdmin');
@@ -101,4 +106,15 @@ class UsersController extends Controller
         User::destroy($id) ? $status = true : $status = false;
         return response()->json(['status' => $status]);
     }
+
+    public function ratingList()
+    {
+        $result = $this->userService->giveRating();
+
+        if ($result) {
+            return response()->json(['status' => 'success','rating'=>$result]);
+        }
+        return response()->json(['status' => 'fail']);
+    }
+
 }
