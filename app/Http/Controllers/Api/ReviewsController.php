@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Reviews;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ReviewsController extends Controller
 {
@@ -55,6 +56,9 @@ class ReviewsController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if (! Gate::allows('update-review', $id)) {
+            abort(403);
+        }
         $id = (int)$id;
         $data = json_decode($request->getContent(),true);
         $review = Reviews::find($id);

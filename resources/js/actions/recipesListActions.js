@@ -24,8 +24,12 @@ export const addCommentary = (recipeId, userId, text) => async (dispatch) => {
     }
 };
 
-export const fetchRecipes = (currentLastId, category='') => async (dispatch) => {
-    const response = await fetch(`${baseURL}/api/recipes/?amount=10&last=${currentLastId}&category=${category}`);
+export const fetchRecipes = (currentLastId, category = "") => async (
+    dispatch
+) => {
+    const response = await fetch(
+        `${baseURL}/api/recipes/?amount=10&last=${currentLastId}&category=${category}`
+    );
     const data = await response.json();
 
     console.log(data);
@@ -52,9 +56,14 @@ export const fetchCategories = () => async (dispatch) => {
 };
 
 export const addRecipe = (recipe) => async (dispatch) => {
-    const response = await fetch(`${baseURL}/api/addrecipe`, {
+    const response = await fetch(`${baseURL}/api/recipes`, {
         method: "POST",
         body: JSON.stringify(recipe),
+        headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+                "currentUserToken"
+            )}`,
+        },
     });
 
     console.log(response);
@@ -63,11 +72,11 @@ export const addRecipe = (recipe) => async (dispatch) => {
     dispatch({ type: SUCCESS });
 };
 
-export const switchCategory = (newCategory) => async dispatch => {
+export const switchCategory = (newCategory) => async (dispatch) => {
     dispatch({
         type: CATEGORY_CHANGE,
         payload: {
             currentCategory: newCategory,
-        }
-    })
-}
+        },
+    });
+};

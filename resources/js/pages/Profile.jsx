@@ -1,17 +1,22 @@
 import React, { useEffect } from "react";
-import { connect, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { connect, useDispatch, useSelector } from "react-redux";
+import { Link, useParams } from "react-router-dom";
 import { fetchUserRecipes } from "../actions/profileActions";
 
-const Profile = ({ recipes, user, id }) => {
+const Profile = () => {
     const dispatch = useDispatch();
+    const { userId, userName, userEmail, userRecipes } = useSelector(
+        (state) => state.profile
+    );
+    const params = useParams();
+    const id = parseInt(params.id);
 
     useEffect(() => {
         dispatch(fetchUserRecipes(id));
-    }, [dispatch]);
+    }, [dispatch, id]);
 
-    const renderedRecipes = recipes.length ? (
-        recipes.map((recipe) => (
+    const renderedRecipes = userRecipes.length ? (
+        userRecipes.map((recipe) => (
             <div key={recipe.id}>
                 <Link
                     style={{ textDecoration: "underline", color: "gray" }}
@@ -23,7 +28,7 @@ const Profile = ({ recipes, user, id }) => {
         ))
     ) : (
         <p>
-            {id === "1"
+            {id === userId
                 ? "Добавьте свой первый рецепт"
                 : "Пользователь еще не добавлял рецепты"}
         </p>
@@ -34,13 +39,19 @@ const Profile = ({ recipes, user, id }) => {
             <h1>Профиль</h1>
             <div>
                 <h2>Имя</h2>
-                <p>{user.name}</p>
+                <p>{userName}</p>
             </div>
             <div>
-                <h2>{id === "1" ? "Мои рецепты" : "Рецепты пользователя"}</h2>
+                <h2>Email</h2>
+                <p>{userEmail}</p>
+            </div>
+            <div>
+                <h2>
+                    {id === userId ? "Мои рецепты" : "Рецепты пользователя"}
+                </h2>
                 <div>{renderedRecipes}</div>
             </div>
-            {id === "1" && (
+            {id === userId && (
                 <div>
                     <h2>Ссылки</h2>
                     <div>
@@ -59,15 +70,4 @@ const Profile = ({ recipes, user, id }) => {
     );
 };
 
-const mapStateToProps = (state, ownProps) => {
-    const { id } = ownProps;
-    const index = id - 1;
-
-    return {
-        recipes: state.profile.recipes,
-        user: state.users[index],
-        id,
-    };
-};
-
-export default connect(mapStateToProps)(Profile);
+export default Profile;
