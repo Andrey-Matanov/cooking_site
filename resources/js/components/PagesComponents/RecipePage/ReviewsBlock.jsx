@@ -2,6 +2,7 @@ import React from 'react';
 import { List, ListItem, Box, Grid, Paper, Typography, makeStyles } from '@material-ui/core'
 
 import AddCommentaryForm from '../../Forms/AddCommentaryForm.jsx'
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     reviewsFormPaper: {
@@ -9,12 +10,12 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ReviewsBlock = ( { reviews } ) => {
-
+const ReviewsBlock = () => {
     const classes = useStyles();
-    const renderReviews = (reviews) => {
-        if (reviews) {
-            return reviews.map((review, i) => 
+    const reviewsList = useSelector(state => state.recipe.reviews)
+    const renderReviews = (reviewsList) => {
+        if (reviewsList) {
+            return reviewsList.map((review, i) =>
                 (<ListItem key={`review${i}`}>
                     <Paper elevation={1}>
                         <Box p={2}>

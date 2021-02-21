@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import { addCommentary } from "../../actions/recipesListActions";
 
 import { Box, Grid, Typography, TextField, Button } from '@material-ui/core'
+import {fetchRecipe} from "../../actions/recipeActions";
 
 const AddCommentaryForm = () => {
     const dispatch = useDispatch();
@@ -14,8 +15,11 @@ const AddCommentaryForm = () => {
         initialValues: {
             text: "",
         },
-        onSubmit: ({ text }) => {
-            dispatch(addCommentary(recipeId, 5, text));
+        onSubmit: ({ text }, actions) => {
+            dispatch(addCommentary(recipeId, 5, text))
+                .then(() => dispatch(fetchRecipe(recipeId)))
+                .catch((err) => throw new Error(err));
+            actions.resetForm()
         },
     });
 
