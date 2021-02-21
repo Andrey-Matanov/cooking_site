@@ -9,14 +9,14 @@ import {fetchRecipe} from "../../actions/recipeActions";
 const AddCommentaryForm = () => {
     const dispatch = useDispatch();
     const recipeId = useSelector(state => state.recipe.recipe.id)
+    const userId = useSelector(state => state.profile.userId)
 
-    console.log(recipeId)
     const formik = useFormik({
         initialValues: {
             text: "",
         },
         onSubmit: ({ text }, actions) => {
-            dispatch(addCommentary(recipeId, 5, text))
+            dispatch(addCommentary(recipeId, userId, text))
                 .then(() => dispatch(fetchRecipe(recipeId)))
                 .catch((err) => throw new Error(err));
             actions.resetForm()
