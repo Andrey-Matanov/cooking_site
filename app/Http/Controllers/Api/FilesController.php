@@ -18,17 +18,9 @@ class FilesController extends Controller
 
     public function saveFile(Request $request)
     {
-        if (!($request->hasFile('image')))
-        {
-            return response()->json([
-                'status' => 'fail'
-            ]);
-        }
+        $data = json_decode($request->getContent(),true);
 
-        $file = $request->file('image');
-        $extension = $file->extension();
-
-        $path = $this->fileService->saveFile($file);
+        $path = $this->fileService->saveFile($data['data']);
 
         if (!($path)) {
             return response()->json([
