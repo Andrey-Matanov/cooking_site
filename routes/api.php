@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\CatalogController;
 use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\api\FilesController;
 use App\Http\Controllers\Api\RecipesController;
 use App\Http\Controllers\Api\IngredientsController;
 use App\Http\Controllers\Api\ReviewsController;
@@ -29,6 +30,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('mark', [RecipesController::class, 'giveMark']);
+Route::post('save', [FilesController::class, 'saveFile']);
+
 Route::get('rating', [UsersController::class, 'ratingList']);
 
 Route::apiResource('recipes', RecipesController::class);
