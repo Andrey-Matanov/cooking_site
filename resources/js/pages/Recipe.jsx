@@ -5,7 +5,7 @@ import { Container } from "@material-ui/core";
 import { fetchRecipe } from "../actions/recipeActions.js";
 import { useParams } from "react-router-dom";
 
-const Recipe = ({ recipe, users, reviewsList, steps }) => {
+const Recipe = ({ recipe, ingredients, reviewsList, steps }) => {
     const dispatch = useDispatch();
     const { id } = useParams();
 
@@ -13,14 +13,17 @@ const Recipe = ({ recipe, users, reviewsList, steps }) => {
         dispatch(fetchRecipe(id));
     }, []);
 
-    if (recipe.recipe.name) {
+    const userId = null;
+
+    if (recipe) {
         return (
             <Container maxWidth="md">
                 <RecipeStepsList
-                    recipe={recipe.recipe}
-                    ingredients={recipe.ingredients}
+                    recipe={recipe}
+                    ingredients={ingredients}
                     reviews={reviewsList}
                     steps={steps}
+                    userId={userId}
                 />
             </Container>
         );
@@ -30,10 +33,10 @@ const Recipe = ({ recipe, users, reviewsList, steps }) => {
 };
 
 const mapStateToProps = (state) => ({
-    recipe: state.recipe,
+    recipe: state.recipe.recipe,
+    ingredients: state.recipe.ingredients,
     steps: state.recipe.steps,
     reviewsList: state.recipe.reviews,
-    users: state.users,
 });
 
 export default connect(mapStateToProps)(Recipe);

@@ -38,7 +38,7 @@ const FormItem = styled.div`
 const AddRecipeFormik = ({ ingredients, categories }) => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const currentUserId = useSelector((state) => state.profile.userId);
+    const currentUserId = useSelector((state) => state.authorization.userId);
 
     const [recipeNutrition, setRecipeNutrition] = useState({
         calories: 0,

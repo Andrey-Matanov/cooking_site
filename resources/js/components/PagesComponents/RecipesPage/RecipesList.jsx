@@ -1,31 +1,31 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Grid, Box, CircularProgress, Fab } from '@material-ui/core';
-import UpIcon from '@material-ui/icons/KeyboardArrowUp';
-import { makeStyles } from '@material-ui/core/styles';
-import RecipeItem from './RecipeItem.jsx';
+import React, { useState, useRef, useEffect } from "react";
+import { Grid, Box, CircularProgress, Fab } from "@material-ui/core";
+import UpIcon from "@material-ui/icons/KeyboardArrowUp";
+import { makeStyles } from "@material-ui/core/styles";
+import RecipeItem from "./RecipeItem.jsx";
 
 const useStyles = makeStyles((theme) => ({
     scrolling: {
-        height: '70vh',
-        paddingRight: '20px',
-        paddingLeft: '20px',
-        overflowY: 'scroll',
-        overflowX: 'hidden',
-        '&::-webkit-scrollbar': {
-            display: 'block',
-            width: '5px',
+        height: "70vh",
+        paddingRight: "20px",
+        paddingLeft: "20px",
+        overflowY: "scroll",
+        overflowX: "hidden",
+        "&::-webkit-scrollbar": {
+            display: "block",
+            width: "5px",
         },
-        '&::-webkit-scrollbar-track': {
-            backgroundColor: '#bfbfbf99',
-            borderRadius: '2.5px',
+        "&::-webkit-scrollbar-track": {
+            backgroundColor: "#bfbfbf99",
+            borderRadius: "2.5px",
         },
-        '&::-webkit-scrollbar-thumb': {
-            backgroundColor: '#afb3b5',
-            borderRadius: '2.5px',
+        "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#afb3b5",
+            borderRadius: "2.5px",
         },
     },
     fab: {
-        position: 'absolute',
+        position: "absolute",
         bottom: theme.spacing(6),
         right: theme.spacing(6),
     },
@@ -37,9 +37,9 @@ const RecipesList = ({ recipesList, loadRecipes, isLast }) => {
     const [isScrolled, setIsScrolled] = useState(false);
     const [isScrolledDown, setIsScrolledDown] = useState(false);
 
-    useEffect(()=>{
+    useEffect(() => {
         if (isScrolledDown === true) loadRecipes();
-    }, [isScrolledDown])
+    }, [isScrolledDown]);
 
     const scrollingArea = useRef(null);
 
@@ -73,7 +73,7 @@ const RecipesList = ({ recipesList, loadRecipes, isLast }) => {
                         <RecipeItem
                             id={item.id}
                             name={item.name}
-                            author='Author'
+                            author={item.author}
                             time={item.time}
                             complexity={item.complexity}
                             rating={item.rating}
@@ -84,14 +84,14 @@ const RecipesList = ({ recipesList, loadRecipes, isLast }) => {
                 );
             });
         } else {
-            return <div>{'No recipes :-('}</div>;
+            return <div>{"No recipes :-("}</div>;
         }
     };
 
     return (
         <div>
             <Grid
-                style={{ height: '60vh' }}
+                style={{ height: "60vh" }}
                 container
                 className={classes.scrolling}
                 spacing={5}
@@ -101,17 +101,17 @@ const RecipesList = ({ recipesList, loadRecipes, isLast }) => {
                 {renderRecipesList()}
                 {!isLast ? (
                     <Grid item xs={12}>
-                        <Box justifyContent='center' display='flex'>
-                            <CircularProgress color='primary' />
+                        <Box justifyContent="center" display="flex">
+                            <CircularProgress color="primary" />
                         </Box>
                     </Grid>
                 ) : null}
             </Grid>
             {isScrolled ? (
                 <Fab
-                    aria-label='Up'
+                    aria-label="Up"
                     className={classes.fab}
-                    color='primary'
+                    color="primary"
                     onClick={scrollUp}
                 >
                     <UpIcon />

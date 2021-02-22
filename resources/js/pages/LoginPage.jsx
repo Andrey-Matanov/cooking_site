@@ -5,6 +5,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { fetchUserData } from "../actions/profileActions";
 import { useHistory } from "react-router-dom";
+import { userLogin } from "../actions/authorizationActions";
 
 const WelcomePage = () => {
     const history = useHistory();
@@ -22,22 +23,27 @@ const WelcomePage = () => {
     const onSigninSubmit = async (e) => {
         e.preventDefault();
 
-        const loginURL = `${baseURL}/api/login`;
         const userData = {
             email,
             password,
         };
 
-        const response = await axios.post(loginURL, userData);
-        window.localStorage.setItem("currentUserToken", response.data.token);
-        dispatch(
-            fetchUserData({
-                userId: response.data.userid,
-                userName: response.data.username,
-                userEmail: response.data.useremail,
-            })
+        const loginResponse = await axios.post(
+            `${baseURL}/api/login`,
+            userData
         );
-        history.push("/");
+        const token = loginResponse.data.token;
+        window.localStorage.setItem("currentUserToken", token);
+
+        const userDataResponse = await axios.get(`${baseURL}/api/get-user`, {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        });
+        const userId = userDataResponse.data.user.id;
+
+        dispatch(userLogin(userId));
+        history.push(`/profile/${userId}`);
     };
 
     return (

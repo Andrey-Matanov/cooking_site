@@ -9,12 +9,15 @@ export const CATEGORY_CHANGE = "@@recipesList/CATEGORY_CHANGE";
 export const FETCH_SUCCESS = "@@recipesList/FETCH_SUCCESS";
 export const FETCH_STARTED = "@@recipesList/FETCH_STARTED";
 
-
 export const addCommentary = (recipeId, userId, text) => async (dispatch) => {
     try {
         const response = await fetch(`${baseURL}/api/reviews`, {
             method: "POST",
-            body: JSON.stringify({recipe_id: recipeId, author_id: userId, description: text}),
+            body: JSON.stringify({
+                recipe_id: recipeId,
+                author_id: userId,
+                description: text,
+            }),
         });
         const data = await response.json();
         dispatch({ type: FETCH_SUCCESS });
@@ -30,8 +33,6 @@ export const fetchRecipes = (currentLastId, category = "") => async (
         `${baseURL}/api/recipes/?amount=10&last=${currentLastId}&category=${category}`
     );
     const data = await response.json();
-
-    console.log(data);
 
     dispatch({
         type: FETCH_RECIPES,
@@ -65,10 +66,7 @@ export const addRecipe = (recipe) => async (dispatch) => {
         },
     });
 
-    console.log(response);
-    // const json = await response.json();
-
-    dispatch({ type: SUCCESS });
+    dispatch({ type: "SUCCESS" });
 };
 
 export const switchCategory = (newCategory) => async (dispatch) => {

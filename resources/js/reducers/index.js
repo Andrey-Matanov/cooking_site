@@ -8,8 +8,10 @@ import { ingredientsReducer } from "./ingredientsReducer";
 import { categoriesReducer } from "./categoriesReducer";
 import { profileReducer } from "./profileReducers";
 import { ratingReducer } from "./ratingReducer";
+import { authorizationReducer } from "./authorizationReducer";
 
 export default combineReducers({
+    authorization: authorizationReducer,
     recipesObject: recipesListReducer,
     categories: categoriesReducer,
     ingredients: ingredientsReducer,

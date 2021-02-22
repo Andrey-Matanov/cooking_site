@@ -3,10 +3,9 @@ import { NavLink, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import HomeIcon from "@material-ui/icons/Home";
 import RecipeIcon from "../../../Icons/RecipeIcon";
-
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogout } from "../../../../actions/profileActions";
+import { userLogout } from "../../../../actions/authorizationActions";
 
 const LinkDiv = styled.div`
     display: flex;
@@ -37,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
 const Menu = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const currentUserId = useSelector((state) => state.profile.userId);
+    const currentUserId = useSelector((state) => state.authorization.userId);
     const classes = useStyles();
 
     return (

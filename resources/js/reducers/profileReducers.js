@@ -1,15 +1,12 @@
 import {
     FETCH_USER_DATA,
-    GET_USER_DATA_BY_TOKEN,
     FETCH_USER_RECIPES,
-    USER_LOGOUT,
     USERNAME_CHANGE,
     DELETE_USER,
 } from "../actions/profileActions";
 
 export const profileReducer = (
     profile = {
-        userLoggedIn: false,
         userId: null,
         userName: null,
         userEmail: null,
@@ -18,17 +15,9 @@ export const profileReducer = (
     action
 ) => {
     switch (action.type) {
-        case FETCH_USER_DATA:
-        case USERNAME_CHANGE: {
+        case FETCH_USER_DATA: {
             return {
                 ...profile,
-                userName: action.payload.name,
-            }
-        }
-        case GET_USER_DATA_BY_TOKEN: {
-            return {
-                ...profile,
-                userLoggedIn: true,
                 userId: action.payload.userData.userId,
                 userName: action.payload.userData.userName,
                 userEmail: action.payload.userData.userEmail,
@@ -37,9 +26,14 @@ export const profileReducer = (
         case FETCH_USER_RECIPES: {
             return { ...profile, userRecipes: action.payload.userRecipes };
         }
-        case USER_LOGOUT, DELETE_USER: {
+        case USERNAME_CHANGE: {
             return {
-                userLoggedIn: false,
+                ...profile,
+                userName: action.payload.name,
+            };
+        }
+        case DELETE_USER: {
+            return {
                 userId: null,
                 userName: null,
                 userEmail: null,

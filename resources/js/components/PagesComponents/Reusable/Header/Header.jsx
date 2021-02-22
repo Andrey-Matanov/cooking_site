@@ -11,6 +11,8 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import { baseURL } from "../../../../utils";
 import { getUserDataByToken } from "../../../../actions/profileActions";
+import { fetchUsers } from "../../../../actions/usersActions";
+import { getUserIdByToken } from "../../../../actions/authorizationActions";
 // import MenuIcon from '@material-ui/icons/Menu';
 
 const useStyles = makeStyles((theme) => ({
@@ -28,19 +30,21 @@ const useStyles = makeStyles((theme) => ({
 
 const Header = () => {
     const classes = useStyles();
-    const userLoggedIn = useSelector((state) => state.profile.userLoggedIn);
     const dispatch = useDispatch();
+    const userId = useSelector((state) => state.authorization.userId);
 
     useEffect(() => {
         console.log("header rerender");
     });
 
     useEffect(() => {
-        console.log(window.localStorage.getItem("currentUserToken"));
-
-        if (window.localStorage.getItem("currentUserToken") && !userLoggedIn) {
-            dispatch(getUserDataByToken());
+        if (!userId && window.localStorage.getItem("currentUserToken")) {
+            dispatch(getUserIdByToken());
         }
+    });
+
+    useEffect(() => {
+        dispatch(fetchUsers());
     }, [dispatch]);
 
     return (
