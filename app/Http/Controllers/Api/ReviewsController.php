@@ -9,6 +9,11 @@ use Illuminate\Support\Facades\Gate;
 
 class ReviewsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store','update','destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -28,9 +33,12 @@ class ReviewsController extends Controller
     public function store(Request $request)
     {
         $data = json_decode($request->getContent(),true);
+
+        $user = auth()->user();
+
         $review = new Reviews();
         $review->recipe_id = $data['recipe_id'];
-        $review->author_id = 1;
+        $review->author_id = $user->id;
         $review->description = $data['description'];
         ($review->save()) ? $status = true : $status = false;
         return response()->json(['status' => $status]);
