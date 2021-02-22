@@ -1,4 +1,6 @@
 import React from "react";
+import AddCommentaryForm from "../../Forms/AddCommentaryForm.jsx";
+import { useSelector } from "react-redux";
 import {
     List,
     ListItem,
@@ -8,13 +10,18 @@ import {
     Typography,
     makeStyles,
 } from "@material-ui/core";
+import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
+import DeleteIcon from '@material-ui/icons/Delete';
+import {deleteCommentary} from "../../../actions/recipesListActions";
 
-import AddCommentaryForm from "../../Forms/AddCommentaryForm.jsx";
-import { useSelector } from "react-redux";
 
 const useStyles = makeStyles((theme) => ({
     reviewsFormPaper: {
         width: "100%",
+    },
+    button: {
+        margin: theme.spacing(1),
     },
 }));
 
@@ -22,6 +29,7 @@ const useStyles = makeStyles((theme) => ({
 const ReviewsBlock = () => {
     const classes = useStyles();
     const userLoggedIn = useSelector((state) => state.profile.userLoggedIn);
+    const userId = useSelector(state => state.profile.userId);
     const reviewsList = useSelector(state => state.recipe.reviews)
     const renderReviews = (reviewsList) => {
         if (reviewsList) {
@@ -47,6 +55,16 @@ const ReviewsBlock = () => {
                             </Grid>
                         </Box>
                     </Paper>
+                        {userId === review.user_id ? <Button
+                            variant="contained"
+                            color="secondary"
+                            className={classes.button}
+                            startIcon={<DeleteIcon/>}
+                            onClick={deleteCommentary}
+                        >
+                            Удалить
+                        </Button> : null}
+
                 </ListItem>
             ));
         }

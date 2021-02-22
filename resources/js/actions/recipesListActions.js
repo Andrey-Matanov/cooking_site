@@ -1,7 +1,9 @@
 import { baseURL } from "../utils";
+import {DELETE_USER} from "./profileActions";
 
 export const ADD_RECIPE = "@@recipesList/ADD_RECIPE";
 export const ADD_COMMENTARY = "@@recipesList/ADD_COMMENTARY";
+export const DELETE_COMMENTARY = "@@recipesList/DELETE_COMMENTARY";
 export const FETCH_RECIPES = "@@recipesList/FETCH_RECIPES";
 export const FETCH_CATEGORIES = "@@recipesList/FETCH_CATEGORIES";
 export const FETCH_ERROR = "@@recipesList/FETCH_ERR";
@@ -22,6 +24,18 @@ export const addCommentary = (recipeId, userId, text) => async (dispatch) => {
         dispatch({ type: FETCH_ERROR });
     }
 };
+export const deleteCommentary = (reviewId) => async (dispatch) => {
+    const token = window.localStorage.getItem("currentUserToken");
+    await fetch(`${baseURL}/api/reviews/${reviewId}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+    dispatch({
+        type: DELETE_COMMENTARY,
+    })
+}
 
 export const fetchRecipes = (currentLastId, category = "") => async (
     dispatch
