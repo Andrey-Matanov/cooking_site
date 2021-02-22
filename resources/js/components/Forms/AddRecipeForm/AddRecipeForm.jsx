@@ -14,6 +14,8 @@ import {
     getUserDataByToken,
 } from "../../../actions/profileActions";
 import { useHistory } from "react-router-dom";
+import { baseURL } from "../../../utils";
+import AddImageField from "./AddImageField";
 // import AddRecipeNutrition from "./AddRecipeNutrition";
 
 const AddRecipeForm = styled.form`
@@ -85,10 +87,13 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
             .min(1, "Добавьте как минимум один шаг"),
     });
 
+    const handleImageChange = (e) => {};
+
     return (
         <Formik
             initialValues={{
                 name: "",
+                image: "",
                 authorId: currentUserId,
                 category_id: 1,
                 time: 0,
@@ -171,6 +176,14 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                     </option>
                                 ))}
                             </Field>
+                        </FormItem>
+                        <FormItem>
+                            <p>Изображение: </p>
+                            <AddImageField
+                                image={values.image}
+                                formFieldName="image"
+                                setFieldValue={setFieldValue}
+                            />
                         </FormItem>
                         <FormItem>
                             <label htmlFor="time">
@@ -291,6 +304,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                             image={image}
                                             errors={errors.steps}
                                             handleChange={handleChange}
+                                            setFieldValue={setFieldValue}
                                             removeCurrentStep={() => {
                                                 setFieldValue(
                                                     "steps",
@@ -315,8 +329,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                                         {
                                             name: "",
                                             description: "",
-                                            image:
-                                                "https://imgholder.ru/600x300/8493a8/adb9ca&text=IMAGE+HOLDER&font=kelson",
+                                            image: "",
                                         },
                                     ])
                                 }

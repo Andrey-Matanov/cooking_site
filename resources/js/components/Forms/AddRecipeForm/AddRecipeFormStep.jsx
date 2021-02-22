@@ -2,6 +2,7 @@ import React from "react";
 import styled from "styled-components";
 import FormInput from "../../Inputs/FormInput";
 import FormTextarea from "../../Inputs/FormTextArea";
+import AddImageField from "./AddImageField";
 
 const Error = styled.div`
     color: red;
@@ -22,6 +23,7 @@ const AddRecipeFormStep = ({
     image,
     errors,
     handleChange,
+    setFieldValue,
     removeCurrentStep,
 }) => {
     console.log(errors);
@@ -47,6 +49,14 @@ const AddRecipeFormStep = ({
             {typeof errors === "object" && errors[index] ? (
                 <Error>{errors[index].description}</Error>
             ) : null}
+            <div>
+                <p>Изображение</p>
+                <AddImageField
+                    image={image}
+                    formFieldName={`steps[${index}].image`}
+                    setFieldValue={setFieldValue}
+                />
+            </div>
             <button onClick={removeCurrentStep}>Удалить текущий шаг</button>
         </Step>
     );

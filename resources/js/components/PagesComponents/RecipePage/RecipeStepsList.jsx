@@ -106,11 +106,8 @@ const renderSteps = (steps) => {
     }
 };
 
-const RecipeStepsList = (props) => {
+const RecipeStepsList = ({ ingredients, recipe, reviews, steps }) => {
     const classes = useStyles();
-
-    const { ingredients, recipe, reviews, steps, userId } = props;
-
     const {
         name,
         user_name,
