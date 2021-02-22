@@ -17,7 +17,6 @@ export const addCommentary = (recipeId, userId, text) => async (dispatch) => {
             body: JSON.stringify({recipe_id: recipeId, author_id: userId, description: text}),
         });
         const data = await response.json();
-        console.log(data);
         dispatch({ type: FETCH_SUCCESS });
     } catch (err) {
         dispatch({ type: FETCH_ERROR });

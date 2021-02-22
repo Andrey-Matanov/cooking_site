@@ -18,8 +18,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-const ReviewsBlock = ({ reviews }) => {
-    const userLoggedIn = useSelector((state) => state.profile.userLoggedIn);
+
 const ReviewsBlock = () => {
     const classes = useStyles();
     const userLoggedIn = useSelector((state) => state.profile.userLoggedIn);

@@ -18,7 +18,7 @@ const AddCommentaryForm = () => {
         onSubmit: ({ text }, actions) => {
             dispatch(addCommentary(recipeId, userId, text))
                 .then(() => dispatch(fetchRecipe(recipeId)))
-                .catch((err) => throw new Error(err));
+                .catch((err) => console.error(err));
             actions.resetForm()
         },
     });
