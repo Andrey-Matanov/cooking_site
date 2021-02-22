@@ -139,7 +139,7 @@ const RecipeStepsList = (props) => {
                                     Автор:{" "}
                                     <Link
                                         className="author-link"
-                                        to={`/profile/${userId}`}
+                                        to={`/profile/${recipe.user_id}`}
                                     >
                                         {user_name}
                                     </Link>

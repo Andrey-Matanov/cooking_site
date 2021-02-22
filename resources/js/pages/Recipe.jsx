@@ -13,8 +13,6 @@ const Recipe = ({ recipe, ingredients, reviewsList, steps }) => {
         dispatch(fetchRecipe(id));
     }, []);
 
-    const userId = null;
-
     if (recipe) {
         return (
             <Container maxWidth="md">
@@ -23,7 +21,6 @@ const Recipe = ({ recipe, ingredients, reviewsList, steps }) => {
                     ingredients={ingredients}
                     reviews={reviewsList}
                     steps={steps}
-                    userId={userId}
                 />
             </Container>
         );
