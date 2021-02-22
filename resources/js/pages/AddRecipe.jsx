@@ -12,10 +12,10 @@ const AddRecipe = ({ ingredients, categories }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        if (!ingredients.length && !categories.length) {
+        if (!ingredients.length || !categories.length) {
             dispatch(fetchIngredientsAndRecipes());
         }
-    });
+    }, []);
 
     return (
         <Wrapper>

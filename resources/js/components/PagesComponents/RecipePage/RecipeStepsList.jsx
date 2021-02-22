@@ -1,33 +1,33 @@
-import React from 'react';
-import Ingredients from './Ingredients';
-import { makeStyles } from '@material-ui/core/styles';
-import { Link } from 'react-router-dom';
-import { Paper, Grid, Box, Typography } from '@material-ui/core';
+import React from "react";
+import Ingredients from "./Ingredients";
+import { makeStyles } from "@material-ui/core/styles";
+import { Link } from "react-router-dom";
+import { Paper, Grid, Box, Typography } from "@material-ui/core";
 
-import ReviewsBlock from '../../../components/PagesComponents/RecipePage/ReviewsBlock.jsx';
-import Nutrition from './Nutrition.jsx';
+import ReviewsBlock from "../../../components/PagesComponents/RecipePage/ReviewsBlock.jsx";
+import Nutrition from "./Nutrition.jsx";
 // import AddCommentaryForm from '../components/Forms/AddCommentaryForm';
-import DifficultyBar from '../Reusable/DifficultyBar';
+import DifficultyBar from "../Reusable/DifficultyBar";
 import RatingBar from "../Reusable/RatingBar.jsx";
 
 const useStyles = makeStyles((theme) => ({
     scrolling: {
-        height: '80vh',
-        paddingRight: '20px',
-        paddingLeft: '20px',
-        overflowY: 'scroll',
-        overflowX: 'hidden',
-        '&::-webkit-scrollbar': {
-            display: 'block',
-            width: '5px',
+        height: "80vh",
+        paddingRight: "20px",
+        paddingLeft: "20px",
+        overflowY: "scroll",
+        overflowX: "hidden",
+        "&::-webkit-scrollbar": {
+            display: "block",
+            width: "5px",
         },
-        '&::-webkit-scrollbar-track': {
-            backgroundColor: '#bfbfbf99',
-            borderRadius: '2.5px',
+        "&::-webkit-scrollbar-track": {
+            backgroundColor: "#bfbfbf99",
+            borderRadius: "2.5px",
         },
-        '&::-webkit-scrollbar-thumb': {
-            backgroundColor: '#afb3b5',
-            borderRadius: '2.5px',
+        "&::-webkit-scrollbar-thumb": {
+            backgroundColor: "#afb3b5",
+            borderRadius: "2.5px",
         },
     },
 }));
@@ -35,10 +35,10 @@ const useStyles = makeStyles((theme) => ({
 let formatTime = (sourceTime) => {
     let retVal;
     if (sourceTime <= 60) {
-        retVal = sourceTime + ' мин.';
+        retVal = sourceTime + " мин.";
     } else {
         retVal =
-            Math.floor(sourceTime / 60) + ' ч. ' + (sourceTime % 60) + ' мин.';
+            Math.floor(sourceTime / 60) + " ч. " + (sourceTime % 60) + " мин.";
     }
     return retVal;
 };
@@ -48,15 +48,15 @@ const renderReviews = (reviews, users) => {
         reviews.map((review) => (
             <div
                 style={{
-                    backgroundColor: 'lightgray',
-                    padding: '5px',
-                    borderRadius: '5px',
-                    marginBottom: '5px',
+                    backgroundColor: "lightgray",
+                    padding: "5px",
+                    borderRadius: "5px",
+                    marginBottom: "5px",
                 }}
                 key={review.id}
             >
                 <p>
-                    Автор:{' '}
+                    Автор:{" "}
                     {users.find((user) => user.id === review.authorId).name}
                 </p>
                 <p>{review.text}</p>
@@ -74,26 +74,26 @@ const renderSteps = (steps) => {
                 <Paper elevation={3} square={true}>
                     <Box p={2}>
                         <Box py={2}>
-                            <Grid container alignItems='center'>
+                            <Grid container alignItems="center">
                                 <Grid item>
                                     <Box pr={2}>
-                                        <Typography variant='h2'>
+                                        <Typography variant="h2">
                                             {step.step}
                                         </Typography>
                                     </Box>
                                 </Grid>
                                 <Grid item>
-                                    <Typography variant='h5'>
+                                    <Typography variant="h5">
                                         {step.heading}
                                     </Typography>
                                 </Grid>
                             </Grid>
                         </Box>
-                        <Box py={2} textAlign='center'>
+                        <Box py={2} textAlign="center">
                             <img src={step.image} alt={step.heading} />
                         </Box>
                         <Box py={2}>
-                            <Typography variant='body1'>
+                            <Typography variant="body1">
                                 {step.description}
                             </Typography>
                         </Box>
@@ -109,11 +109,11 @@ const renderSteps = (steps) => {
 const RecipeStepsList = (props) => {
     const classes = useStyles();
 
-    const { ingredients, recipe, reviews, steps } = props;
+    const { ingredients, recipe, reviews, steps, userId } = props;
 
     const {
         name,
-        author,
+        user_name,
         complexity,
         image,
         description,
@@ -123,30 +123,36 @@ const RecipeStepsList = (props) => {
 
     return (
         <Box mt={10}>
-            <div style={{ marginTop: '20px' }}></div>
+            <div style={{ marginTop: "20px" }}></div>
             <Grid container className={classes.scrolling} spacing={5}>
                 <Grid item xs={12}>
                     <Paper elevation={3} square={true}>
                         <Box p={2}>
                             <Box mt={3}>
-                                <Typography variant='h4'>{name}</Typography>
+                                <Typography variant="h4">{name}</Typography>
                             </Box>
-                            <Box my={3} textAlign='center'>
+                            <Box my={3} textAlign="center">
                                 <img src={image} alt={name} />
                             </Box>
                             <Box my={3}>
                                 <p>
-                                    Автор:{' '}
-                                    <Link className='author-link' to='/users'>
-                                        {author}
+                                    Автор:{" "}
+                                    <Link
+                                        className="author-link"
+                                        to={`/profile/${recipe.user_id}`}
+                                    >
+                                        {user_name}
                                     </Link>
                                 </p>
                             </Box>
+                            <Box my={3}>Рейтинг:</Box>
                             <DifficultyBar diff={complexity} />
                             <Box my={3}>
                                 Время приготовления: {formatTime(time)}
                             </Box>
-                            <Box my={3}><RatingBar rating={rating} /></Box>
+                            <Box my={3}>
+                                <RatingBar rating={rating} />
+                            </Box>
                         </Box>
                     </Paper>
                 </Grid>

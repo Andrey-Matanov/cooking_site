@@ -5,9 +5,15 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Reviews;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Gate;
 
 class ReviewsController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:api')->only('store','update','destroy');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -24,10 +30,17 @@ class ReviewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Reviews $reviews)
+    public function store(Request $request)
     {
-        $reviews->create($request->all()) ? $status = true : $status = false;
+        $data = json_decode($request->getContent(),true);
 
+        $user = auth()->user();
+
+        $review = new Reviews();
+        $review->recipe_id = $data['recipe_id'];
+        $review->author_id = $user->id;
+        $review->description = $data['description'];
+        ($review->save()) ? $status = true : $status = false;
         return response()->json(['status' => $status]);
     }
 
@@ -51,9 +64,18 @@ class ReviewsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Reviews::find($id)->update($request->all()) ? $status = true : $status = false;
+        if (! Gate::allows('update-review', $id)) {
+            abort(403);
+        }
+        $id = (int)$id;
+        $data = json_decode($request->getContent(),true);
+        $review = Reviews::find($id);
+        $review->recipe_id = $data['recipe_id'];
+        $review->description = $data['description'];
+        ($review->save()) ? $status = true : $status = false;
 
         return response()->json(['status' => $status]);
+
     }
 
     /**

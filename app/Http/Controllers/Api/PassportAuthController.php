@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Auth;
+
 use Illuminate\Http\Request;
 use App\Models\User;
 
@@ -13,21 +15,27 @@ class PassportAuthController extends Controller
      */
     public function register(Request $request)
     {
+
         $this->validate($request, [
             'name' => 'required|min:4',
             'email' => 'required|email',
             'password' => 'required|min:8',
         ]);
-
+        $existuseremail = User::where('email', '=', $request->email)->first();
+        if ($existuseremail === null){
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'password' => bcrypt($request->password)
+            'password' => \Hash::make($request->password)
         ]);
-
         $token = $user->createToken('Laravel8PassportAuth')->accessToken;
-
-        return response()->json(['token' => $token], 200);
+        $data = ['token' => $token, 'access' => 'true'];
+        $status = '200';
+        }else{
+            $data = ['error' => 'Email exist', 'access' => 'false'];
+            $status = '401';
+        }
+        return response()->json($data, $status);
     }
 
     /**
@@ -42,13 +50,15 @@ class PassportAuthController extends Controller
 
         if (auth()->attempt($data)) {
             $token = auth()->user()->createToken('Laravel8PassportAuth')->accessToken;
-            return response()->json(['token' => $token], 200);
+            $user = auth()->user();
+            return response()->json(['token' => $token,'userid' => $user['id'], 'username'=> $user['name'],
+            'useremail'=> $user['email'], 'userrole'=> 1, 'userIsAdmin'=> $user['isAdmin'] ], 200);
         } else {
             return response()->json(['error' => 'Unauthorised'], 401);
         }
     }
 
-    public function userInfo()
+    public function userinfo()
     {
 
         $user = auth()->user();

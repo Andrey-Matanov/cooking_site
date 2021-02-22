@@ -20,13 +20,11 @@ const AddRecipeFormStep = ({
     name,
     description,
     image,
-    recipeSteps,
     errors,
-    touched,
     handleChange,
-    setFieldValue,
+    removeCurrentStep,
 }) => {
-    console.log(touched);
+    console.log(errors);
     return (
         <Step>
             <p>Шаг № {index + 1}</p>
@@ -36,7 +34,7 @@ const AddRecipeFormStep = ({
                 onChange={handleChange}
                 name={`steps[${index}].name`}
             />
-            {typeof errors === "object" && errors[index].name ? (
+            {typeof errors === "object" && errors[index] ? (
                 <Error>{errors[index].name}</Error>
             ) : null}
             <label htmlFor={`step${index + 1}_description`}>Описание</label>
@@ -46,19 +44,10 @@ const AddRecipeFormStep = ({
                 name={`steps[${index}].description`}
                 id={`step${index + 1}`}
             />
-            {typeof errors === "object" && errors[index].description ? (
+            {typeof errors === "object" && errors[index] ? (
                 <Error>{errors[index].description}</Error>
             ) : null}
-            <button
-                onClick={() => {
-                    setFieldValue(
-                        "steps",
-                        [...recipeSteps].filter((step, i) => i !== index)
-                    );
-                }}
-            >
-                Удалить текущий шаг
-            </button>
+            <button onClick={removeCurrentStep}>Удалить текущий шаг</button>
         </Step>
     );
 };

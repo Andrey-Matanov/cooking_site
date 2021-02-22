@@ -43,13 +43,16 @@ const Nutrition = ({ ingredients }) => {
                     <Grid container justify="space-between">
                         <Grid item>
                             <Typography variant="body1">
-                                <BoltIcon color="secondary" fontSize='inherit' /> Энергетическая
-                                ценность:
+                                <BoltIcon
+                                    color="secondary"
+                                    fontSize="inherit"
+                                />{" "}
+                                Энергетическая ценность:
                             </Typography>
                         </Grid>
                         <Grid item>
                             <Typography variant="body1">
-                                {nutritionValues.calorie} ккал
+                                {nutritionValues.calorie / 100} ккал
                             </Typography>
                         </Grid>
                     </Grid>
@@ -58,13 +61,16 @@ const Nutrition = ({ ingredients }) => {
                     <Grid container justify="space-between">
                         <Grid item>
                             <Typography variant="body1">
-                                <DrumstickBiteIcon color="secondary" fontSize='inherit' />{" "}
+                                <DrumstickBiteIcon
+                                    color="secondary"
+                                    fontSize="inherit"
+                                />{" "}
                                 Протеины:
                             </Typography>
                         </Grid>
                         <Grid item>
                             <Typography variant="body1">
-                                {nutritionValues.protein} г
+                                {nutritionValues.protein / 100} г
                             </Typography>
                         </Grid>
                     </Grid>
@@ -73,12 +79,16 @@ const Nutrition = ({ ingredients }) => {
                     <Grid container justify="space-between">
                         <Grid item>
                             <Typography variant="body1">
-                                <CandyCaneIcon color="secondary" fontSize='inherit' /> Углеводы:
+                                <CandyCaneIcon
+                                    color="secondary"
+                                    fontSize="inherit"
+                                />{" "}
+                                Углеводы:
                             </Typography>
                         </Grid>
                         <Grid item>
                             <Typography variant="body1">
-                                {nutritionValues.carb} г
+                                {nutritionValues.carb / 100} г
                             </Typography>
                         </Grid>
                     </Grid>
@@ -87,12 +97,16 @@ const Nutrition = ({ ingredients }) => {
                     <Grid container justify="space-between">
                         <Grid item>
                             <Typography variant="body1">
-                                <CheeseIcon color="secondary" fontSize='inherit' /> Жиры:
+                                <CheeseIcon
+                                    color="secondary"
+                                    fontSize="inherit"
+                                />{" "}
+                                Жиры:
                             </Typography>
                         </Grid>
                         <Grid item>
                             <Typography variant="body1">
-                                {nutritionValues.fat} г
+                                {nutritionValues.fat / 100} г
                             </Typography>
                         </Grid>
                     </Grid>

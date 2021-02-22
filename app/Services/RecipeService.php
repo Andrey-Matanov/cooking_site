@@ -5,6 +5,7 @@ namespace App\Services;
 
 
 use App\Models\IngredientInRecipe;
+use App\Models\MarkControl;
 use App\Models\Recipe;
 use App\Models\Step;
 use Illuminate\Support\Facades\DB;
@@ -13,21 +14,21 @@ class RecipeService
 {
     public function giveOneRecipe($id)
     {
-        $recipe = DB::table('recipes')->select('recipes.image as image','recipes.time as time','recipes.rating as rating', 'recipes.complexity as complexity','recipes.id as id', 'recipes.name', 'recipes.status', 'recipes.name as name', 'users.name as user_name', 'catalog.name as catalog_name','recipes.description')->where('recipes.id',$id)->join('catalog','recipes.catalog_id', '=', 'catalog.id')->join('users', 'recipes.author_id', '=', 'users.id')->get();
+
+        $recipe = DB::table('recipes')->select('recipes.image as image','recipes.time as time','recipes.rating as rating', 'recipes.complexity as complexity','recipes.id as id', 'recipes.name', 'recipes.status', 'recipes.name as name', 'users.name as user_name', 'users.id as user_id', 'catalog.name as catalog_name','recipes.description')->where('recipes.id',$id)->join('catalog','recipes.catalog_id', '=', 'catalog.id')->join('users', 'recipes.author_id', '=', 'users.id')->get();
 
         $ingredients = DB::table('ingredients_in_recipes')->select('ingredients.name as ingredient_name', 'ingredients_in_recipes.count as count','units.name as unit_name','ingredients.product_fat as fat', 'ingredients.product_protein as protein', 'ingredients.product_carb as carb', 'ingredients.calorie','ingredients.id as ingredient_id')->where('ingredients_in_recipes.recipe_id','=',$id)->join('ingredients','ingredients_in_recipes.ingredient_id','=','ingredients.id')->join('units','ingredients.unit_id','=','units.id')->get();
 
-        $reviews = DB::table('reviews')->select('users.name as user_name','reviews.description','reviews.updated_at', 'users.id as user_id')->where('reviews.recipe_id','=',$id)->join('users','reviews.author_id','=','users.id')->get();
+        $reviews = DB::table('reviews')->select('users.name as user_name','reviews.description','reviews.updated_at', 'users.id as user_id', 'reviews.id as id')->where('reviews.recipe_id','=',$id)->join('users','reviews.author_id','=','users.id')->get();
 
         $steps = Step::where('recipe_id', $id)->get(['heading','image', 'description', 'step']);
 
         return array($recipe, $ingredients, $reviews,$steps);
     }
 
-    public function saveRecipe($data)
+    public function saveRecipe($data, $id, $userId)
     {
-        //$author = $data['author'];
-        $author = 1;
+        $author = (int)$userId;
         $name = $data['name'];
         $description = $data['description'];
         $time = $data['time'];
@@ -37,7 +38,15 @@ class RecipeService
         $steps= $data['steps'];
 
         DB::beginTransaction();
-        $recipe = new Recipe();
+        if ($id) {
+            $recipe = Recipe::find($id);
+            IngredientInRecipe::where('recipe_id','=',$id)->delete();
+            Step::where('recipe_id','=',$id)->delete();
+        }
+        else{
+            $recipe = new Recipe();
+        }
+
         $recipe->name = $name;
         $recipe->author_id = $author;
         $recipe->description = $description;
@@ -47,8 +56,7 @@ class RecipeService
         $recipe->image = '';
         $recipe->save();
 
-        $newRecipe = Recipe::orderBy('id', 'desc')->first();
-        $idRecipe = $newRecipe->id;
+        $idRecipe = $recipe->id;
 
         for ($i = 0; $i < count($ingredients); $i++){
             $ingredient = new IngredientInRecipe();
@@ -70,7 +78,7 @@ class RecipeService
 
         DB::commit();
 
-        return true;
+        return $idRecipe;
     }
 
     public function giveBunchRecipes($data)
@@ -87,19 +95,47 @@ class RecipeService
         if ($amount < 1) $amount = 10;
         if ($last < 0)  $last = 0;
 
-        $recipes = DB::table('recipes')->select('recipes.image','recipes.catalog_id','recipes.time','recipes.rating', 'recipes.complexity','recipes.id', 'recipes.name', 'recipes.status', 'users.name as author', 'users.id as author_id','recipes.description')->where('recipes.id','>',$last)->orderBy('recipes.id', 'asc')->join('users', 'recipes.author_id', '=', 'users.id')->limit($amount)->get();
-
         if (isset($data['category'])) {
             $category = (int)$data['category'];
-            $recipes = $recipes->where('catalog_id','=',$category);
+            $recipes = DB::table('recipes')->select('recipes.image','recipes.catalog_id','recipes.time','recipes.rating', 'recipes.complexity','recipes.id', 'recipes.name', 'recipes.status', 'users.name as author', 'users.id as author_id','recipes.description')->where('catalog_id','=',$category)->where('recipes.id','>',$last)->orderBy('recipes.id', 'asc')->join('users', 'recipes.author_id', '=', 'users.id')->limit($amount)->get();
+            $maxIdRecipes = Recipe::where('catalog_id','=',$category)->max('id');
+        }else{
+            $recipes = DB::table('recipes')->select('recipes.image','recipes.catalog_id','recipes.time','recipes.rating', 'recipes.complexity','recipes.id', 'recipes.name', 'recipes.status', 'users.name as author', 'users.id as author_id','recipes.description')->where('recipes.id','>',$last)->orderBy('recipes.id', 'asc')->join('users', 'recipes.author_id', '=', 'users.id')->limit($amount)->get();
+            $maxIdRecipes = Recipe::max('id');
         }
 
         $maxIdInBunch = $recipes->max('id');
-        $maxIdRecipes = Recipe::max('id');
         ($maxIdRecipes > $maxIdInBunch)?$isLastRecipes = 0:$isLastRecipes = 1;
 
         return array($recipes, $isLastRecipes);
     }
 
+    public function solvingNewRating($data,$userId)
+    {
+        $recipeId  = (int)$data['recipeId'];
+        $newMark = (int)$data['newMark'];
+
+        $result = MarkControl::where('recipe_id',$recipeId)->where('user_id',$userId)->count();
+        if ($result != 0) {
+            return 'fail';
+        }
+
+        $control = new MarkControl();
+        $control->recipe_id = $recipeId;
+        $control->user_id = $userId;
+        $control->save();
+
+        if ($newMark < 1) $newMark = 1;
+        if ($newMark > 5) $newMark = 5;
+        $recipe = Recipe::findOrFail($recipeId);
+        $rating = $recipe->rating;
+        $count_mark = $recipe->count_mark;
+        $rating = ($rating * $count_mark + $newMark) / ($count_mark + 1);
+        $recipe->rating = $rating;
+        $recipe->count_mark++;
+        $result = ($recipe->save())?'success':'fail';
+
+        return $result;
+    }
 
 }

@@ -1,19 +1,25 @@
 import React from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useFormik } from "formik";
 import { addCommentary } from "../../actions/recipesListActions";
 
 import { Box, Grid, Typography, TextField, Button } from '@material-ui/core'
+import {fetchRecipe} from "../../actions/recipeActions";
 
-const AddCommentaryForm = ({ recipeId }) => {
+const AddCommentaryForm = () => {
     const dispatch = useDispatch();
+    const recipeId = useSelector(state => state.recipe.recipe.id)
+    const userId = useSelector(state => state.profile.userId)
 
     const formik = useFormik({
         initialValues: {
             text: "",
         },
-        onSubmit: ({ text }) => {
-            dispatch(addCommentary(recipeId, text));
+        onSubmit: ({ text }, actions) => {
+            dispatch(addCommentary(recipeId, userId, text))
+                .then(() => dispatch(fetchRecipe(recipeId)))
+                .catch((err) => console.error(err));
+            actions.resetForm()
         },
     });
 

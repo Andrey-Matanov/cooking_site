@@ -25,9 +25,11 @@ class CategoryController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CategoryRequest $request, Category $category)
+    public function store(Request $request)
     {
-        $category->fill($request->all());
+        $data = json_decode($request->getContent(),true);
+        $category = new Category();
+        $category->name = $data['name'];
         if( $category->save()){
             return response()->json(['status' => true]);
         }else{
@@ -56,10 +58,13 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(CategoryRequest $request, $id)
+    public function update(Request $request, $id)
     {
         $id = (int)$id;
-        Category::find($id)->update($request->all()) ? $status = true : $status = false;
+        $data = json_decode($request->getContent(),true);
+        $category = Category::find($id);
+        $category->name = $data['name'];
+        ($category->save()) ? $status = true : $status = false;
 
         return response()->json(['status' => $status]);
     }

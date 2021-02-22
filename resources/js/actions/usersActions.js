@@ -1,12 +1,15 @@
-export const UPDATE_USER_RECIPES_IDS = '@@users/UPDATE_USER_RECIPES_IDS';
-export const UPDATE_USER_ARTICLES_IDS = '@@users/UPDATE_USER_ARTICLES_IDS';
+import axios from "axios";
+import { baseURL } from "../utils";
 
-export const updateUserRecipesIds = (id) => ({
-    type: UPDATE_USER_RECIPES_IDS,
-    payload: id,
-});
+export const FETCH_USERS = "@@users/FETCH_USERS";
 
-export const updateUserArticlesIds = (id) => ({
-    type: UPDATE_USER_ARTICLES_IDS,
-    payload: id,
-});
+export const fetchUsers = () => async (dispatch) => {
+    const response = await axios.get(`${baseURL}/api/users`);
+
+    dispatch({
+        type: FETCH_USERS,
+        payload: {
+            users: response.data.data,
+        },
+    });
+};

@@ -86,7 +86,9 @@ const RecipeItem = (props) => {
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Typography variant="h5">{author}</Typography>
+                                <Typography variant="h5">
+                                    Автор: {author}
+                                </Typography>
                             </Grid>
                             <Grid
                                 item
@@ -111,6 +113,9 @@ const RecipeItem = (props) => {
                                 <DifficultyBar diff={complexity} />
                             </Grid>
                             <Grid item>
+                                <Typography variant="body1">
+                                    Рейтинг:
+                                </Typography>
                                 <RatingBar rating={rating} />
                             </Grid>
                             <Grid item>
