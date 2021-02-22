@@ -5,6 +5,8 @@ export const FETCH_USER_DATA = "@@profile/FETCH_USER_DATA";
 export const GET_USER_DATA_BY_TOKEN = "@@profile/GET_USER_DATA_BY_TOKEN";
 export const FETCH_USER_RECIPES = "@@profile/FETCH_USER_RECIPES";
 export const USER_LOGOUT = "@@profile/USER_LOGOUT";
+export const USERNAME_CHANGE = "@@profile/USERNAME_CHANGE"
+export const DELETE_USER = "@@profile/DELETE_USER"
 
 export const fetchUserData = (userData) => ({
     type: FETCH_USER_DATA,
@@ -50,3 +52,36 @@ export const fetchUserRecipes = (authorId) => async (dispatch) => {
 export const userLogout = () => ({
     type: USER_LOGOUT,
 });
+
+export const changeUserName = (userId, newUserName) => async (dispatch) => {
+    const token = window.localStorage.getItem("currentUserToken");
+    await axios.patch(`${baseURL}/api/users/${userId}`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+        body: {
+            name: JSON.stringify(newUserName),
+        },
+    });
+
+    dispatch({
+        type: USERNAME_CHANGE,
+        payload: {
+            name: newUserName,
+        }
+    })
+}
+
+export const deleteUser = (userId) => async (dispatch) => {
+    const token = window.localStorage.getItem("currentUserToken");
+    await fetch(`${baseURL}/api/users/${userId}`, {
+        method: 'DELETE',
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
+
+    dispatch({
+        type: DELETE_USER,
+    })
+}
