@@ -4,21 +4,22 @@ import { useFormik } from "formik";
 import { addCommentary } from "../../actions/recipesListActions";
 
 import { Box, Grid, Typography, TextField, Button } from '@material-ui/core'
+import {fetchRecipe} from "../../actions/recipeActions";
 
 const AddCommentaryForm = () => {
     const dispatch = useDispatch();
     const recipeId = useSelector(state => state.recipe.recipe.id)
+    const userId = useSelector(state => state.profile.userId)
 
-    console.log(recipeId)
     const formik = useFormik({
         initialValues: {
             text: "",
         },
         onSubmit: ({ text }, actions) => {
-            // const jsonStringify = JSON.stringify({recipe_id: recipeId, author_id: 5, description: text})
-            // console.log(jsonStringify);
-            dispatch(addCommentary(recipeId, 5, text));
-            actions.resetForm();
+            dispatch(addCommentary(recipeId, userId, text))
+                .then(() => dispatch(fetchRecipe(recipeId)))
+                .catch((err) => throw new Error(err));
+            actions.resetForm()
         },
     });
 

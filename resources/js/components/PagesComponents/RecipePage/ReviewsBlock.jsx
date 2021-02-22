@@ -20,11 +20,14 @@ const useStyles = makeStyles((theme) => ({
 
 const ReviewsBlock = ({ reviews }) => {
     const userLoggedIn = useSelector((state) => state.profile.userLoggedIn);
+const ReviewsBlock = () => {
     const classes = useStyles();
-    const renderReviews = (reviews) => {
-        if (reviews) {
-            return reviews.map((review, i) => (
-                <ListItem key={`review${i}`}>
+    const userLoggedIn = useSelector((state) => state.profile.userLoggedIn);
+    const reviewsList = useSelector(state => state.recipe.reviews)
+    const renderReviews = (reviewsList) => {
+        if (reviewsList) {
+            return reviewsList.map((review, i) =>
+                (<ListItem key={`review${i}`}>
                     <Paper elevation={1}>
                         <Box p={2}>
                             <Grid container>
@@ -54,7 +57,7 @@ const ReviewsBlock = ({ reviews }) => {
         <Box>
             <Typography variant="h5">Комментарии</Typography>
             <List>
-                {renderReviews(reviews)}
+                {renderReviews(reviewsList)}
                 <ListItem>
                     <Paper elevation={1} className={classes.reviewsFormPaper}>
                         {userLoggedIn ? (
