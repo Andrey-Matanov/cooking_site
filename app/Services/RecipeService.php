@@ -33,6 +33,7 @@ class RecipeService
         $description = $data['description'];
         $time = $data['time'];
         $complexity = $data['difficulty'];
+        $image = $data['image'];
         $categories = $data['category_id'];
         $ingredients= $data['ingredients'];
         $steps= $data['steps'];
@@ -53,7 +54,7 @@ class RecipeService
         $recipe->time = $time;
         $recipe->complexity = $complexity;
         $recipe->catalog_id = $categories;
-        $recipe->image = '';
+        $recipe->image = $image;
         $recipe->save();
 
         $idRecipe = $recipe->id;
