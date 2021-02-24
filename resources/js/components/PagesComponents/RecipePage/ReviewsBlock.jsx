@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ReviewsBlock = () => {
     const classes = useStyles();
-    const userLoggedIn = useSelector((state) => state.profile.userLoggedIn);
+    const userLoggedIn = useSelector((state) => state.authorization.userId);
     const userId = useSelector(state => state.profile.userId);
     const reviewsList = useSelector(state => state.recipe.reviews)
     const renderReviews = (reviewsList) => {
@@ -55,7 +55,7 @@ const ReviewsBlock = () => {
                             </Grid>
                         </Box>
                     </Paper>
-                        {userId === review.user_id ? <Button
+                        {userLoggedIn === review.user_id ? <Button
                             variant="contained"
                             color="secondary"
                             className={classes.button}
