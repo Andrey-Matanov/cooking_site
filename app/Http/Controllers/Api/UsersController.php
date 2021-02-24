@@ -16,7 +16,6 @@ class UsersController extends Controller
 
     public function __construct(UserService $userService) {
         $this->middleware ('auth:api')->only('store', 'update', 'destroy');
-        $this->middleware (['admin'])->only('destroy');
 
         $this->userService = $userService;
     }
@@ -98,12 +97,13 @@ class UsersController extends Controller
     {
         $id = (int)$id;
         $user=auth()->user();
-        if(!$user['isAdmin']) {
-            if(!$user['id'] == $id) {
-                return json(['status' => false]);
-            }
+        if($user['id'] == $id) {
+            User::destroy($id) ? $status = true : $status = false;
+        }elseif($user['is_Admin']){
+            User::destroy($id) ? $status = true : $status = false;
+        }else{
+            $status = false;
         }
-        User::destroy($id) ? $status = true : $status = false;
         return response()->json(['status' => $status]);
     }
 
