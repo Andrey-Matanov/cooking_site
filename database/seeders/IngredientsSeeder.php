@@ -573,7 +573,6 @@ class IngredientsSeeder extends Seeder
                 "calorie"=> "31.0"
             ],
             "127"=> [
-                "id"=> "127",
                 "name"=> "Лук зелёный",
                 "product_protein"=> "1.3",
                 "product_fat"=> "0.0",
@@ -581,7 +580,6 @@ class IngredientsSeeder extends Seeder
                 "calorie"=> "22.0"
             ],
             "128"=> [
-                "id"=> "128",
                 "name"=> "Лук репчатый",
                 "product_protein"=> "1.7",
                 "product_fat"=> "0.0",
@@ -1410,7 +1408,6 @@ class IngredientsSeeder extends Seeder
         "calorie"=> "193.0"
     ],
             "299"=> [
-        "id"=> "299",
         "name"=> "Хлопковое масло",
         "product_protein"=> "0.0",
         "product_fat"=> "99.9",
