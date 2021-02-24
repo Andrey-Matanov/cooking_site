@@ -15,7 +15,7 @@ class UsersController extends Controller
     protected $userService;
 
     public function __construct(UserService $userService) {
-        $this->middleware ('auth:api')->only('store', 'update', 'destroy');
+        $this->middleware ('auth:api')->only('index', 'store', 'update', 'destroy');
 
         $this->userService = $userService;
     }
