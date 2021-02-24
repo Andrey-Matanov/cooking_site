@@ -82,7 +82,7 @@ class UsersController extends Controller
             $user->email = $data['email'];
         }
         if (isset($data['password'])) {
-            $user->password = $data['password'];
+            $user->password = \Hash::make($data['password']);
         }
         ($user->save()) ? $status = true : $status = false;
         return response()->json(['status' => $status]);
