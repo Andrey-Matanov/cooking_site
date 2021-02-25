@@ -1,6 +1,6 @@
 import React from "react";
 import AddCommentaryForm from "../../Forms/AddCommentaryForm.jsx";
-import { useSelector } from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {
     List,
     ListItem,
@@ -13,7 +13,8 @@ import {
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteIcon from '@material-ui/icons/Delete';
-import {deleteCommentary} from "../../../actions/recipesListActions";
+import {addCommentary, deleteCommentary} from "../../../actions/recipesListActions";
+import {fetchRecipe} from "../../../actions/recipeActions";
 
 
 const useStyles = makeStyles((theme) => ({
@@ -28,9 +29,11 @@ const useStyles = makeStyles((theme) => ({
 
 const ReviewsBlock = () => {
     const classes = useStyles();
+    const dispatch = useDispatch();
     const userLoggedIn = useSelector((state) => state.authorization.userId);
     const userId = useSelector(state => state.profile.userId);
-    const reviewsList = useSelector(state => state.recipe.reviews)
+    const reviewsList = useSelector(state => state.recipe.reviews);
+    const recipeId = useSelector(state => state.recipe.recipe.id);
     const renderReviews = (reviewsList) => {
         if (reviewsList) {
             return reviewsList.map((review, i) =>
@@ -60,7 +63,11 @@ const ReviewsBlock = () => {
                             color="secondary"
                             className={classes.button}
                             startIcon={<DeleteIcon/>}
-                            onClick={deleteCommentary}
+                            onClick={() => {
+                                dispatch(deleteCommentary(review.id))
+                                    .then(() => dispatch(fetchRecipe(recipeId)))
+                                    .catch((err) => console.error(err));
+                            }}
                         >
                             Удалить
                         </Button> : null}

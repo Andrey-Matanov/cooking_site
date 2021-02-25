@@ -43,7 +43,7 @@ export const deleteCommentary = (reviewId) => async (dispatch) => {
         type: DELETE_COMMENTARY,
     })
 
-}
+};
 
 export const fetchRecipes = (currentLastId, category = "") => async (
     dispatch
