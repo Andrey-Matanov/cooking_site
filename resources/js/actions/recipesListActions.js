@@ -18,14 +18,13 @@ export const addCommentary = (recipeId, text) => async (dispatch) => {
             method: "POST",
             body: JSON.stringify({
                 recipe_id: recipeId,
-                // author_id: userId,
                 description: text,
             }),
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         });
-        // const data = await response.json();
+        const data = await response.json();
         dispatch({ type: FETCH_SUCCESS });
     } catch (err) {
         dispatch({ type: FETCH_ERROR });
