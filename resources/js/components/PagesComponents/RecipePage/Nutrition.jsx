@@ -18,10 +18,10 @@ const Nutrition = ({ ingredients }) => {
     };
 
     ingredients.map((item) => {
-        nutritionValues.calorie += item.calorie * item.count;
-        nutritionValues.protein += item.protein * item.count;
-        nutritionValues.fat += item.fat * item.count;
-        nutritionValues.carb += item.carb * item.count;
+        nutritionValues.calorie += item.calorie * item.amount;
+        nutritionValues.protein += item.protein * item.amount;
+        nutritionValues.fat += item.fat * item.amount;
+        nutritionValues.carb += item.carb * item.amount;
     });
 
     nutritionValues

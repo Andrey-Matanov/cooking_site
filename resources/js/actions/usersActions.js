@@ -4,7 +4,12 @@ import { baseURL } from "../utils";
 export const FETCH_USERS = "@@users/FETCH_USERS";
 
 export const fetchUsers = () => async (dispatch) => {
-    const response = await axios.get(`${baseURL}/api/users`);
+    const token = window.localStorage.getItem("currentUserToken");
+    const response = await axios.get(`${baseURL}/api/users`, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    });
 
     dispatch({
         type: FETCH_USERS,

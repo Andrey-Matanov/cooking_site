@@ -9,6 +9,7 @@ import { categoriesReducer } from "./categoriesReducer";
 import { profileReducer } from "./profileReducers";
 import { ratingReducer } from "./ratingReducer";
 import { authorizationReducer } from "./authorizationReducer";
+import { unitsReducer } from "./unitsReducer";
 
 export default combineReducers({
     authorization: authorizationReducer,
@@ -21,4 +22,5 @@ export default combineReducers({
     articles: articlesListReducer,
     recipe: recipeReducer,
     reviews: reviewsReducer,
+    units: unitsReducer,
 });

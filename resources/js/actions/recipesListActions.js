@@ -1,7 +1,8 @@
 import { baseURL } from "../utils";
-import {DELETE_USER} from "./profileActions";
+import { DELETE_USER } from "./profileActions";
 
 export const ADD_RECIPE = "@@recipesList/ADD_RECIPE";
+export const EDIT_RECIPE = "@@recipesList/EDIT_RECIPE";
 export const ADD_COMMENTARY = "@@recipesList/ADD_COMMENTARY";
 export const DELETE_COMMENTARY = "@@recipesList/DELETE_COMMENTARY";
 export const FETCH_RECIPES = "@@recipesList/FETCH_RECIPES";
@@ -33,15 +34,14 @@ export const addCommentary = (recipeId, text) => async (dispatch) => {
 export const deleteCommentary = (reviewId) => async (dispatch) => {
     const token = window.localStorage.getItem("currentUserToken");
     await fetch(`${baseURL}/api/reviews/${reviewId}`, {
-        method: 'DELETE',
+        method: "DELETE",
         headers: {
             Authorization: `Bearer ${token}`,
         },
     });
     dispatch({
         type: DELETE_COMMENTARY,
-    })
-
+    });
 };
 
 export const fetchRecipes = (currentLastId, category = "") => async (
@@ -76,6 +76,20 @@ export const fetchCategories = () => async (dispatch) => {
 export const addRecipe = (recipe) => async (dispatch) => {
     const response = await fetch(`${baseURL}/api/recipes`, {
         method: "POST",
+        body: JSON.stringify(recipe),
+        headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+                "currentUserToken"
+            )}`,
+        },
+    });
+
+    dispatch({ type: "SUCCESS" });
+};
+
+export const editRecipe = (recipe, recipeId) => async (dispatch) => {
+    const response = await fetch(`${baseURL}/api/recipes/${recipeId}`, {
+        method: "PUT",
         body: JSON.stringify(recipe),
         headers: {
             Authorization: `Bearer ${window.localStorage.getItem(

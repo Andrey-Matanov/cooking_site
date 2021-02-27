@@ -100,11 +100,9 @@ const Profile = () => {
                             </Grid>
                             {id === userId ? (
                                 <Grid item xs={3}>
-                                    <Button>
-                                        <Typography variant="body2">
-                                            Изменить
-                                        </Typography>
-                                    </Button>
+                                    <Link to={`/edit_recipe/${recipe.id}`}>
+                                        Изменить рецепт
+                                    </Link>
                                 </Grid>
                             ) : (
                                 <div />

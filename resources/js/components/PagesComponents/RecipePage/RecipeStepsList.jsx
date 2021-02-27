@@ -84,13 +84,13 @@ const renderSteps = (steps) => {
                                 </Grid>
                                 <Grid item>
                                     <Typography variant="h5">
-                                        {step.heading}
+                                        {step.name}
                                     </Typography>
                                 </Grid>
                             </Grid>
                         </Box>
                         <Box py={2} textAlign="center">
-                            <img src={step.image} alt={step.heading} />
+                            <img src={step.image} alt={step.name} />
                         </Box>
                         <Box py={2}>
                             <Typography variant="body1">

@@ -26,7 +26,6 @@ const AddRecipeFormStep = ({
     setFieldValue,
     removeCurrentStep,
 }) => {
-    console.log(errors);
     return (
         <Step>
             <p>Шаг № {index + 1}</p>

@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
-import { addRecipe } from "../../../actions/recipesListActions";
+import { addRecipe, editRecipe } from "../../../actions/recipesListActions";
 import AddRecipeFormStep from "./AddRecipeFormStep";
 import AddRecipeFormIngredient from "./AddRecipeFormIngredient";
 import FormTextarea from "../../Inputs/FormTextArea";
@@ -37,7 +37,19 @@ const FormItem = styled.div`
     }
 `;
 
-const AddRecipeFormik = ({ ingredients, categories }) => {
+const AddRecipeFormik = ({
+    ingredients,
+    categories,
+    units,
+    formInitialValues,
+    submitButtonLabel,
+    additionalInfo,
+}) => {
+    console.log("ingredients: ", ingredients);
+    console.log("categories: ", categories);
+    console.log("formInitialValues: ", formInitialValues);
+    console.log("units: ", units);
+
     const dispatch = useDispatch();
     const history = useHistory();
     const currentUserId = useSelector((state) => state.authorization.userId);
@@ -56,9 +68,9 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
     const validationSchema = Yup.object().shape({
         name: Yup.string().required("Название не должно быть пустым"),
         category_id: Yup.number().required(),
-        time: Yup.number().positive(
-            "Время приготовления не может быть меньше одной минуты"
-        ),
+        time: Yup.number()
+            .positive("Время приготовления не может быть меньше одной минуты")
+            .required("Введите оценочное время приготовления рецепта"),
         difficulty: Yup.string().required(),
         ingredients: Yup.array()
             .of(
@@ -66,7 +78,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                     id: Yup.number().required(),
                     amount: Yup.number()
                         .min(1, "Количество не может быть меньше 1")
-                        .required(),
+                        .required("Введите количество"),
                     unit_id: Yup.number().required(),
                 })
             )
@@ -91,20 +103,20 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
 
     return (
         <Formik
-            initialValues={{
-                name: "",
-                image: "",
-                authorId: currentUserId,
-                category_id: 1,
-                time: 0,
-                difficulty: "1",
-                ingredients: [],
-                description: "",
-                steps: [],
-            }}
+            initialValues={{ ...formInitialValues, authorId: currentUserId }}
             validationSchema={validationSchema}
             onSubmit={(values) => {
-                dispatch(addRecipe(values));
+                switch (additionalInfo.type) {
+                    case "edit": {
+                        dispatch(editRecipe(values, additionalInfo.recipeId));
+                        break;
+                    }
+                    case "add": {
+                        dispatch(addRecipe(values));
+                        break;
+                    }
+                }
+
                 dispatch(fetchUserRecipes(currentUserId));
                 history.push(`/profile/${currentUserId}`);
             }}
@@ -117,7 +129,6 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                 handleSubmit,
                 setFieldValue,
             }) => {
-                console.log("steps: ", values.steps);
                 const getNewIngredientId = () => {
                     let newIngredientId = 1;
                     const ingredients = values.ingredients;
@@ -227,26 +238,29 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                         <FormItem>
                             <p>Состав рецепта</p>
                             {ingredients.length ? (
-                                values.ingredients.map((ingredient, i) => (
-                                    <AddRecipeFormIngredient
-                                        key={i}
-                                        currentNumber={i}
-                                        currentId={ingredient.id}
-                                        currentName={
-                                            ingredients.find(
-                                                (item) =>
-                                                    item.id === ingredient.id
-                                            ).name
-                                        }
-                                        currentAmount={ingredient.amount}
-                                        ingredients={ingredients}
-                                        errors={errors.ingredients}
-                                        usedIngredients={values.ingredients}
-                                        unitId={ingredient.unit_id}
-                                        handleChange={handleChange}
-                                        setFieldValue={setFieldValue}
-                                    />
-                                ))
+                                values.ingredients.map((ingredient, i) => {
+                                    return (
+                                        <AddRecipeFormIngredient
+                                            key={i}
+                                            currentNumber={i}
+                                            currentId={ingredient.id}
+                                            currentName={
+                                                ingredients.find(
+                                                    (item) =>
+                                                        item.id ===
+                                                        ingredient.id
+                                                ).name
+                                            }
+                                            currentAmount={ingredient.amount}
+                                            ingredients={ingredients}
+                                            errors={errors.ingredients}
+                                            usedIngredients={values.ingredients}
+                                            unitId={ingredient.unit_id}
+                                            handleChange={handleChange}
+                                            setFieldValue={setFieldValue}
+                                        />
+                                    );
+                                })
                             ) : (
                                 <p>Ингредиенты загружаются...</p>
                             )}
@@ -294,28 +308,26 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                         <FormItem>
                             <p>Ход приготовления</p>
                             <div className="steps">
-                                {values.steps.map(
-                                    ({ name, description, image }, i) => (
-                                        <AddRecipeFormStep
-                                            key={i}
-                                            index={i}
-                                            name={name}
-                                            description={description}
-                                            image={image}
-                                            errors={errors.steps}
-                                            handleChange={handleChange}
-                                            setFieldValue={setFieldValue}
-                                            removeCurrentStep={() => {
-                                                setFieldValue(
-                                                    "steps",
-                                                    [...values.steps].filter(
-                                                        (step, j) => j !== i
-                                                    )
-                                                );
-                                            }}
-                                        />
-                                    )
-                                )}
+                                {values.steps.map((step, i) => (
+                                    <AddRecipeFormStep
+                                        key={i}
+                                        index={i}
+                                        name={step.name || step.heading}
+                                        description={step.description}
+                                        image={step.image}
+                                        errors={errors.steps}
+                                        handleChange={handleChange}
+                                        setFieldValue={setFieldValue}
+                                        removeCurrentStep={() => {
+                                            setFieldValue(
+                                                "steps",
+                                                [...values.steps].filter(
+                                                    (step, j) => j !== i
+                                                )
+                                            );
+                                        }}
+                                    />
+                                ))}
                             </div>
                             {errors.steps &&
                             touched.steps &&
@@ -348,7 +360,7 @@ const AddRecipeFormik = ({ ingredients, categories }) => {
                         </FormItem>
                         <FormItem>
                             <button onClick={handleSubmit} type="submit">
-                                Добавить рецепт
+                                {submitButtonLabel}
                             </button>
                         </FormItem>
                     </Form>

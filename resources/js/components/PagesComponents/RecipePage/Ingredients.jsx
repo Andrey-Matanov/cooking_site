@@ -15,17 +15,17 @@ const Ingredients = (props) => {
     const renderIngredientsList = (ingredients) => {
         if (ingredients) {
             return ingredients.map((item) => (
-                <Fragment key={item.ingredient_id}>
+                <Fragment key={item.id}>
                     <ListItem>
                         <Grid container justify="space-between">
                             <Grid item>
                                 <Typography variant="body1">
-                                    {item.ingredient_name}:
+                                    {item.name}:
                                 </Typography>
                             </Grid>
                             <Grid item>
                                 <Typography variant="body1">
-                                    {item.count} {item.unit_name}
+                                    {item.amount} {item.unit_name}
                                 </Typography>
                             </Grid>
                         </Grid>
