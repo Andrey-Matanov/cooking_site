@@ -27,49 +27,35 @@ import ClearIcon from "@material-ui/icons/Clear";
 
 const Profile = () => {
     const dispatch = useDispatch();
-    const { userId, userName, userEmail, userRecipes } = useSelector(
+    const { userName, userEmail, userRecipes } = useSelector(
         (state) => state.profile
     );
+
+    const { userId } = useSelector(
+        (state) => state.authorization
+    )
+
     const params = useParams();
     const id = parseInt(params.id);
 
     const [openPassword, setOpenPassword] = useState(false);
     const [openDeleteUser, setOpenDeleteUser] = useState(false);
     const [nameChange, setNameChange] = useState(false);
-    const [newNameValue, setNewNameValue] = useState("");
+    const [newNameValue, setNewNameValue] = useState(userName);
 
     useEffect(() => {
         dispatch(fetchUserData(id));
         dispatch(fetchUserRecipes(id));
     }, [dispatch]);
 
-    const enterEditName = () => {
-        setNameChange(true);
-    };
-
-    const cancelEditName = () => {
-        setNameChange(false);
-    };
+    useEffect(() => {
+        dispatch(fetchUserData(id));
+        dispatch(fetchUserRecipes(id));
+    }, [id]);
 
     const applyEditName = () => {
         setNameChange(false);
         dispatch(changeUserName(userId, newNameValue));
-    };
-
-    const handleOpenPassword = () => {
-        setOpenPassword(true);
-    };
-
-    const handleClosePassword = () => {
-        setOpenPassword(false);
-    };
-
-    const handleOpenDeleteUser = () => {
-        setOpenDeleteUser(true);
-    };
-
-    const handleCloseDeleteUser = () => {
-        setOpenDeleteUser(false);
     };
 
     const handleDeleteUser = () => {
@@ -100,9 +86,20 @@ const Profile = () => {
                             </Grid>
                             {id === userId ? (
                                 <Grid item xs={3}>
-                                    <Link to={`/edit_recipe/${recipe.id}`}>
-                                        Изменить рецепт
-                                    </Link>
+                                    <Button
+                                        variant="contained"
+                                        size="small"
+                                    >
+                                        <Link
+                                            style={{
+                                                textDecoration: "none",
+                                                color: "inherit",
+                                            }}
+                                            to={`/edit_recipe/${recipe.id}`}
+                                        >
+                                            Изменить рецепт
+                                        </Link>
+                                    </Button>
                                 </Grid>
                             ) : (
                                 <div />
@@ -140,7 +137,7 @@ const Profile = () => {
                         {nameChange ? (
                             <Box minHeight="32px">
                                 <TextField
-                                    placeholder="Имя"
+                                    placeholder="Новое имя"
                                     onInput={(e) =>
                                         setNewNameValue(e.target.value)
                                     }
@@ -155,7 +152,7 @@ const Profile = () => {
                                 <IconButton
                                     variant="contained"
                                     size="small"
-                                    onClick={cancelEditName}
+                                    onClick={() => setNameChange(false)}
                                 >
                                     <ClearIcon />
                                 </IconButton>
@@ -178,7 +175,7 @@ const Profile = () => {
                                         <IconButton
                                             variant="contained"
                                             size="small"
-                                            onClick={enterEditName}
+                                            onClick={() => setNameChange(true)}
                                         >
                                             <EditIcon fontSize="small" />
                                         </IconButton>
@@ -243,7 +240,7 @@ const Profile = () => {
                                         <IconButton
                                             variant="contained"
                                             size="small"
-                                            onClick={handleOpenPassword}
+                                            onClick={() => setOpenPassword(true)}
                                         >
                                             <EditIcon fontSize="small" />
                                         </IconButton>
@@ -278,7 +275,7 @@ const Profile = () => {
                     )}
                     {id === userId ? (
                         <Grid item xs={12}>
-                            <Button size="small" onClick={handleOpenDeleteUser}>
+                            <Button size="small" onClick={() => setOpenDeleteUser(true)}>
                                 Удалить профиль
                             </Button>
                         </Grid>
@@ -289,23 +286,23 @@ const Profile = () => {
             </Container>
             <Dialog
                 open={openPassword}
-                onClose={handleClosePassword}
+                onClose={() => setOpenPassword(false)}
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
             >
                 <ChangePasswordForm
                     userId={userId}
-                    handleClose={handleClosePassword}
+                    handleClose={() => setOpenPassword(false)}
                 />
             </Dialog>
             <Dialog
                 open={openDeleteUser}
-                onClose={handleOpenDeleteUser}
+                onClose={() => setOpenDeleteUser(true)}
                 aria-labelledby="simple-modal-title"
                 aria-describedby="simple-modal-description"
             >
                 <DeleteDialog
-                    handleClose={handleCloseDeleteUser}
+                    handleClose={() => setOpenDeleteUser(false)}
                     handleDelete={handleDeleteUser}
                 />
             </Dialog>
