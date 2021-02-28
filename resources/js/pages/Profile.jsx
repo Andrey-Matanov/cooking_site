@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import {
     fetchUserRecipes,
     changeUserName,
@@ -24,9 +24,11 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 import CheckIcon from "@material-ui/icons/Check";
 import ClearIcon from "@material-ui/icons/Clear";
+import { userLogout } from "../actions/authorizationActions";
 
 const Profile = () => {
     const dispatch = useDispatch();
+    const history = useHistory();
     const { userName, userEmail, userRecipes } = useSelector(
         (state) => state.profile
     );
@@ -60,8 +62,9 @@ const Profile = () => {
 
     const handleDeleteUser = () => {
         setOpenDeleteUser(false);
-        window.localStorage.removeItem("currentUserToken");
         dispatch(deleteUser(userId));
+        dispatch(userLogout());
+        window.localStorage.removeItem("currentUserToken");
         history.push("/");
     };
 
