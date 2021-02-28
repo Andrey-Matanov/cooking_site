@@ -37,14 +37,17 @@ export const fetchUserRecipes = (authorId) => async (dispatch) => {
 
 export const changeUserName = (userId, newUserName) => async (dispatch) => {
     const token = window.localStorage.getItem("currentUserToken");
-    await axios.patch(`${baseURL}/api/users/${userId}`, {
-        headers: {
-            Authorization: `Bearer ${token}`,
-        },
-        body: {
-            name: JSON.stringify(newUserName),
-        },
-    });
+    await axios.patch(`${baseURL}/api/users/${userId}`,
+        {
+            body: {
+                name: JSON.stringify(newUserName),
+            }},
+        {
+            headers: {
+                Authorization: `Bearer ${token}`,
+            },
+        }
+        );
 
     dispatch({
         type: USERNAME_CHANGE,
@@ -56,8 +59,7 @@ export const changeUserName = (userId, newUserName) => async (dispatch) => {
 
 export const deleteUser = (userId) => async (dispatch) => {
     const token = window.localStorage.getItem("currentUserToken");
-    await fetch(`${baseURL}/api/users/${userId}`, {
-        method: "DELETE",
+    await axios.delete(`${baseURL}/api/users/${userId}`, {
         headers: {
             Authorization: `Bearer ${token}`,
         },
