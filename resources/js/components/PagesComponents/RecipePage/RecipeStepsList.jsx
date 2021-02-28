@@ -7,8 +7,8 @@ import { Paper, Grid, Box, Typography } from "@material-ui/core";
 import ReviewsBlock from "../../../components/PagesComponents/RecipePage/ReviewsBlock.jsx";
 import Nutrition from "./Nutrition.jsx";
 // import AddCommentaryForm from '../components/Forms/AddCommentaryForm';
-import DifficultyBar from "../Reusable/DifficultyBar";
-import RatingBar from "../Reusable/RatingBar.jsx";
+import DifficultyBar from "../../Common/DifficultyBar";
+import RatingBar from "../../Common/RatingBar.jsx";
 
 const useStyles = makeStyles((theme) => ({
     scrolling: {

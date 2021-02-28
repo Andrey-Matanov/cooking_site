@@ -16,7 +16,7 @@ export default combineReducers({
     recipesObject: recipesListReducer,
     categories: categoriesReducer,
     ingredients: ingredientsReducer,
-    users: usersReducer,
+    usersState: usersReducer,
     rating: ratingReducer,
     profile: profileReducer,
     articles: articlesListReducer,

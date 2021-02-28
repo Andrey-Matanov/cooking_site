@@ -13,6 +13,7 @@ import AddArticle from "./AddArticle";
 import RegisterPage from "./RegisterPage";
 import ImageUpload from "./ImageUpload";
 import EditRecipe from "./EditRecipe";
+import AdminPanel from "./AdminPanel";
 
 const RootRouter = () => {
     return (
@@ -30,6 +31,7 @@ const RootRouter = () => {
                 <Route path="/login" render={() => <LoginPage />} />
                 <Route path="/register" render={() => <RegisterPage />} />
                 <Route path="/image" render={() => <ImageUpload />} />
+                <Route path="/admin" render={() => <AdminPanel />} />
                 <Route render={() => <Error404 />} />
             </Switch>
         </>
