@@ -34,6 +34,8 @@ class RecipesController extends Controller
                 'isLastRecipes' => $isLastRecipes
             ]);
         }
+
+        return response()->json(['status' => true, 'data' => Recipe::select('id','name', 'image')->get()]);
     }
 
     /**
