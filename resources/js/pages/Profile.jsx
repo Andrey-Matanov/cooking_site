@@ -24,6 +24,8 @@ import {
 import EditIcon from "@material-ui/icons/Edit";
 import CheckIcon from "@material-ui/icons/Check";
 import ClearIcon from "@material-ui/icons/Clear";
+import {deleteRecipe} from "../actions/recipesListActions";
+import {fetchRecipe} from "../actions/recipeActions";
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -64,6 +66,8 @@ const Profile = () => {
         dispatch(deleteUser(userId));
         history.push("/");
     };
+    // console.log(applyEditName)
+    // console.log(handleDeleteUser)
 
     const renderedRecipes = userRecipes.length ? (
         userRecipes.map((recipe) => (
@@ -99,6 +103,16 @@ const Profile = () => {
                                         >
                                             Изменить рецепт
                                         </Link>
+                                    </Button>
+                                    <Button
+                                        variant="contained"
+                                        size="small"
+                                        onClick={() => {
+                                            dispatch(deleteRecipe(recipe.id))
+                                                .then(() => dispatch(fetchUserRecipes(recipeId)))
+                                                .catch((err) => console.error(err))
+                                        }}
+                                    >Удалить рецепт
                                     </Button>
                                 </Grid>
                             ) : (

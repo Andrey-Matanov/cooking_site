@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
-import { addRecipe, editRecipe } from "../../../actions/recipesListActions";
+import { addRecipe, editRecipe, deleteRecipe } from "../../../actions/recipesListActions";
 import AddRecipeFormStep from "./AddRecipeFormStep";
 import AddRecipeFormIngredient from "./AddRecipeFormIngredient";
 import FormTextarea from "../../Inputs/FormTextArea";
@@ -113,6 +113,10 @@ const AddRecipeFormik = ({
                     }
                     case "add": {
                         dispatch(addRecipe(values));
+                        break;
+                    }
+                    case "delete": {
+                        dispatch(deleteRecipe(additionalInfo.recipeId));
                         break;
                     }
                 }

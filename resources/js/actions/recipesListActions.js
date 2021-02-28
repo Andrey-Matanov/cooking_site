@@ -3,6 +3,7 @@ import { DELETE_USER } from "./profileActions";
 
 export const ADD_RECIPE = "@@recipesList/ADD_RECIPE";
 export const EDIT_RECIPE = "@@recipesList/EDIT_RECIPE";
+export const DELETE_RECIPE = "@@recipesList/DELETE_RECIPE";
 export const ADD_COMMENTARY = "@@recipesList/ADD_COMMENTARY";
 export const DELETE_COMMENTARY = "@@recipesList/DELETE_COMMENTARY";
 export const FETCH_RECIPES = "@@recipesList/FETCH_RECIPES";
@@ -99,6 +100,18 @@ export const editRecipe = (recipe, recipeId) => async (dispatch) => {
     });
 
     dispatch({ type: "SUCCESS" });
+};
+
+export const deleteRecipe = (recipeId) => async (dispatch) => {
+    await fetch(`${baseURL}/api/recipes/${recipeId}`, {
+        method: "DELETE",
+        headers: {
+            Authorization: `Bearer ${window.localStorage.getItem(
+                "currentUserToken"
+            )}`,
+        },
+    });
+    dispatch({ type: "DELETE_RECIPE" });
 };
 
 export const switchCategory = (newCategory) => async (dispatch) => {
