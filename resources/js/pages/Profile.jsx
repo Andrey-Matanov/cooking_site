@@ -245,7 +245,7 @@ const Profile = () => {
         return (
             <Grid container>
                     <Grid item xs={2}>
-                        <Box py={1}>
+                        <Box pt={3} pb={1}>
                             <Typography variant="h4">Профиль</Typography>
                         </Box>
                     </Grid>

@@ -60,11 +60,11 @@ const Recipes = () => {
         return (
             <>
                 <Box mt={3}>
-                    <Typography variant='h3'>Рецепты</Typography>
+                    <Typography variant='h5'>Рецепты</Typography>
                 </Box>
-                <Box my={3}>
+                <Box mb={3}>
                     <FormControl className={classes.formControl}>
-                        <InputLabel htmlFor="age-native-simple">Категория</InputLabel>
+                        <InputLabel>Категория</InputLabel>
                         <Select
                         native
                         value={currentCategory}
