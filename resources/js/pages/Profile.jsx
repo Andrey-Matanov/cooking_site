@@ -139,7 +139,7 @@ const Profile = () => {
                                         size="small"
                                         onClick={() => {
                                             dispatch(deleteRecipe(recipe.id))
-                                                .then(() => dispatch(fetchUserRecipes(recipeId)))
+                                                .then(() => dispatch(fetchUserRecipes(userId)))
                                                 .catch((err) => console.error(err))
                                         }}
                                     >Удалить рецепт
