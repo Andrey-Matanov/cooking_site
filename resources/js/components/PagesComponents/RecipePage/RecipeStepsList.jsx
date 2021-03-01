@@ -7,8 +7,8 @@ import { Paper, Grid, Box, Typography } from "@material-ui/core";
 import ReviewsBlock from "../../../components/PagesComponents/RecipePage/ReviewsBlock.jsx";
 import Nutrition from "./Nutrition.jsx";
 // import AddCommentaryForm from '../components/Forms/AddCommentaryForm';
-import DifficultyBar from "../Reusable/DifficultyBar";
-import RatingBar from "../Reusable/RatingBar.jsx";
+import DifficultyBar from "../../Common/DifficultyBar";
+import RatingBar from "../../Common/RatingBar.jsx";
 
 const useStyles = makeStyles((theme) => ({
     scrolling: {
@@ -30,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
             borderRadius: "2.5px",
         },
     },
+    image: {
+        maxWidth: "100%",
+        height: "auto"
+    }
 }));
 
 let formatTime = (sourceTime) => {
@@ -68,6 +72,7 @@ const renderReviews = (reviews, users) => {
 };
 
 const renderSteps = (steps) => {
+    const classes = useStyles();
     if (steps) {
         return steps.map((step, i) => (
             <Grid item xs={12} key={`step${i}`}>
@@ -84,13 +89,13 @@ const renderSteps = (steps) => {
                                 </Grid>
                                 <Grid item>
                                     <Typography variant="h5">
-                                        {step.heading}
+                                        {step.name}
                                     </Typography>
                                 </Grid>
                             </Grid>
                         </Box>
                         <Box py={2} textAlign="center">
-                            <img src={step.image} alt={step.heading} />
+                            <img src={step.image} alt={step.name} className={classes.image} />
                         </Box>
                         <Box py={2}>
                             <Typography variant="body1">
@@ -106,11 +111,8 @@ const renderSteps = (steps) => {
     }
 };
 
-const RecipeStepsList = (props) => {
+const RecipeStepsList = ({ ingredients, recipe, reviews, steps }) => {
     const classes = useStyles();
-
-    const { ingredients, recipe, reviews, steps, userId } = props;
-
     const {
         name,
         user_name,
@@ -122,7 +124,7 @@ const RecipeStepsList = (props) => {
     } = recipe;
 
     return (
-        <Box mt={10}>
+        <Box mt={"45px"}>
             <div style={{ marginTop: "20px" }}></div>
             <Grid container className={classes.scrolling} spacing={5}>
                 <Grid item xs={12}>
@@ -132,7 +134,7 @@ const RecipeStepsList = (props) => {
                                 <Typography variant="h4">{name}</Typography>
                             </Box>
                             <Box my={3} textAlign="center">
-                                <img src={image} alt={name} />
+                                <img src={image} alt={name} className={classes.image} />
                             </Box>
                             <Box my={3}>
                                 <p>

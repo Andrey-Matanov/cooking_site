@@ -2,7 +2,7 @@ import React from "react";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components";
 import HomeIcon from "@material-ui/icons/Home";
-import RecipeIcon from "../../../Icons/RecipeIcon";
+import RecipeIcon from "../../Icons/RecipeIcon";
 
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -55,23 +55,13 @@ const Menu = () => {
                     <Heading>Рейтинг авторов</Heading>
                 </LinkDiv>
             </NavLink>
-            {/* <NavLink to="/profile/1" activeClassName={classes.selected_link}>
-                <LinkDiv>
-                    <RecipeIcon color="secondary" />
-                    <Heading>Личный кабинет</Heading>
-                </LinkDiv>
-            </NavLink> */}
-            <NavLink
-                exact
-                to="/articles"
-                activeClassName={classes.selected_link}
-            >
+            <NavLink to="/articles" activeClassName={classes.selected_link}>
                 <LinkDiv>
                     <HomeIcon color="secondary" />
                     <Heading>Все статьи</Heading>
                 </LinkDiv>
             </NavLink>
-            <NavLink exact to="/login" activeClassName={classes.selected_link}>
+            <NavLink to="/login" activeClassName={classes.selected_link}>
                 <LinkDiv>
                     <HomeIcon color="secondary" />
                     <Heading>Вход в личный кабинет</Heading>

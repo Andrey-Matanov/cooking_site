@@ -12,6 +12,8 @@ import AddRecipe from "./AddRecipe";
 import AddArticle from "./AddArticle";
 import RegisterPage from "./RegisterPage";
 import ImageUpload from "./ImageUpload";
+import EditRecipe from "./EditRecipe";
+import AdminPanel from "./AdminPanel";
 
 const RootRouter = () => {
     return (
@@ -23,11 +25,13 @@ const RootRouter = () => {
                 <Route path="/authors" render={() => <Authors />} />
                 <Route path="/profile/:id" render={() => <Profile />} />
                 <Route path="/add_recipe" render={() => <AddRecipe />} />
+                <Route path="/edit_recipe/:id" render={() => <EditRecipe />} />
                 <Route path="/add_article" render={() => <AddArticle />} />
                 <Route path="/articles" render={() => <Articles />} />
                 <Route path="/login" render={() => <LoginPage />} />
                 <Route path="/register" render={() => <RegisterPage />} />
                 <Route path="/image" render={() => <ImageUpload />} />
+                <Route path="/admin" render={() => <AdminPanel />} />
                 <Route render={() => <Error404 />} />
             </Switch>
         </>

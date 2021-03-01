@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import RecipeStepsList from "../components/PagesComponents/RecipePage/RecipeStepsList";
-import { Container } from "@material-ui/core";
+import { Container, Box, CircularProgress } from "@material-ui/core";
 import { fetchRecipe } from "../actions/recipeActions.js";
 import { useParams } from "react-router-dom";
 
-const Recipe = ({ recipe, ingredients, reviewsList, steps }) => {
+const Recipe = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
 
@@ -13,27 +13,30 @@ const Recipe = ({ recipe, ingredients, reviewsList, steps }) => {
         dispatch(fetchRecipe(id));
     }, []);
 
-    if (recipe) {
-        return (
-            <Container maxWidth="md">
-                <RecipeStepsList
-                    recipe={recipe}
-                    ingredients={ingredients}
-                    reviews={reviewsList}
-                    steps={steps}
-                />
-            </Container>
-        );
-    } else {
-        return <div></div>;
+    const { status, recipe, ingredients, reviewsList, steps } = useSelector((state) => state.recipe)
+
+    switch (status) {
+        case "loading": {
+            <Box justifyContent="center" display="flex">
+                <CircularProgress color="primary" />
+            </Box>
+        }
+        case "ok": {
+            return (
+                <Container maxWidth="md">
+                    <RecipeStepsList
+                        recipe={recipe}
+                        ingredients={ingredients}
+                        reviews={reviewsList}
+                        steps={steps}
+                    />
+                </Container>
+            );
+        }
+        case "failed": {
+            return <RequestError retryFunction={() => dispatch(fetchRecipe(id))} />;
+        }
     }
 };
 
-const mapStateToProps = (state) => ({
-    recipe: state.recipe.recipe,
-    ingredients: state.recipe.ingredients,
-    steps: state.recipe.steps,
-    reviewsList: state.recipe.reviews,
-});
-
-export default connect(mapStateToProps)(Recipe);
+export default Recipe;

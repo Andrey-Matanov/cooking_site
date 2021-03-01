@@ -2,10 +2,10 @@ import React from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import styled from "styled-components";
 import HomeIcon from "@material-ui/icons/Home";
-import RecipeIcon from "../../../Icons/RecipeIcon";
+import RecipeIcon from "../../Icons/RecipeIcon";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
-import { userLogout } from "../../../../actions/authorizationActions";
+import { userLogout } from "../../../actions/authorizationActions";
 
 const LinkDiv = styled.div`
     display: flex;
@@ -67,6 +67,12 @@ const Menu = () => {
                 <LinkDiv>
                     <HomeIcon color="secondary" />
                     <Heading>Все статьи</Heading>
+                </LinkDiv>
+            </NavLink>
+            <NavLink to="/admin" activeClassName={classes.selected_link}>
+                <LinkDiv>
+                    <RecipeIcon color="secondary" />
+                    <Heading>Админ.меню</Heading>
                 </LinkDiv>
             </NavLink>
             <NavLink

@@ -4,6 +4,7 @@ import {
     ADD_RECIPE,
     FETCH_RECIPES,
     CATEGORY_CHANGE,
+    FETCH_ERROR,
 } from "../actions/recipesListActions";
 
 export const recipesListReducer = (
@@ -12,6 +13,7 @@ export const recipesListReducer = (
         currentLastId: 0,
         isLastRecipes: false,
         currentCategory: '',
+        status: "loading",
     },
     action
 ) => {
@@ -23,6 +25,7 @@ export const recipesListReducer = (
                 currentLastId: action.payload.recipes[action.payload.recipes.length - 1].id,
                 isLastRecipes: action.payload.isLastRecipes === 1,
                 currentCategory: recipesObject.currentCategory,
+                status: "ok",
             };
         }
         case CATEGORY_CHANGE: {
@@ -32,6 +35,7 @@ export const recipesListReducer = (
                 currentLastId: 0,
                 isLastRecipes: false,
                 currentCategory: action.payload.currentCategory,
+                status: "ok",
             }
         }
         case ADD_RECIPE: {
@@ -45,6 +49,7 @@ export const recipesListReducer = (
                     image: "https://via.placeholder.com/150/aba",
                     rating: 0,
                     commentaries: [],
+                    status: "ok",
                 });
             });
         }
@@ -61,6 +66,12 @@ export const recipesListReducer = (
                         text,
                     });
             });
+        }
+        case FETCH_ERROR: {
+            return {
+                ...recipesObject,
+                status: "failed"
+            }
         }
         default: {
             return recipesObject;

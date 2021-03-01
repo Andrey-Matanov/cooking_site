@@ -6,7 +6,7 @@ import RecipeItem from "./RecipeItem.jsx";
 
 const useStyles = makeStyles((theme) => ({
     scrolling: {
-        height: "70vh",
+        height: "calc(100vh - 250px)",
         paddingRight: "20px",
         paddingLeft: "20px",
         overflowY: "scroll",
@@ -91,7 +91,6 @@ const RecipesList = ({ recipesList, loadRecipes, isLast }) => {
     return (
         <div>
             <Grid
-                style={{ height: "60vh" }}
                 container
                 className={classes.scrolling}
                 spacing={5}
