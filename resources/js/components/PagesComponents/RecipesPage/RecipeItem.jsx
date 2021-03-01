@@ -82,11 +82,11 @@ const RecipeItem = (props) => {
                                     to={`/recipes/${id}`}
                                     className={classes.link}
                                 >
-                                    <Typography variant="h4">{name}</Typography>
+                                    <Typography variant="h5">{name}</Typography>
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Typography variant="h5">
+                                <Typography variant="body1">
                                     Автор: {author}
                                 </Typography>
                             </Grid>

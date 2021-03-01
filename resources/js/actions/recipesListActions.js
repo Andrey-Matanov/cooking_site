@@ -48,30 +48,38 @@ export const deleteCommentary = (reviewId) => async (dispatch) => {
 export const fetchRecipes = (currentLastId, category = "") => async (
     dispatch
 ) => {
-    const response = await fetch(
-        `${baseURL}/api/recipes/?amount=10&last=${currentLastId}&category=${category}`
-    );
-    const data = await response.json();
-
-    dispatch({
-        type: FETCH_RECIPES,
-        payload: {
-            recipes: data.recipes,
-            isLastRecipes: data.isLastRecipes,
-        },
-    });
+    try {
+        const response = await fetch(
+            `${baseURL}/api/recipes/?amount=10&last=${currentLastId}&category=${category}`
+        );
+        const data = await response.json();
+    
+        dispatch({
+            type: FETCH_RECIPES,
+            payload: {
+                recipes: data.recipes,
+                isLastRecipes: data.isLastRecipes,
+            },
+        });
+    } catch (err) {
+        dispatch({ type: FETCH_ERROR })
+    }
 };
 
 export const fetchCategories = () => async (dispatch) => {
-    const response = await fetch(`${baseURL}/api/categories`);
-    const json = await response.json();
+    try {
+        const response = await fetch(`${baseURL}/api/categories`);
+        const json = await response.json();
 
-    dispatch({
-        type: FETCH_CATEGORIES,
-        payload: {
-            recipes: json.recipes,
-        },
-    });
+        dispatch({
+            type: FETCH_CATEGORIES,
+            payload: {
+                recipes: json.recipes,
+            },
+        });
+    } catch (err) {
+        dispatch({ type: FETCH_ERROR })
+    }
 };
 
 export const addRecipe = (recipe) => async (dispatch) => {

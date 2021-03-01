@@ -30,6 +30,10 @@ const useStyles = makeStyles((theme) => ({
             borderRadius: "2.5px",
         },
     },
+    image: {
+        maxWidth: "100%",
+        height: "auto"
+    }
 }));
 
 let formatTime = (sourceTime) => {
@@ -68,6 +72,7 @@ const renderReviews = (reviews, users) => {
 };
 
 const renderSteps = (steps) => {
+    const classes = useStyles();
     if (steps) {
         return steps.map((step, i) => (
             <Grid item xs={12} key={`step${i}`}>
@@ -90,7 +95,7 @@ const renderSteps = (steps) => {
                             </Grid>
                         </Box>
                         <Box py={2} textAlign="center">
-                            <img src={step.image} alt={step.name} />
+                            <img src={step.image} alt={step.name} className={classes.image} />
                         </Box>
                         <Box py={2}>
                             <Typography variant="body1">
@@ -119,7 +124,7 @@ const RecipeStepsList = ({ ingredients, recipe, reviews, steps }) => {
     } = recipe;
 
     return (
-        <Box mt={10}>
+        <Box mt={"45px"}>
             <div style={{ marginTop: "20px" }}></div>
             <Grid container className={classes.scrolling} spacing={5}>
                 <Grid item xs={12}>
@@ -129,7 +134,7 @@ const RecipeStepsList = ({ ingredients, recipe, reviews, steps }) => {
                                 <Typography variant="h4">{name}</Typography>
                             </Box>
                             <Box my={3} textAlign="center">
-                                <img src={image} alt={name} />
+                                <img src={image} alt={name} className={classes.image} />
                             </Box>
                             <Box my={3}>
                                 <p>

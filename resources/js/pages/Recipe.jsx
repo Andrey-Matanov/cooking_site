@@ -1,11 +1,11 @@
 import React, { useEffect } from "react";
-import { connect, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import RecipeStepsList from "../components/PagesComponents/RecipePage/RecipeStepsList";
-import { Container } from "@material-ui/core";
+import { Container, Box, CircularProgress } from "@material-ui/core";
 import { fetchRecipe } from "../actions/recipeActions.js";
 import { useParams } from "react-router-dom";
 
-const Recipe = ({ status, recipe, ingredients, reviewsList, steps }) => {
+const Recipe = () => {
     const dispatch = useDispatch();
     const { id } = useParams();
 
@@ -13,9 +13,13 @@ const Recipe = ({ status, recipe, ingredients, reviewsList, steps }) => {
         dispatch(fetchRecipe(id));
     }, []);
 
+    const { status, recipe, ingredients, reviewsList, steps } = useSelector((state) => state.recipe)
+
     switch (status) {
         case "loading": {
-            return <h2>Рецепт загружается</h2>;
+            <Box justifyContent="center" display="flex">
+                <CircularProgress color="primary" />
+            </Box>
         }
         case "ok": {
             return (
@@ -30,17 +34,9 @@ const Recipe = ({ status, recipe, ingredients, reviewsList, steps }) => {
             );
         }
         case "failed": {
-            return <h2>Такого рецепта не существует</h2>;
+            return <RequestError retryFunction={() => dispatch(fetchRecipe(id))} />;
         }
     }
 };
 
-const mapStateToProps = (state) => ({
-    status: state.recipe.status,
-    recipe: state.recipe.recipe,
-    ingredients: state.recipe.ingredients,
-    steps: state.recipe.steps,
-    reviewsList: state.recipe.reviews,
-});
-
-export default connect(mapStateToProps)(Recipe);
+export default Recipe;
