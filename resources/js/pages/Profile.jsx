@@ -1,9 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams, useHistory } from "react-router-dom";
+import {
+    Link,
+    useParams,
+    useHistory
+} from "react-router-dom";
+
 import {
     fetchUserRecipes,
     changeUserName,
+    changeEmail,
     deleteUser,
     fetchUserData,
 } from "../actions/profileActions";
@@ -20,16 +26,29 @@ import {
     Button,
     Dialog,
     TextField,
+    Avatar,
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/styles"
+
 import EditIcon from "@material-ui/icons/Edit";
 import CheckIcon from "@material-ui/icons/Check";
 import ClearIcon from "@material-ui/icons/Clear";
 import { userLogout } from "../actions/authorizationActions";
+import RequestError from "../components/Common/RequestError.jsx"
+
+const useStyles = makeStyles((theme) => ({
+    avatar: {
+      width: theme.spacing(7),
+      height: theme.spacing(7),
+    },
+  }));
+  
 
 const Profile = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const { userName, userEmail, userRecipes } = useSelector(
+    const classes = useStyles();
+    const { userName, userEmail, userRecipes, status } = useSelector(
         (state) => state.profile
     );
 
@@ -43,22 +62,32 @@ const Profile = () => {
     const [openPassword, setOpenPassword] = useState(false);
     const [openDeleteUser, setOpenDeleteUser] = useState(false);
     const [nameChange, setNameChange] = useState(false);
+    const [emailChange, setEmailChange] = useState(false);
     const [newNameValue, setNewNameValue] = useState(userName);
+    const [newEmailValue, setNewEmailValue] = useState(userEmail);
 
-    useEffect(() => {
+    const fetchData = (id) => {
         dispatch(fetchUserData(id));
         dispatch(fetchUserRecipes(id));
+    }
+
+    useEffect(() => {
+        fetchData(id);
     }, [dispatch]);
 
     useEffect(() => {
-        dispatch(fetchUserData(id));
-        dispatch(fetchUserRecipes(id));
+        fetchData(id);
     }, [id]);
 
     const applyEditName = () => {
         setNameChange(false);
         dispatch(changeUserName(userId, newNameValue));
     };
+
+    const applyEditEmail = () => {
+        setEmailChange(false);
+        dispatch(changeEmail(userId, newEmailValue));
+    }
 
     const handleDeleteUser = () => {
         setOpenDeleteUser(false);
@@ -115,19 +144,113 @@ const Profile = () => {
     ) : (
         <Grid item xs={12}>
             {id === userId
-                ? "Добавьте свой первый рецепт"
-                : "Пользователь еще не добавлял рецепты"}
+                ? <Typography variant="body2">Добавьте свой первый рецепт</Typography>
+                : <Typography variant="body2">Пользователь еще не добавлял рецепты</Typography>}
         </Grid>
     );
 
-    return (
-        <>
-            <Container maxWidth="lg">
-                <Grid container>
+    const emailAndPasswordRender = () => {
+        return (
+            <div>
+                <Grid item container alignItems="center" xs={12}>
+                    {emailChange ? (
+                        <Box minHeight="32px">
+                            <TextField
+                                placeholder="Новый email"
+                                onInput={(e) =>
+                                    setNewEmailValue(e.target.value)
+                                }
+                            />
+                            <IconButton
+                                variant="contained"
+                                size="small"
+                                onClick={applyEditEmail}
+                            >
+                                <CheckIcon />
+                            </IconButton>
+                            <IconButton
+                                variant="contained"
+                                size="small"
+                                onClick={() => setEmailChange(false)}
+                            >
+                                <ClearIcon />
+                            </IconButton>
+                        </Box>
+                    ) : (
+                        <Grid item container>
+                            <Grid item>
+                                <Box
+                                    pr={1}
+                                    minHeight="32px"
+                                    lineHeight="32px"
+                                >
+                                    <Typography variant="body1">
+                                        <b>E-mail: </b>
+                                    </Typography>
+                                </Box>
+                            </Grid>
+                            <Grid item>
+                                <Box pr={1}>
+                                    <Typography variant="body1">
+                                        {userEmail}{" "}
+                                    </Typography>
+                                </Box>
+                            </Grid>
+                            <Grid item>
+                                <Box pr={1}>
+                                    <IconButton
+                                        variant="contained"
+                                        size="small"
+                                        onClick={() => setEmailChange(true)}
+                                    >
+                                        <EditIcon fontSize="small" />
+                                    </IconButton>
+                                </Box>
+                            </Grid>
+                        </Grid>
+                    )}
+                </Grid>
+                <Grid item container alignItems="center" xs={12}>
+                    <Grid item>
+                        <Box pr={1}>
+                            <Typography variant="body1">
+                                <b>Пароль: </b>
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item>
+                        <Box pr={1}>
+                            <Typography variant="body1">
+                                ******
+                            </Typography>
+                        </Box>
+                    </Grid>
+                    <Grid item>
+                        <Box pr={1}>
+                            <IconButton
+                                variant="contained"
+                                size="small"
+                                onClick={() => setOpenPassword(true)}
+                            >
+                                <EditIcon fontSize="small" />
+                            </IconButton>
+                        </Box>
+                    </Grid>
+                </Grid>
+            </div>
+        )
+    }
+
+    const renderSucceed = () => {
+        return (
+            <Grid container>
                     <Grid item xs={2}>
                         <Box py={1}>
                             <Typography variant="h4">Профиль</Typography>
                         </Box>
+                    </Grid>
+                    <Grid item xs={12}>
+                        <Avatar alt={userName} className={classes.avatar}></Avatar>
                     </Grid>
                     <Grid item container alignItems="center" xs={12}>
                         <Grid item>
@@ -196,61 +319,7 @@ const Profile = () => {
                         )}
                     </Grid>
                     {id === userId ? (
-                        <div>
-                            <Grid item container alignItems="center" xs={12}>
-                                <Grid item>
-                                    <Box pr={1}>
-                                        <Typography variant="body1">
-                                            <b>E-mail: </b>
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-                                <Grid item>
-                                    <Box pr={1}>
-                                        <Typography variant="body1">
-                                            {userEmail}{" "}
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-                                <Grid item>
-                                    <Box pr={1}>
-                                        <IconButton
-                                            variant="contained"
-                                            size="small"
-                                        >
-                                            <EditIcon fontSize="small" />
-                                        </IconButton>
-                                    </Box>
-                                </Grid>
-                            </Grid>
-                            <Grid item container alignItems="center" xs={12}>
-                                <Grid item>
-                                    <Box pr={1}>
-                                        <Typography variant="body1">
-                                            <b>Пароль: </b>
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-                                <Grid item>
-                                    <Box pr={1}>
-                                        <Typography variant="body1">
-                                            ******
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-                                <Grid item>
-                                    <Box pr={1}>
-                                        <IconButton
-                                            variant="contained"
-                                            size="small"
-                                            onClick={() => setOpenPassword(true)}
-                                        >
-                                            <EditIcon fontSize="small" />
-                                        </IconButton>
-                                    </Box>
-                                </Grid>
-                            </Grid>
-                        </div>
+                        emailAndPasswordRender()
                     ) : (
                         <div />
                     )}
@@ -262,16 +331,16 @@ const Profile = () => {
                     {renderedRecipes}
                     {id === userId ? (
                         <Grid item xs={12}>
-                            <Link
-                                style={{ textDecoration: "none" }}
-                                to="/add_recipe"
-                            >
-                                <Box py={1}>
+                            <Box py={1}>
+                                <Link
+                                    style={{ textDecoration: "none" }}
+                                    to="/add_recipe"
+                                >
                                     <Button variant="contained" size="small">
                                         Добавить рецепт
                                     </Button>
-                                </Box>
-                            </Link>
+                                </Link>
+                            </Box>
                         </Grid>
                     ) : (
                         <div />
@@ -286,6 +355,18 @@ const Profile = () => {
                         <div />
                     )}
                 </Grid>
+        )
+    }
+
+    return (
+        <>
+            <Container maxWidth="lg">
+                {(status === "failed") ? (
+                    <RequestError retryFunction={() => fetchData(id)} />
+                ) : (
+                    renderSucceed()
+                )}
+                
             </Container>
             <Dialog
                 open={openPassword}

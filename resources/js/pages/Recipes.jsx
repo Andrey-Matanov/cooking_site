@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import RecipesList from '../components/PagesComponents/RecipesPage/RecipesList.jsx';
+import RequestError from "../components/Common/RequestError.jsx"
 import { fetchRecipes, switchCategory } from '../actions/recipesListActions.js';
 import { fetchRecipesAndCategories } from '../actions/combinedActions.js';
 
-import { Container, Box, Typography, FormControl, InputLabel, Select } from '@material-ui/core';
+import { Container, Box, Typography, FormControl, InputLabel, Select, CircularProgress } from '@material-ui/core';
 import { makeStyles } from '@material-ui/styles';
 
 const useStyles = makeStyles((theme) => ({
@@ -22,15 +23,8 @@ const Recipes = () => {
     const classes = useStyles();
 
     const recipesList = useSelector((state) => state.recipesObject.recipes);
-    const currentLastId = useSelector(
-        (state) => state.recipesObject.currentLastId
-    );
-    const isLastRecipes = useSelector(
-        (state) => state.recipesObject.isLastRecipes
-    );
-    const currentCategory = useSelector(
-        (state) => state.recipesObject.currentCategory
-    )
+
+    const { currentLastId, isLastRecipes, currentCategory, status } = useSelector((state) => state.recipesObject)
 
     const categories = useSelector((state) => state.categories)
 
@@ -62,35 +56,51 @@ const Recipes = () => {
         ))
     }
 
+    const renderSucceed = () => {
+        return (
+            <>
+                <Box mt={3}>
+                    <Typography variant='h3'>Рецепты</Typography>
+                </Box>
+                <Box my={3}>
+                    <FormControl className={classes.formControl}>
+                        <InputLabel htmlFor="age-native-simple">Категория</InputLabel>
+                        <Select
+                        native
+                        value={currentCategory}
+                        onChange={handleChange}
+                        className={classes.selectEmpty}
+                        >
+                            <option aria-label="None" value="" />
+                            {renderCategoryOptions(categories)}
+                        </Select>
+                    </FormControl>
+                </Box>
+                {recipesList.length ? (
+                    <RecipesList
+                        recipesList={recipesList}
+                        loadRecipes={renderRecipes}
+                        isLast={isLastRecipes}
+                        currentLastId={currentLastId}
+                    />
+                ) : (
+                    <Box display="flex" justifyContent="center">
+                        <CircularProgress />
+                    </Box>
+                )}
+            </>
+        )
+    }
+
     return (
         <Container maxWidth='lg'>
-            <Box mt={3}>
-                <Typography variant='h3'>Рецепты</Typography>
-            </Box>
-            <Box my={3}>
-                <FormControl className={classes.formControl}>
-                    <InputLabel htmlFor="age-native-simple">Категория</InputLabel>
-                    <Select
-                    native
-                    value={currentCategory}
-                    onChange={handleChange}
-                    className={classes.selectEmpty}
-                    >
-                        <option aria-label="None" value="" />
-                        {renderCategoryOptions(categories)}
-                    </Select>
-                </FormControl>
-            </Box>
-            {recipesList.length ? (
-                <RecipesList
-                    recipesList={recipesList}
-                    loadRecipes={renderRecipes}
-                    isLast={isLastRecipes}
-                    currentLastId={currentLastId}
-                />
-            ) : (
-                <div>Рецепты загружаются</div>
-            )}
+            { (status === "failed") ? 
+                (
+                    <RequestError retryFunction={() => dispatch(fetchRecipesAndCategories(currentLastId, currentCategory))} />
+                ) : (
+                    renderSucceed()
+                )
+            }
         </Container>
     );
 };
