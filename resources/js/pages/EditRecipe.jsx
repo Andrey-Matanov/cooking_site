@@ -5,6 +5,7 @@ import styled from "styled-components";
 import { fetchIngredientsAndRecipes } from "../actions/combinedActions";
 import { fetchRecipe } from "../actions/recipeActions";
 import { fetchUnits } from "../actions/unitsActions";
+import LoadingDataComponent from "../components/Common/LoadingDataComponent";
 import AddRecipeForm from "../components/Forms/AddRecipeForm/AddRecipeForm";
 
 const Wrapper = styled.div`
@@ -14,30 +15,33 @@ const Wrapper = styled.div`
 const EditRecipe = ({ ingredients, categories }) => {
     const { id } = useParams();
     const dispatch = useDispatch();
-    const recipe = useSelector((state) => state.recipe);
+    const recipeStatus = useSelector((state) => state.recipe.status);
+    const recipeInfo = useSelector((state) => state.recipe.recipe);
+    const recipeIngredients = useSelector((state) => state.recipe.ingredients);
+    const recipeSteps = useSelector((state) => state.recipe.steps);
     const userId = useSelector((state) => state.authorization.userId);
     const units = useSelector((state) => state.units);
 
-    const isRecipeOfUser = recipe.recipe.user_id === userId;
+    const isRecipeOfUser = recipeInfo.user_id === userId;
 
     const initialValues =
-        categories.length && ingredients.length && recipe
+        categories.length && ingredients.length && recipeStatus
             ? {
-                  name: recipe.recipe.name,
-                  image: recipe.recipe.image,
+                  name: recipeInfo.name,
+                  image: recipeInfo.image,
                   category_id: categories.find(
-                      (category) => category.name === recipe.recipe.catalog_name
+                      (category) => category.name === recipeInfo.catalog_name
                   ).id,
-                  time: recipe.recipe.time,
-                  difficulty: recipe.recipe.complexity,
-                  ingredients: recipe.ingredients.map((ingredient) => ({
+                  time: recipeInfo.time,
+                  difficulty: recipeInfo.complexity,
+                  ingredients: recipeIngredients.map((ingredient) => ({
                       id: ingredient.id,
                       name: ingredient.name,
                       amount: ingredient.amount,
                       unit_id: ingredient.units_id,
                   })),
-                  description: recipe.recipe.description,
-                  steps: recipe.steps.map((step) => ({
+                  description: recipeInfo.description,
+                  steps: recipeSteps.map((step) => ({
                       name: step.name,
                       description: step.description,
                       image: step.image,
@@ -63,7 +67,10 @@ const EditRecipe = ({ ingredients, categories }) => {
         units.length &&
         initialValues
     ) {
-        switch (recipe.status) {
+        switch (recipeStatus) {
+            case "loading": {
+                return <LoadingDataComponent />;
+            }
             case "ok": {
                 return (
                     <Wrapper>
@@ -91,7 +98,7 @@ const EditRecipe = ({ ingredients, categories }) => {
             }
         }
     } else {
-        return <h2>Загрузка</h2>;
+        return <LoadingDataComponent />;
     }
 };
 

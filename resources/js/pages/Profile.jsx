@@ -1,10 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-    Link,
-    useParams,
-    useHistory
-} from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 
 import {
     fetchUserRecipes,
@@ -28,23 +24,23 @@ import {
     TextField,
     Avatar,
 } from "@material-ui/core";
-import { makeStyles } from "@material-ui/styles"
+import { makeStyles } from "@material-ui/styles";
 
 import EditIcon from "@material-ui/icons/Edit";
 import CheckIcon from "@material-ui/icons/Check";
 import ClearIcon from "@material-ui/icons/Clear";
 import { userLogout } from "../actions/authorizationActions";
-import RequestError from "../components/Common/RequestError.jsx"
+import RequestError from "../components/Common/RequestError.jsx";
 
 const useStyles = makeStyles((theme) => ({
     avatar: {
-      width: theme.spacing(7),
-      height: theme.spacing(7),
+        width: theme.spacing(7),
+        height: theme.spacing(7),
     },
-  }));
+}));
 
-import {deleteRecipe} from "../actions/recipesListActions";
-import {fetchRecipe} from "../actions/recipeActions";
+import { deleteRecipe } from "../actions/recipesListActions";
+import { fetchRecipe } from "../actions/recipeActions";
 
 const Profile = () => {
     const dispatch = useDispatch();
@@ -54,9 +50,7 @@ const Profile = () => {
         (state) => state.profile
     );
 
-    const { userId } = useSelector(
-        (state) => state.authorization
-    )
+    const { userId } = useSelector((state) => state.authorization);
 
     const params = useParams();
     const id = parseInt(params.id);
@@ -71,7 +65,7 @@ const Profile = () => {
     const fetchData = (id) => {
         dispatch(fetchUserData(id));
         dispatch(fetchUserRecipes(id));
-    }
+    };
 
     useEffect(() => {
         fetchData(id);
@@ -89,7 +83,7 @@ const Profile = () => {
     const applyEditEmail = () => {
         setEmailChange(false);
         dispatch(changeEmail(userId, newEmailValue));
-    }
+    };
 
     const handleDeleteUser = () => {
         setOpenDeleteUser(false);
@@ -120,10 +114,7 @@ const Profile = () => {
                             </Grid>
                             {id === userId ? (
                                 <Grid item xs={3}>
-                                    <Button
-                                        variant="contained"
-                                        size="small"
-                                    >
+                                    <Button variant="contained" size="small">
                                         <Link
                                             style={{
                                                 textDecoration: "none",
@@ -139,10 +130,17 @@ const Profile = () => {
                                         size="small"
                                         onClick={() => {
                                             dispatch(deleteRecipe(recipe.id))
-                                                .then(() => dispatch(fetchUserRecipes(userId)))
-                                                .catch((err) => console.error(err))
+                                                .then(() =>
+                                                    dispatch(
+                                                        fetchUserRecipes(userId)
+                                                    )
+                                                )
+                                                .catch((err) =>
+                                                    console.error(err)
+                                                );
                                         }}
-                                    >Удалить рецепт
+                                    >
+                                        Удалить рецепт
                                     </Button>
                                 </Grid>
                             ) : (
@@ -155,9 +153,15 @@ const Profile = () => {
         ))
     ) : (
         <Grid item xs={12}>
-            {id === userId
-                ? <Typography variant="body2">Добавьте свой первый рецепт</Typography>
-                : <Typography variant="body2">Пользователь еще не добавлял рецепты</Typography>}
+            {id === userId ? (
+                <Typography variant="body2">
+                    Добавьте свой первый рецепт
+                </Typography>
+            ) : (
+                <Typography variant="body2">
+                    Пользователь еще не добавлял рецепты
+                </Typography>
+            )}
         </Grid>
     );
 
@@ -191,11 +195,7 @@ const Profile = () => {
                     ) : (
                         <Grid item container>
                             <Grid item>
-                                <Box
-                                    pr={1}
-                                    minHeight="32px"
-                                    lineHeight="32px"
-                                >
+                                <Box pr={1} minHeight="32px" lineHeight="32px">
                                     <Typography variant="body1">
                                         <b>E-mail: </b>
                                     </Typography>
@@ -232,9 +232,7 @@ const Profile = () => {
                     </Grid>
                     <Grid item>
                         <Box pr={1}>
-                            <Typography variant="body1">
-                                ******
-                            </Typography>
+                            <Typography variant="body1">******</Typography>
                         </Box>
                     </Grid>
                     <Grid item>
@@ -250,135 +248,127 @@ const Profile = () => {
                     </Grid>
                 </Grid>
             </div>
-        )
-    }
+        );
+    };
 
     const renderSucceed = () => {
         return (
             <Grid container>
-                    <Grid item xs={2}>
-                        <Box pt={3} pb={1}>
-                            <Typography variant="h4">Профиль</Typography>
+                <Grid item xs={2}>
+                    <Box pt={3} pb={1}>
+                        <Typography variant="h4">Профиль</Typography>
+                    </Box>
+                </Grid>
+                <Grid item xs={12}>
+                    <Avatar alt={userName} className={classes.avatar}></Avatar>
+                </Grid>
+                <Grid item container alignItems="center" xs={12}>
+                    <Grid item>
+                        <Box pr={1} minHeight="32px">
+                            <Typography variant="body1">
+                                <b>Имя: </b>
+                            </Typography>
                         </Box>
                     </Grid>
-                    <Grid item xs={12}>
-                        <Avatar alt={userName} className={classes.avatar}></Avatar>
-                    </Grid>
-                    <Grid item container alignItems="center" xs={12}>
-                        <Grid item>
-                            <Box pr={1} minHeight="32px">
-                                <Typography variant="body1">
-                                    <b>Имя: </b>
-                                </Typography>
-                            </Box>
-                        </Grid>
-                        {nameChange ? (
-                            <Box minHeight="32px">
-                                <TextField
-                                    placeholder="Новое имя"
-                                    onInput={(e) =>
-                                        setNewNameValue(e.target.value)
-                                    }
-                                />
-                                <IconButton
-                                    variant="contained"
-                                    size="small"
-                                    onClick={applyEditName}
-                                >
-                                    <CheckIcon />
-                                </IconButton>
-                                <IconButton
-                                    variant="contained"
-                                    size="small"
-                                    onClick={() => setNameChange(false)}
-                                >
-                                    <ClearIcon />
-                                </IconButton>
-                            </Box>
-                        ) : id === userId ? (
-                            <Grid item container xs={8}>
-                                <Grid item>
-                                    <Box
-                                        pr={1}
-                                        minHeight="32px"
-                                        lineHeight="32px"
-                                    >
-                                        <Typography variant="body1">
-                                            {userName}{" "}
-                                        </Typography>
-                                    </Box>
-                                </Grid>
-                                <Grid item>
-                                    <Box pr={1} minHeight="32px">
-                                        <IconButton
-                                            variant="contained"
-                                            size="small"
-                                            onClick={() => setNameChange(true)}
-                                        >
-                                            <EditIcon fontSize="small" />
-                                        </IconButton>
-                                    </Box>
-                                </Grid>
-                            </Grid>
-                        ) : (
+                    {nameChange ? (
+                        <Box minHeight="32px">
+                            <TextField
+                                placeholder="Новое имя"
+                                onInput={(e) => setNewNameValue(e.target.value)}
+                            />
+                            <IconButton
+                                variant="contained"
+                                size="small"
+                                onClick={applyEditName}
+                            >
+                                <CheckIcon />
+                            </IconButton>
+                            <IconButton
+                                variant="contained"
+                                size="small"
+                                onClick={() => setNameChange(false)}
+                            >
+                                <ClearIcon />
+                            </IconButton>
+                        </Box>
+                    ) : id === userId ? (
+                        <Grid item container xs={8}>
                             <Grid item>
-                                <Box pr={1}>
+                                <Box pr={1} minHeight="32px" lineHeight="32px">
                                     <Typography variant="body1">
                                         {userName}{" "}
                                     </Typography>
                                 </Box>
                             </Grid>
-                        )}
-                    </Grid>
-                    {id === userId ? (
-                        emailAndPasswordRender()
+                            <Grid item>
+                                <Box pr={1} minHeight="32px">
+                                    <IconButton
+                                        variant="contained"
+                                        size="small"
+                                        onClick={() => setNameChange(true)}
+                                    >
+                                        <EditIcon fontSize="small" />
+                                    </IconButton>
+                                </Box>
+                            </Grid>
+                        </Grid>
                     ) : (
-                        <div />
-                    )}
-                    <Grid item xs={12}>
-                        <Box py={1}>
-                            <Typography variant="h5">Рецепты</Typography>
-                        </Box>
-                    </Grid>
-                    {renderedRecipes}
-                    {id === userId ? (
-                        <Grid item xs={12}>
-                            <Box py={1}>
-                                <Link
-                                    style={{ textDecoration: "none" }}
-                                    to="/add_recipe"
-                                >
-                                    <Button variant="contained" size="small">
-                                        Добавить рецепт
-                                    </Button>
-                                </Link>
+                        <Grid item>
+                            <Box pr={1}>
+                                <Typography variant="body1">
+                                    {userName}{" "}
+                                </Typography>
                             </Box>
                         </Grid>
-                    ) : (
-                        <div />
-                    )}
-                    {id === userId ? (
-                        <Grid item xs={12}>
-                            <Button size="small" onClick={() => setOpenDeleteUser(true)}>
-                                Удалить профиль
-                            </Button>
-                        </Grid>
-                    ) : (
-                        <div />
                     )}
                 </Grid>
-        )
-    }
+                {id === userId ? emailAndPasswordRender() : <div />}
+                <Grid item xs={12}>
+                    <Box py={1}>
+                        <Typography variant="h5">Рецепты</Typography>
+                    </Box>
+                </Grid>
+                {renderedRecipes}
+                {id === userId ? (
+                    <Grid item xs={12}>
+                        <Box py={1}>
+                            <Link
+                                style={{ textDecoration: "none" }}
+                                to="/add_recipe"
+                            >
+                                <Button variant="contained" size="small">
+                                    Добавить рецепт
+                                </Button>
+                            </Link>
+                        </Box>
+                    </Grid>
+                ) : (
+                    <div />
+                )}
+                {id === userId ? (
+                    <Grid item xs={12}>
+                        <Button
+                            size="small"
+                            onClick={() => setOpenDeleteUser(true)}
+                        >
+                            Удалить профиль
+                        </Button>
+                    </Grid>
+                ) : (
+                    <div />
+                )}
+            </Grid>
+        );
+    };
 
     return (
         <>
             <Container maxWidth="lg">
-                {(status === "failed") ? (
+                {status === "failed" ? (
                     <RequestError retryFunction={() => fetchData(id)} />
                 ) : (
                     renderSucceed()
                 )}
-
             </Container>
             <Dialog
                 open={openPassword}

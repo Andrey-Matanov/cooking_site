@@ -1,10 +1,12 @@
 import React, { useEffect } from "react";
 import { FixedSizeList as List } from "react-window";
-import styled from "styled-components";
-
-const Error = styled.div`
-    color: red;
-`;
+import {
+    Button,
+    Card,
+    CardContent,
+    TextField,
+    Typography,
+} from "@material-ui/core";
 
 const AddRecipeFormIngredient = ({
     currentNumber,
@@ -13,10 +15,12 @@ const AddRecipeFormIngredient = ({
     currentAmount,
     ingredients,
     errors,
+    touched,
     usedIngredients,
     setFieldValue,
     unitId,
     handleChange,
+    handleBlur,
 }) => {
     const getUnitName = (unitId) =>
         ["граммы", "миллилитры", "штуки", "ч.л.", "ст.л."][unitId - 1];
@@ -58,56 +62,75 @@ const AddRecipeFormIngredient = ({
         );
     };
 
+    console.log(currentNumber);
+    console.log(errors);
+
     return (
-        <div
-            style={{
-                marginBottom: "10px",
-                padding: "10px",
-                border: "2px solid black",
-            }}
-        >
-            <div>
-                <List
-                    height={150}
-                    itemCount={ingredients.length}
-                    itemSize={35}
-                    width={300}
+        <Card variant="outlined" style={{ marginBottom: "10px" }}>
+            <CardContent>
+                <Typography
+                    variant="body1"
+                    color="primary"
+                    style={{ marginBottom: "10px" }}
                 >
-                    {Ingredient}
-                </List>
-            </div>
-            <p>Выбранный ингредиент: {currentName}</p>
-            <div>
-                <label htmlFor={`ingredient${currentNumber}_amount`}>
-                    Количество{`(${getUnitName(unitId)})`}
-                </label>
-                <input
-                    id={`ingredient${currentNumber}_amount`}
-                    type="number"
-                    value={currentAmount}
-                    onChange={handleChange}
-                    name={`ingredients[${currentNumber}].amount`}
-                />
-                <Error>
-                    {typeof errors === "object" && errors[currentNumber]
-                        ? errors[currentNumber].amount
-                        : null}
-                </Error>
-            </div>
-            <button
-                type="button"
-                onClick={() => {
-                    setFieldValue(
-                        "ingredients",
-                        [...usedIngredients].filter(
-                            (ingredient) => ingredient.id !== currentId
-                        )
-                    );
-                }}
-            >
-                Удалить текущий ингрендиент
-            </button>
-        </div>
+                    Выбранный ингредиент: {currentName}
+                </Typography>
+
+                <div>
+                    <List
+                        height={150}
+                        itemCount={ingredients.length}
+                        itemSize={35}
+                        width={300}
+                    >
+                        {Ingredient}
+                    </List>
+                </div>
+                <div>
+                    <TextField
+                        fullwidth="true"
+                        type="number"
+                        id={`ingredients[${currentNumber}].amount`}
+                        name={`ingredients[${currentNumber}].amount`}
+                        label={`Количество(${getUnitName(unitId)})`}
+                        value={currentAmount}
+                        onChange={handleChange}
+                        onBlur={handleBlur}
+                        error={
+                            typeof touched === "object" &&
+                            touched[currentNumber] &&
+                            touched[currentNumber].amount &&
+                            typeof errors === "object" &&
+                            Boolean(errors[currentNumber]) &&
+                            Boolean(errors[currentNumber].amount)
+                        }
+                        helperText={
+                            typeof touched === "object" &&
+                            touched[currentNumber] &&
+                            touched[currentNumber].amount &&
+                            errors &&
+                            errors[currentNumber] &&
+                            errors[currentNumber].amount
+                        }
+                    />
+                </div>
+                <Button
+                    color="secondary"
+                    variant="contained"
+                    type="button"
+                    onClick={() => {
+                        setFieldValue(
+                            "ingredients",
+                            [...usedIngredients].filter(
+                                (ingredient) => ingredient.id !== currentId
+                            )
+                        );
+                    }}
+                >
+                    Удалить текущий ингрендиент
+                </Button>
+            </CardContent>
+        </Card>
     );
 };
 
