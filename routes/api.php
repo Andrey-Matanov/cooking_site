@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\Api\CatalogController;
 use App\Http\Controllers\Api\CategoryController;
 use App\Http\Controllers\api\FilesController;
 use App\Http\Controllers\Api\RecipesController;
@@ -12,7 +11,6 @@ use App\Http\Middleware\Admin;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\PassportAuthController;
-use App\Http\Controllers\Api\ProductController;
 use App\Http\Controllers\Api\ImageDBController;
 
 /*
