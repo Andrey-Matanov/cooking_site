@@ -4,9 +4,10 @@ import { baseURL } from "../../../utils";
 
 const AddImageField = ({
     label = "Изображение",
-    image,
     formFieldName,
     setFieldValue,
+    imageString,
+    setImageString,
 }) => {
     const handleImageChange = (e) => {
         e.preventDefault();
@@ -14,19 +15,23 @@ const AddImageField = ({
         let reader = new FileReader();
         let file = e.target.files[0];
 
-        reader.onloadend = async () => {
-            const response = await fetch(`${baseURL}/api/save`, {
+        reader.onload = async () => {
+            const response = await fetch(`${baseURL}/api/save2`, {
                 method: "POST",
                 body: JSON.stringify({
-                    data: reader.result.slice(5),
+                    data: reader.result,
                 }),
             });
-            const json = await response.json();
 
-            setFieldValue(
-                formFieldName,
-                `${baseURL}/storage/images/${json.path}`
-            );
+            if (response.status === 500) {
+                console.log("Ошибка");
+            } else {
+                const json = await response.json();
+                const id = json.id;
+
+                setFieldValue(formFieldName, `${id}`);
+                setImageString(reader.result);
+            }
         };
 
         reader.readAsDataURL(file);
@@ -35,12 +40,12 @@ const AddImageField = ({
     return (
         <div style={{ display: "flex", flexDirection: "column" }}>
             <Typography>{label}</Typography>
-            <label htmlFor="upload-photo">
+            <label htmlFor={`upload-photo-${formFieldName}`}>
                 <input
                     onChange={handleImageChange}
                     style={{ display: "none" }}
-                    id="upload-photo"
-                    name="upload-photo"
+                    id={`upload-photo-${formFieldName}`}
+                    name={`upload-photo-${formFieldName}`}
                     type="file"
                 />
 
@@ -49,8 +54,13 @@ const AddImageField = ({
                 </Button>
             </label>
 
-            {image ? (
-                <img src={image} alt="recipeImage" width="200" height="200" />
+            {imageString ? (
+                <img
+                    src={imageString}
+                    alt="recipeImage"
+                    width="200"
+                    height="200"
+                />
             ) : null}
         </div>
     );

@@ -3,7 +3,11 @@ import { useDispatch, useSelector } from "react-redux";
 import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
 import styled from "styled-components";
-import { addRecipe, editRecipe, deleteRecipe } from "../../../actions/recipesListActions";
+import {
+    addRecipe,
+    editRecipe,
+    deleteRecipe,
+} from "../../../actions/recipesListActions";
 import AddRecipeFormStep from "./AddRecipeFormStep";
 import AddRecipeFormIngredient from "./AddRecipeFormIngredient";
 import FormTextarea from "../../Inputs/FormTextArea";
@@ -28,6 +32,7 @@ import {
     TextField,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
+import AddRecipeImage from "./AddRecipeImage";
 // import AddRecipeNutrition from "./AddRecipeNutrition";
 
 const AddRecipeForm = styled.form`
@@ -201,12 +206,7 @@ const AddRecipeFormik = ({
                         </FormControl>
 
                         <FormItem>
-                            <AddImageField
-                                label="Изображение рецепта"
-                                image={values.image}
-                                formFieldName="image"
-                                setFieldValue={setFieldValue}
-                            />
+                            <AddRecipeImage setFieldValue={setFieldValue} />
                         </FormItem>
 
                         <TextField
@@ -214,7 +214,7 @@ const AddRecipeFormik = ({
                             id="time"
                             name="time"
                             type="number"
-                            label="Ориентировочное время приготовления рецепта"
+                            label="Ориентировочное время приготовления рецепта (в минутах)"
                             value={values.time}
                             onChange={handleChange}
                             onBlur={handleBlur}
@@ -344,7 +344,7 @@ const AddRecipeFormik = ({
                                 <AddRecipeFormStep
                                     key={i}
                                     index={i}
-                                    name={step.name || step.heading}
+                                    name={step.name}
                                     description={step.description}
                                     image={step.image}
                                     errors={errors.steps}

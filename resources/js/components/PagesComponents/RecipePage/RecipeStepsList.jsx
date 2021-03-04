@@ -9,6 +9,7 @@ import Nutrition from "./Nutrition.jsx";
 // import AddCommentaryForm from '../components/Forms/AddCommentaryForm';
 import DifficultyBar from "../../Common/DifficultyBar";
 import RatingBar from "../../Common/RatingBar.jsx";
+import RecipeImage from "./RecipeImage";
 
 const useStyles = makeStyles((theme) => ({
     scrolling: {
@@ -32,8 +33,8 @@ const useStyles = makeStyles((theme) => ({
     },
     image: {
         maxWidth: "100%",
-        height: "auto"
-    }
+        height: "auto",
+    },
 }));
 
 let formatTime = (sourceTime) => {
@@ -95,7 +96,11 @@ const renderSteps = (steps) => {
                             </Grid>
                         </Box>
                         <Box py={2} textAlign="center">
-                            <img src={step.image} alt={step.name} className={classes.image} />
+                            <RecipeImage
+                                image={step.image}
+                                alt={step.name}
+                                className={classes.image}
+                            />
                         </Box>
                         <Box py={2}>
                             <Typography variant="body1">
@@ -134,7 +139,11 @@ const RecipeStepsList = ({ ingredients, recipe, reviews, steps }) => {
                                 <Typography variant="h4">{name}</Typography>
                             </Box>
                             <Box my={3} textAlign="center">
-                                <img src={image} alt={name} className={classes.image} />
+                                <RecipeImage
+                                    image={image}
+                                    alt={name}
+                                    className={classes.image}
+                                />
                             </Box>
                             <Box my={3}>
                                 <p>

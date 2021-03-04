@@ -55,12 +55,12 @@ const Menu = () => {
                     <Heading>Рейтинг авторов</Heading>
                 </LinkDiv>
             </NavLink>
-            <NavLink to="/articles" activeClassName={classes.selected_link}>
+            {/* <NavLink to="/articles" activeClassName={classes.selected_link}>
                 <LinkDiv>
                     <HomeIcon color="secondary" />
                     <Heading>Все статьи</Heading>
                 </LinkDiv>
-            </NavLink>
+            </NavLink> */}
             <NavLink to="/login" activeClassName={classes.selected_link}>
                 <LinkDiv>
                     <HomeIcon color="secondary" />

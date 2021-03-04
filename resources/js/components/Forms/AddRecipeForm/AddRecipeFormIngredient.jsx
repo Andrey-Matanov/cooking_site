@@ -25,12 +25,6 @@ const AddRecipeFormIngredient = ({
     const getUnitName = (unitId) =>
         ["граммы", "миллилитры", "штуки", "ч.л.", "ст.л."][unitId - 1];
 
-    useEffect(() => {
-        if (ingredients.length) {
-            console.log("Ingredient" + currentName + " - rerender");
-        }
-    });
-
     const Ingredient = ({ index, style }) => {
         const isCurrent = ingredients[index].id === currentId;
         const isDisabled =
@@ -61,9 +55,6 @@ const AddRecipeFormIngredient = ({
             </button>
         );
     };
-
-    console.log(currentNumber);
-    console.log(errors);
 
     return (
         <Card variant="outlined" style={{ marginBottom: "10px" }}>

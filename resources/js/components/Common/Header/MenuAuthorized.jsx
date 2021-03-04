@@ -59,7 +59,7 @@ const Menu = () => {
                     <Heading>Рейтинг авторов</Heading>
                 </LinkDiv>
             </NavLink>
-            <NavLink
+            {/* <NavLink
                 exact
                 to="/articles"
                 activeClassName={classes.selected_link}
@@ -68,7 +68,7 @@ const Menu = () => {
                     <HomeIcon color="secondary" />
                     <Heading>Все статьи</Heading>
                 </LinkDiv>
-            </NavLink>
+            </NavLink> */}
             <NavLink to="/admin" activeClassName={classes.selected_link}>
                 <LinkDiv>
                     <RecipeIcon color="secondary" />
