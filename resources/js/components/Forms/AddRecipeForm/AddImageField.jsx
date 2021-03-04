@@ -49,7 +49,7 @@ const AddImageField = ({
                     type="file"
                 />
 
-                <Button color="secondary" variant="contained" component="span">
+                <Button color="primary" variant="contained" component="span">
                     Загрузить изображение
                 </Button>
             </label>

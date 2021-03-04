@@ -33,6 +33,8 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/styles";
 import AddRecipeImage from "./AddRecipeImage";
+import Nutrition from "../../PagesComponents/RecipePage/Nutrition";
+import AddRecipeNutrition from "./AddRecipeNutrition";
 // import AddRecipeNutrition from "./AddRecipeNutrition";
 
 const AddRecipeForm = styled.form`
@@ -276,6 +278,9 @@ const AddRecipeFormik = ({
                                             handleChange={handleChange}
                                             handleBlur={handleBlur}
                                             setFieldValue={setFieldValue}
+                                            setRecipeNutrition={
+                                                setRecipeNutrition
+                                            }
                                         />
                                     );
                                 })
@@ -288,18 +293,43 @@ const AddRecipeFormik = ({
                                 <Error>{errors.ingredients}</Error>
                             ) : null}
                             <Button
-                                color="secondary"
+                                color="primary"
                                 variant="contained"
                                 fullWidth={true}
                                 onClick={() => {
+                                    const newId = getNewIngredientId();
+                                    const ingredient = ingredients.find(
+                                        (ingredient) => ingredient.id === newId
+                                    );
+
                                     setFieldValue("ingredients", [
                                         ...values.ingredients,
                                         {
-                                            id: getNewIngredientId(),
+                                            id: newId,
                                             amount: 1,
                                             unit_id: 1,
                                         },
                                     ]);
+
+                                    setRecipeNutrition({
+                                        ...recipeNutrition,
+                                        calories: (
+                                            recipeNutrition.calories +
+                                            ingredient.calorie / 100
+                                        ).toFixed(2),
+                                        proteins: (
+                                            recipeNutrition.proteins +
+                                            ingredient.product_protein / 100
+                                        ).toFixed(2),
+                                        fat: (
+                                            recipeNutrition.fat +
+                                            ingredient.product_fat / 100
+                                        ).toFixed(2),
+                                        carbs: (
+                                            recipeNutrition.carbs +
+                                            ingredient.product_carb / 100
+                                        ).toFixed(2),
+                                    });
                                 }}
                                 type="button"
                             >
@@ -307,12 +337,12 @@ const AddRecipeFormik = ({
                             </Button>
                         </Card>
 
-                        {/* {ingredients.length && (
                         <AddRecipeNutrition
-                            values={values}
-                            ingredients={ingredients}
+                            calories={recipeNutrition.calories}
+                            proteins={recipeNutrition.proteins}
+                            fat={recipeNutrition.fat}
+                            carbs={recipeNutrition.carbs}
                         />
-                    )} */}
 
                         <TextField
                             fullwidth="true"
@@ -369,7 +399,7 @@ const AddRecipeFormik = ({
                                 <Error>{errors.steps}</Error>
                             ) : null}
                             <Button
-                                color="secondary"
+                                color="primary"
                                 variant="contained"
                                 fullWidth={true}
                                 onClick={() =>
@@ -387,27 +417,15 @@ const AddRecipeFormik = ({
                                 Добавить новый шаг
                             </Button>
                         </Card>
-                        <ButtonGroup
-                            orientation="vertical"
-                            aria-label="vertical outlined button group"
+
+                        <Button
+                            color="primary"
+                            variant="contained"
+                            onClick={handleSubmit}
+                            type="submit"
                         >
-                            <Button
-                                color="secondary"
-                                variant="contained"
-                                type="button"
-                                onClick={() => console.log(values)}
-                            >
-                                Show values
-                            </Button>
-                            <Button
-                                color="secondary"
-                                variant="contained"
-                                onClick={handleSubmit}
-                                type="submit"
-                            >
-                                {submitButtonLabel}
-                            </Button>
-                        </ButtonGroup>
+                            {submitButtonLabel}
+                        </Button>
                     </Form>
                 );
             }}

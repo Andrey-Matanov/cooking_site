@@ -1,5 +1,5 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Redirect, Route, Switch } from "react-router-dom";
 import Error404 from "./Error404";
 import Main from "./Main";
 import Profile from "./Profile";
@@ -20,7 +20,10 @@ const RootRouter = () => {
     return (
         <>
             <Switch>
-                <Route exact path="/" render={() => <Main />} />
+                {/* <Route exact path="/" render={() => <Main />} /> */}
+                <Route exact path="/">
+                    <Redirect to="/recipes" />
+                </Route>
                 <Route exact path="/recipes" render={() => <Recipes />} />
                 <Route path="/recipes/:id" render={() => <Recipe />} />
                 <Route path="/authors" render={() => <Authors />} />

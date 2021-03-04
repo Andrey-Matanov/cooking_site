@@ -1,11 +1,14 @@
 import React from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import styled from "styled-components";
-import HomeIcon from "@material-ui/icons/Home";
-import RecipeIcon from "../../Icons/RecipeIcon";
 import { makeStyles } from "@material-ui/core/styles";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogout } from "../../../actions/authorizationActions";
+import HomeIcon from "@material-ui/icons/Home";
+import PeopleIcon from "@material-ui/icons/People";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import RecipeIcon from "../../Icons/RecipeIcon";
 
 const LinkDiv = styled.div`
     display: flex;
@@ -31,6 +34,18 @@ const useStyles = makeStyles((theme) => ({
     selected_link: {
         color: "#999",
     },
+    link: {
+        marginLeft: "5px",
+    },
+    button: {
+        display: "flex",
+        alignItems: "center",
+        marginLeft: "5px",
+        border: "none",
+        background: "none",
+        textDecoration: "underline",
+        cursor: "pointer",
+    },
 }));
 
 const Menu = () => {
@@ -41,27 +56,40 @@ const Menu = () => {
 
     return (
         <div className={classes.menu}>
-            <NavLink exact to="/" activeClassName={classes.selected_link}>
+            {/* <NavLink
+                exact
+                to="/"
+                className={classes.link}
+                activeClassName={classes.selected_link}
+            >
                 <LinkDiv>
                     <HomeIcon color="secondary" />
                     <Heading>Главная</Heading>
                 </LinkDiv>
-            </NavLink>
-            <NavLink to="/recipes" activeClassName={classes.selected_link}>
+            </NavLink> */}
+            <NavLink
+                to="/recipes"
+                className={classes.link}
+                activeClassName={classes.selected_link}
+            >
                 <LinkDiv>
                     <RecipeIcon color="secondary" />
                     <Heading>Рецепты</Heading>
                 </LinkDiv>
             </NavLink>
-            <NavLink to="/authors" activeClassName={classes.selected_link}>
+            <NavLink
+                to="/authors"
+                className={classes.link}
+                activeClassName={classes.selected_link}
+            >
                 <LinkDiv>
-                    <RecipeIcon color="secondary" />
+                    <PeopleIcon color="secondary" />
                     <Heading>Рейтинг авторов</Heading>
                 </LinkDiv>
             </NavLink>
             {/* <NavLink
                 exact
-                to="/articles"
+                to="/articles" className={classes.link}
                 activeClassName={classes.selected_link}
             >
                 <LinkDiv>
@@ -69,18 +97,13 @@ const Menu = () => {
                     <Heading>Все статьи</Heading>
                 </LinkDiv>
             </NavLink> */}
-            <NavLink to="/admin" activeClassName={classes.selected_link}>
-                <LinkDiv>
-                    <RecipeIcon color="secondary" />
-                    <Heading>Админ.меню</Heading>
-                </LinkDiv>
-            </NavLink>
             <NavLink
                 to={`/profile/${currentUserId}`}
+                className={classes.link}
                 activeClassName={classes.selected_link}
             >
                 <LinkDiv>
-                    <RecipeIcon color="secondary" />
+                    <AccountBoxIcon color="secondary" />
                     <Heading>Личный кабинет</Heading>
                 </LinkDiv>
             </NavLink>
@@ -90,8 +113,10 @@ const Menu = () => {
                     dispatch(userLogout());
                     history.push("/");
                 }}
+                className={classes.button}
             >
-                Выход
+                <ExitToAppIcon color="secondary" />
+                <Heading>Выход</Heading>
             </button>
         </div>
     );
