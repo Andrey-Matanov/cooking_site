@@ -1,4 +1,5 @@
 import React, { useLayoutEffect, useState } from "react";
+import { baseURL } from "../../../utils";
 
 const RecipeImage = ({ image, name, className }) => {
     const [src, setSrc] = useState(image);
@@ -6,9 +7,7 @@ const RecipeImage = ({ image, name, className }) => {
     useLayoutEffect(() => {
         const getImage = async () => {
             if (!isNaN(parseInt(image))) {
-                const response = await fetch(
-                    `http://cookingsite.loc/api/image/${image}`
-                );
+                const response = await fetch(`${baseURL}/api/image/${image}`);
                 const json = await response.json();
 
                 setSrc(json.data);
