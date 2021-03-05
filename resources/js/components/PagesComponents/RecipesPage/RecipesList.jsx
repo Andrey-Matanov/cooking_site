@@ -74,6 +74,7 @@ const RecipesList = ({ recipesList, loadRecipes, isLast }) => {
                             id={item.id}
                             name={item.name}
                             author={item.author}
+                            authorId={item.author_id}
                             time={item.time}
                             complexity={item.complexity}
                             rating={item.rating}

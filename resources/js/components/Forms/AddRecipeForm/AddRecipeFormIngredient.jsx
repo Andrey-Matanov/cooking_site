@@ -61,7 +61,11 @@ const AddRecipeFormIngredient = ({
         []
     );
     const [searchedIngredient, setSearchedIngredient] = useState("");
-    const [lastNumberAmount, setLastNumberAmount] = useState(1);
+    const [lastNumberAmount, setLastNumberAmount] = useState(null);
+
+    useEffect(() => {
+        setLastNumberAmount(currentAmount);
+    }, []);
 
     useEffect(() => {
         setSearchedIngredientsArray(ingredients);
@@ -93,12 +97,63 @@ const AddRecipeFormIngredient = ({
         return (
             <button
                 disabled={isDisabled}
-                onClick={() =>
+                onClick={() => {
+                    const oldIngredient = ingredients.find(
+                        (ingredient) => ingredient.id === currentId
+                    );
+                    const newIngredient = ingredients.find(
+                        (ingredient) =>
+                            ingredient.id === searchedIngredientsArray[index].id
+                    );
+                    const calories = Number(
+                        (
+                            recipeNutrition.calories +
+                            (currentAmount *
+                                (newIngredient.calorie -
+                                    oldIngredient.calorie)) /
+                                100
+                        ).toFixed(2)
+                    );
+                    const proteins = Number(
+                        (
+                            recipeNutrition.proteins +
+                            (currentAmount *
+                                (newIngredient.product_protein -
+                                    oldIngredient.product_protein)) /
+                                100
+                        ).toFixed(2)
+                    );
+                    const fat = Number(
+                        (
+                            recipeNutrition.fat +
+                            (currentAmount *
+                                (newIngredient.product_fat -
+                                    oldIngredient.product_fat)) /
+                                100
+                        ).toFixed(2)
+                    );
+                    const carbs = Number(
+                        (
+                            recipeNutrition.carbs +
+                            (currentAmount *
+                                (newIngredient.product_carb -
+                                    oldIngredient.product_carb)) /
+                                100
+                        ).toFixed(2)
+                    );
+
+                    setRecipeNutrition({
+                        calories: calories,
+                        proteins: proteins,
+                        fat: fat,
+                        carbs: carbs,
+                    });
+
                     setFieldValue(
                         `ingredients[${currentNumber}].id`,
                         searchedIngredientsArray[index].id
-                    )
-                }
+                    );
+                }}
                 type="button"
                 style={{
                     ...style,

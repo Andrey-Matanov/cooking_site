@@ -378,12 +378,12 @@ const AddRecipeFormik = ({
                             </Button>
                         </Card>
 
-                        {/* <AddRecipeNutrition
+                        <AddRecipeNutrition
                             calories={recipeNutrition.calories}
                             proteins={recipeNutrition.proteins}
                             fat={recipeNutrition.fat}
                             carbs={recipeNutrition.carbs}
-                        /> */}
+                        />
 
                         <TextField
                             fullwidth="true"

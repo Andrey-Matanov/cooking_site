@@ -31,6 +31,7 @@ const RecipeItem = (props) => {
         id,
         name,
         author,
+        authorId,
         time,
         complexity,
         rating,
@@ -87,7 +88,10 @@ const RecipeItem = (props) => {
                             </Grid>
                             <Grid item>
                                 <Typography variant="body1">
-                                    Автор: {author}
+                                    Автор:{" "}
+                                    <Link to={`/profile/${authorId}`}>
+                                        {author}
+                                    </Link>
                                 </Typography>
                             </Grid>
                             <Grid
