@@ -98,7 +98,7 @@ const AddRecipeFormStep = ({
                     />
                 </div>
                 <Button
-                    color="secondary"
+                    color="primary"
                     variant="contained"
                     fullWidth={true}
                     onClick={removeCurrentStep}

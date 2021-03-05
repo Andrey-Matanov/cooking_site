@@ -278,6 +278,7 @@ const AddRecipeFormik = ({
                                             handleChange={handleChange}
                                             handleBlur={handleBlur}
                                             setFieldValue={setFieldValue}
+                                            recipeNutrition={recipeNutrition}
                                             setRecipeNutrition={
                                                 setRecipeNutrition
                                             }
@@ -301,6 +302,18 @@ const AddRecipeFormik = ({
                                     const ingredient = ingredients.find(
                                         (ingredient) => ingredient.id === newId
                                     );
+                                    const calories =
+                                        recipeNutrition.calories +
+                                        ingredient.calorie / 100;
+                                    const proteins =
+                                        recipeNutrition.proteins +
+                                        ingredient.product_protein / 100;
+                                    const fat =
+                                        recipeNutrition.fat +
+                                        ingredient.product_fat / 100;
+                                    const carbs =
+                                        recipeNutrition.carbs +
+                                        ingredient.product_carb / 100;
 
                                     setFieldValue("ingredients", [
                                         ...values.ingredients,
@@ -312,23 +325,10 @@ const AddRecipeFormik = ({
                                     ]);
 
                                     setRecipeNutrition({
-                                        ...recipeNutrition,
-                                        calories: (
-                                            recipeNutrition.calories +
-                                            ingredient.calorie / 100
-                                        ).toFixed(2),
-                                        proteins: (
-                                            recipeNutrition.proteins +
-                                            ingredient.product_protein / 100
-                                        ).toFixed(2),
-                                        fat: (
-                                            recipeNutrition.fat +
-                                            ingredient.product_fat / 100
-                                        ).toFixed(2),
-                                        carbs: (
-                                            recipeNutrition.carbs +
-                                            ingredient.product_carb / 100
-                                        ).toFixed(2),
+                                        calories: Number(calories.toFixed(2)),
+                                        proteins: Number(proteins.toFixed(2)),
+                                        fat: Number(fat.toFixed(2)),
+                                        carbs: Number(carbs.toFixed(2)),
                                     });
                                 }}
                                 type="button"
