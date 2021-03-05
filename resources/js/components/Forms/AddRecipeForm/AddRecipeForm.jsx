@@ -75,6 +75,47 @@ const AddRecipeFormik = ({
         carbs: 0,
     });
 
+    console.log(recipeNutrition);
+
+    useEffect(() => {
+        if (
+            formInitialValues.ingredients.length > 0 &&
+            ingredients.length > 0
+        ) {
+            const newRecipeNutrition = {
+                calories: 0,
+                proteins: 0,
+                fat: 0,
+                carbs: 0,
+            };
+
+            formInitialValues.ingredients.forEach((ingredient) => {
+                const ingredientValues = ingredients.find(
+                    (ingredientsItem) => ingredientsItem.id === ingredient.id
+                );
+
+                newRecipeNutrition.calories += +(
+                    (ingredient.amount * ingredientValues.calorie) /
+                    100
+                ).toFixed(2);
+                newRecipeNutrition.proteins += +(
+                    (ingredient.amount * ingredientValues.product_protein) /
+                    100
+                ).toFixed(2);
+                newRecipeNutrition.fat += +(
+                    (ingredient.amount * ingredientValues.product_fat) /
+                    100
+                ).toFixed(2);
+                newRecipeNutrition.carbs += +(
+                    (ingredient.amount * ingredientValues.product_carb) /
+                    100
+                ).toFixed(2);
+            });
+
+            setRecipeNutrition(newRecipeNutrition);
+        }
+    }, [ingredients.length]);
+
     useEffect(() => {
         console.log("addRecipeForm rerender");
     });
@@ -337,12 +378,12 @@ const AddRecipeFormik = ({
                             </Button>
                         </Card>
 
-                        <AddRecipeNutrition
+                        {/* <AddRecipeNutrition
                             calories={recipeNutrition.calories}
                             proteins={recipeNutrition.proteins}
                             fat={recipeNutrition.fat}
                             carbs={recipeNutrition.carbs}
-                        />
+                        /> */}
 
                         <TextField
                             fullwidth="true"
