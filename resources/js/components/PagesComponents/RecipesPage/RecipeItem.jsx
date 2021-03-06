@@ -5,6 +5,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import AccessTimeIcon from "@material-ui/icons/AccessTime";
 import DifficultyBar from "../../Common/DifficultyBar.jsx";
 import RatingBar from "../../Common/RatingBar.jsx";
+import RecipeImage from "../RecipePage/RecipeImage.jsx";
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -64,11 +65,11 @@ const RecipeItem = (props) => {
                         spacing={2}
                     >
                         <Grid item className={classes.image}>
-                            <img
+                            <RecipeImage
                                 className={classes.img}
-                                src={"https://via.placeholder.com/150"}
-                                alt="recipe"
-                            ></img>
+                                name="recipe"
+                                image={image}
+                            />
                         </Grid>
                         <Grid
                             container
